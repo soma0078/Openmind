@@ -2,7 +2,7 @@ import { useRef, useId, useState } from 'react';
 import iconClose from '../assets/icon-close.svg';
 import iconMessage from '../assets/icon-messages.svg';
 
-function QuestionModal() {
+function QuestionModal({ userData }) {
   const dialogRef = useRef();
   const textareaId = useId();
   const [questionContent, setQuestionContent] = useState('');
@@ -28,35 +28,48 @@ function QuestionModal() {
     <>
       <button
         onClick={handleOpenModal}
-        className="rounded-full bg-amber-950 text-white px-6 py-3 shadow-xl"
+        className="rounded-full bg-amber-950 text-white px-6 py-3 shadow-xl m-96 block"
       >
         질문 작성하기
       </button>
-      <dialog ref={dialogRef} className="rounded-3xl shadow-xl p-9 relative">
+      <dialog
+        ref={dialogRef}
+        className="rounded-3xl shadow-xl p-9 relative max-md:p-6"
+      >
         <div className="flex gap-1 mb-9">
-          <img src={iconMessage} alt="" />
-          <h2 className="text-2xl">질문을 작성하세요</h2>
+          <img src={iconMessage} alt="메세지 아이콘" />
+          <h2 className="text-2xl max-md:text-xl">질문을 작성하세요</h2>
         </div>
-        <button onClick={handleCloseModal} className="absolute top-9 right-9">
-          <img src={iconClose} alt="close button" />
+        <button
+          onClick={handleCloseModal}
+          className="absolute top-9 right-9 max-md:top-6 max-md:right-6"
+        >
+          <img src={iconClose} alt="닫기 버튼 아이콘" />
         </button>
         <form onSubmit={handleSubmit}>
-          <lable htmlFor={textareaId} className="flex gap-1 text-lg">
-            To. <img src={iconMessage} alt="img" /> NAME
-          </lable>
+          <label
+            htmlFor={textareaId}
+            className="flex items-center gap-1 text-lg"
+          >
+            To.{' '}
+            <img
+              src={userData.imageSource}
+              alt={userData.imageSource}
+              className="w-7 h-7 rounded-full"
+            />
+            {userData.name}
+          </label>
           <textarea
             id={textareaId}
             value={questionContent}
             onChange={handleContentChange}
             placeholder="질문을 입력해주세요"
-            rows={4}
-            cols={40}
-            className="w-96 rounded-md block bg-slate-100 p-3 mt-3 mb-2 outline-[#542F1A]/40"
+            className="w-[33rem] min-w-72 h-44 rounded-md block bg-slate-100 p-3 mt-3 mb-2 outline-[#542F1A]/40 resize-none max-md:w-full max-md:h-96"
           />
           <button
             type="submit"
             disabled={!questionContent.trim()} // textarea 값이 비어있으면 비활성화
-            className={`w-96 rounded-md bg-amber-950 text-white px-6 py-3 block ${
+            className={`w-full rounded-md bg-amber-950 text-white px-6 py-3 block ${
               !questionContent.trim() && 'opacity-30' // textarea 값이 비어있으면 스타일 변경
             }`}
           >
