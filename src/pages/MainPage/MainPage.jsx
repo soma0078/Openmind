@@ -1,6 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react';
+import logoImage from '../../assets/img-logo.png';
+import { Link, useNavigate } from 'react-router-dom';
+import { createQuestionCard } from '../../api/api';
 
 function MainPage() {
+  const [nickName, setNickName] = useState(null);
+
+  const nav = useNavigate();
+
+  const checkIsNickName = () => {
+    return nickName;
+  };
+
+  const handleChangeNickName = (e) => {
+    setNickName(e.target.value);
+  };
+
+  const onMovePost = () => {
+    const isNickName = checkIsNickName();
+
+    if (isNickName) {
+      createQuestionCard(nickName).then(result => {
+        nav(`/post/${result.id}/answer`);
+      })
+    } else {
+      alert('닉네임을 입력해주세요.');
+    }
+  };
+
   return (
     <div className='flex flex-col'>
       <div className='w-[1200px] h-[627px] bg-main2 bg-cover pt-[3%]'>
