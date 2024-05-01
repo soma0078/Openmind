@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import logoImage from '../../assets/img-logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { createQuestionCard } from '../../api/api';
+import { setLocalStorage } from '../../util/localStorage';
 
 function MainPage() {
   const [nickName, setNickName] = useState(null);
@@ -21,6 +22,7 @@ function MainPage() {
 
     if (isNickName) {
       createQuestionCard(nickName).then(result => {
+        setLocalStorage(result.id, result.name);
         nav(`/post/${result.id}/answer`);
       })
     } else {
