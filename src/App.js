@@ -1,8 +1,13 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ListPage from "./pages/ListPage/ListPage";
+
 function App() {
   return (
-    <>
-      <div>test</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/list" element={<ListPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
