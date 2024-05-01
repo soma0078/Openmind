@@ -1,7 +1,9 @@
+import PostPage from "./pages/postPage/postPage";
+
 function App() {
   return (
     <>
-      <div>test</div>
+      <PostPage />
     </>
   );
 }
