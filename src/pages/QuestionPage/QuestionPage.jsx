@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getUsetData } from '../../api/api';
-import QuestionModal from '../../components/QuestionModal';
+import QuestionModal from './components/QuestionModal';
 
 function QuestionPage() {
   const [userData, setUserData] = useState('');
