@@ -27,10 +27,13 @@ function AllSubjectsSection() {
   const [subjectList, setSubjectList] = useState([]);
   const [subjectTotalCount, setSubjectTotalCount] = useState(0);
 
-  const fetchSortedData = async ({ orderBy, page, pageSize }) => {
+  const fetchSortedData = async () => {
     const subjects = await getSubjects({ orderBy, page, pageSize });
+    console.log("Fetched subjects: ", subjects); // API 응답 로그 출력
     setSubjectList(subjects.results);
+    console.log("Updated subjectList: ", subjects.results); // subjectList 업데이트 로그 출력
     setSubjectTotalCount(subjects.count);
+    console.log("Updated subjectTotalCount: ", subjects.count); // subjectTotalCount 업데이트 로그 출력
   };
 
   const handleSortSelection = (sortOption) => {
@@ -54,6 +57,7 @@ function AllSubjectsSection() {
 
   const onPageChange = (pageNumber) => {
     setPage(pageNumber);
+    console.log("Page updated: ", pageNumber); // 페이지 업데이트 로그 출력
   };
 
   return (
