@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import UserCard from "./UserCard.jsx";
 import { getSubjects } from "../../../api/api.jsx";
-import PaginationBar from "../pagination/PaginationBar.jsx";
+import PaginationBar from "./PaginationBar.jsx";
 
 // md (min-width: 768px)
 // xl (min-width: 1280px)
