@@ -4,7 +4,7 @@ import useOnClickOutside from '../../../hooks/useOnClickOutside';
 import iconClose from '../../../assets/icon-close.svg';
 import iconMessage from '../../../assets/icon-messages.svg';
 
-function QuestionModal({ userData }) {
+function QuestionModal({ userData, onQuestionSubmitted }) {
   const dialogRef = useRef();
   const textareaId = useId();
   const [questionContent, setQuestionContent] = useState('');
@@ -18,10 +18,12 @@ function QuestionModal({ userData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await submitQuestion(userData.id, questionContent);
+      const newQuestion = await submitQuestion(userData.id, questionContent);
       console.log('질문이 성공적으로 전송되었습니다.', questionContent);
       // 질문 전송 후 입력창 비우기
       setQuestionContent('');
+      // 질문이 등록되면 상태를 업데이트
+      onQuestionSubmitted(newQuestion);
     } catch (error) {
       console.error('질문 전송에 실패했습니다.', error);
     }
@@ -56,7 +58,7 @@ function QuestionModal({ userData }) {
               htmlFor={textareaId}
               className="flex items-center gap-1 text-lg"
             >
-              To.{' '}
+              To.
               <img
                 src={userData.imageSource}
                 alt={userData.imageSource}
