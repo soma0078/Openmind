@@ -1,4 +1,5 @@
 import { useRef, useId, useState } from 'react';
+import { submitQuestion } from '../api/api';
 import iconClose from '../assets/icon-close.svg';
 import iconMessage from '../assets/icon-messages.svg';
 
@@ -19,9 +20,16 @@ function QuestionModal({ userData }) {
     setQuestionContent(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('질문 전송', questionContent);
+    try {
+      await submitQuestion(userData.id, questionContent);
+      console.log('질문이 성공적으로 전송되었습니다.', questionContent);
+      // 질문 전송 후 입력창 비우기
+      setQuestionContent('');
+    } catch (error) {
+      console.error('질문 전송에 실패했습니다.', error);
+    }
   };
 
   return (
