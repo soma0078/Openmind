@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import ListPage from "./pages/ListPage/ListPage";
 
 function App() {
@@ -6,6 +6,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/list" element={<ListPage />} />
+        <Route path="/" element={<Navigate to="/list" />} />
       </Routes>
     </BrowserRouter>
   );

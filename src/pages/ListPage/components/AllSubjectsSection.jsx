@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import UserCard from "./UserCard.jsx";
 import { getSubjects } from "../../../api/api.jsx";
+import PaginationBar from "../pagination/PaginationBar.jsx";
 
 // md (min-width: 768px)
 // xl (min-width: 1280px)
@@ -24,10 +25,12 @@ function AllSubjectsSection() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [subjectList, setSubjectList] = useState([]);
+  const [subjectTotalCount, setSubjectTotalCount] = useState(0);
 
   const fetchSortedData = async ({ orderBy, page, pageSize }) => {
     const subjects = await getSubjects({ orderBy, page, pageSize });
     setSubjectList(subjects.results);
+    setSubjectTotalCount(subjects.count);
   };
 
   const handleSortSelection = (sortOption) => {
@@ -60,6 +63,12 @@ function AllSubjectsSection() {
           <UserCard item={subject} key={subject.id} />
         ))}
       </div>
+      <PaginationBar
+        activePage={page}
+        subjectCountPerPage={pageSize}
+        subjectTotalCount={subjectTotalCount}
+        onPageChange={onPageChange}
+      />
     </>
   );
 }

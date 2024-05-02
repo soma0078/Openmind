@@ -1,0 +1,25 @@
+.Pagination {
+  align-items: center;
+  display: flex;
+  font-size: 25px;
+  font-weight: 600;
+  justify-content: center;
+  margin: 40px;
+}
+
+.Pagination li {
+  list-style-type: none;
+  padding: 0 20px;
+}
+
+.Pagination li a {
+  color: #818181;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  width: 30px;
+}
+
+.Pagination .active a {
+  color: #542f1a;
+}
