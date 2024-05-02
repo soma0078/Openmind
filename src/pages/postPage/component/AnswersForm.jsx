@@ -34,9 +34,11 @@ function AnswersForm() {
     setEditingAnswerTitle("");
   };
 
+  const isAnsweringEnabled = answers.length === 0;
+  // 답변이 없는 경우에만 답변 입력 가능하도록 함
+
   return (
     <>
-      <p>답변</p>
       <ul>
         {answers.map((answer) => (
           <div key={answer.id}>
@@ -66,8 +68,11 @@ function AnswersForm() {
           type="text"
           value={answerTitle}
           onChange={(e) => setAnswerTitle(e.target.value)}
+          disabled={!isAnsweringEnabled}
         />
-        <button type="submit">등록하기</button>
+        <button type="submit" disabled={!isAnsweringEnabled}>
+          등록하기
+        </button>
       </form>
     </>
   );

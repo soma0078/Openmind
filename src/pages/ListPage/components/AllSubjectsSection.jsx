@@ -26,7 +26,7 @@ function AllSubjectsSection() {
   const [subjectList, setSubjectList] = useState([]);
 
   const fetchSortedData = async ({ orderBy, page, pageSize }) => {
-    const subjects = await getSubjects({ orderBy, page, pageSize });
+    const subjects = await getSubjects("subjects", { orderBy, page, pageSize });
     setSubjectList(subjects.results);
   };
 
