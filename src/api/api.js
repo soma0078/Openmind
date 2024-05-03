@@ -1,5 +1,26 @@
 const BASE_URL = 'https://openmind-api.vercel.app/6-13';
 
+// 닉네임의 신규 피드 생성
+export const createCard = async (name )=> {
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        team: '8',
+      }),
+    });
+
+    if (response.ok) return response.json();
+    return new Error('');
+  } catch (e) {
+    if (e instanceof Error) return e;
+  }
+};
+
 // ListPage 카드 데이터 받아오기
 export async function getSubjects(params = {}) {
   const query = new URLSearchParams(params).toString();
