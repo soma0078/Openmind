@@ -35,9 +35,8 @@ function DropdownMenu({ onSortSelection }) {
 
       {isDropdownVisible && (
         <div
-          className="mt-[5px] w-[79px] h-[68px] rounded-lg border-[1px] bg-[#ffffff]
-        border-[#8c8c8c] text-[14px] font-medium text-center cursor-pointer z-99"
-        >
+          className="mt-[5px] w-[79px] h-[68px] rounded-lg border-[1px] bg-[#ffffff
+        border-[#8c8c8c] text-[14px] font-medium text-center cursor-pointer">
           {sortingOptions.map((option) => (
             <div
               key={option.value}
