@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
 function QuestionContent({ content }) {
   return (
-    <div>{content}</div>
-  )
+    <div>
+      <p>{content}</p>
+    </div>
+  );
 }
 
-export default QuestionContent
+export default QuestionContent;

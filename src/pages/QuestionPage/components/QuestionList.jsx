@@ -1,5 +1,5 @@
-import React from 'react'
-import QuestionContent from './QuestionContent'
+import React from 'react';
+import QuestionContent from './QuestionContent';
 
 function QuestionList({ questionData }) {
   return (
@@ -14,6 +14,5 @@ function QuestionList({ questionData }) {
     </div>
   );
 }
-
 
 export default QuestionList;
