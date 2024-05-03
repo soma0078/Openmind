@@ -1,8 +1,31 @@
+const BASE_URL = 'https://openmind-api.vercel.app/6-13';
+
+// ListPage 카드 데이터 받아오기
+export async function getSubjects(params = {}) {
+  const query = new URLSearchParams(params).toString();
+
+  try {
+    const response = await fetch(
+      `${BASE_URL}/subjects/?${query}`
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const body = await response.json();
+    console.log("body");
+    console.log(body);
+    return body;
+  } catch (error) {
+    console.error("Failed to fetch products:", error);
+    throw error;
+  }
+}
+
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
 export async function getUsetData(id) {
   try {
     const response = await fetch(
-      `https://openmind-api.vercel.app/6-13/subjects/${id}/`,
+      `${BASE_URL}/subjects/${id}/`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
@@ -19,7 +42,7 @@ export async function getUsetData(id) {
 export async function submitQuestion(id, questionContent) {
   try {
     const response = await fetch(
-      `https://openmind-api.vercel.app/6-13/subjects/${id}/questions/`,
+      `${BASE_URL}/subjects/${id}/questions/`,
       {
         method: 'POST',
         headers: {
@@ -44,7 +67,7 @@ export async function submitQuestion(id, questionContent) {
 export async function getQuestionsByUserId(id) {
   try {
     const response = await fetch(
-      `https://openmind-api.vercel.app/6-13/subjects/${id}/questions/`,
+      `${BASE_URL}/subjects/${id}/questions/`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
