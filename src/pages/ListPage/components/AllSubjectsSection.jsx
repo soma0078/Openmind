@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import UserCard from "./UserCard.jsx";
-import { getSubjects } from "../../../api/api.jsx";
-import DropdownMenu from "./DropdownMenu.jsx";
+import { useEffect, useState } from 'react';
+import UserCard from './UserCard.jsx';
+import { getSubjects } from '../../../api/api.jsx';
+import DropdownMenu from './DropdownMenu.jsx';
 
 // md (min-width: 768px)
 // xl (min-width: 1280px)
@@ -21,7 +21,8 @@ const getPageSize = () => {
 };
 
 function AllSubjectsSection() {
-  const [sort, setSort] = useState("name");
+
+  const [sort, setSort] = useState('name');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [subjectList, setSubjectList] = useState([]);
@@ -41,18 +42,18 @@ function AllSubjectsSection() {
     };
 
     // 화면 크기 변경할 때마다 pageSize를 다시 계산해 넣음
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     fetchSortedData({ sort, page, pageSize });
 
     // Cleanup function
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [sort, page, pageSize]);
 
-  const onPageChange = (pageNumber) => {
-    setPage(pageNumber);
-  };
+  // const onPageChange = (pageNumber) => {
+  //   setPage(pageNumber);
+  // };
 
   return (
     <div className="flex flex-col gap-[40px]">
@@ -62,7 +63,7 @@ function AllSubjectsSection() {
         </p>
         <DropdownMenu onSortSelection={handleSortSelection} />
       </div>
-      <div className="w-[940px] h-[394px] grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 gap-[20px]">
+      <div className="w-[940px] h-[394px] grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 gap-[20px]">   
         {subjectList?.map((subject) => (
           <UserCard item={subject} key={subject.id} />
         ))}
