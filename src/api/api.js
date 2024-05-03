@@ -22,7 +22,7 @@ export async function getSubjects(params = {}) {
 }
 
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
-export async function getUsetData(id) {
+export async function getUserData(id) {
   try {
     const response = await fetch(
       `${BASE_URL}/subjects/${id}/`,
