@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUsetData, fetchQuestionsByUser } from '../../api/api';
+import { getUserData, fetchQuestionsByUser } from '../../api/api';
 import QuestionModal from './components/QuestionModal';
 import QuestionList from './components/QuestionList';
 
@@ -11,7 +11,7 @@ function QuestionPage() {
   useEffect(() => {
     async function fetchName() {
       try {
-        const userDatas = await getUsetData(5637);
+        const userDatas = await getUserData(5637);
         setUserData(userDatas);
       } catch (error) {
         console.error('데이터를 불러오는데 실패했습니다.', error);
