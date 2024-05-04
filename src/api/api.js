@@ -40,6 +40,30 @@ export async function getSubjects(params = {}) {
     console.error("Failed to fetch products:", error);
     throw error;
   }
+
+};
+
+// 질문카드 생성
+export const createQuestionCard = async (name) => {
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        team: '13',
+      }),
+    });
+
+    if (response.ok) return response.json();
+    return new Error('');
+  } catch (e) {
+    if (e instanceof Error) return e;
+  }
+};
+
 }
 
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
