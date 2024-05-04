@@ -27,7 +27,7 @@ function AllSubjectsSection() {
   // const [pageSize, setPageSize] = useState(getPageSize());
 
   const [subjectList, setSubjectList] = useState([]);
-  const [sort, setSort] = useState("name");
+  const [sort, setSort] = useState("createdAt");
   const [limit, setLimit] = useState(getPageSize());
 
   // 일단 저는 sort, limit만 아규먼트로 전달해주었습니다

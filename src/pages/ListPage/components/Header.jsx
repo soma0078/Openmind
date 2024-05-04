@@ -1,12 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import arrowRight from "../assets/arrow-right.png";
 
 function Header() {
-  // const name = localStorage.getItem("5741");
-  // console.log("--- name ---");
-  // console.log(name);
-
   const userDataString = localStorage.getItem("user");
   const userData = JSON.parse(userDataString);
   console.log("--- userData ---");

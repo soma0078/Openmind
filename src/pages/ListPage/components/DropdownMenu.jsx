@@ -3,7 +3,7 @@ import arrowUp from "../assets/arrow-up.png";
 
 function DropdownMenu({ onSortSelection }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [sortSelection, setSortSelection] = useState("이름순");
+  const [sortSelection, setSortSelection] = useState("최신순");
 
   const sortingOptions = [
     { label: "이름순", value: "name" },
