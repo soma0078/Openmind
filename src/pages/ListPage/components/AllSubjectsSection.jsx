@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import UserCard from "./UserCard.jsx";
-import { getSubjects } from "../../../api/api.jsx";
+import { getSubjects } from "../../../api/api.js";
 import DropdownMenu from "./DropdownMenu.jsx";
 
 // tailwind media query 적용 시 참고

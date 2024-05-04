@@ -1,6 +1,6 @@
 const BASE_URL = "https://openmind-api.vercel.app/6-13";
 
-// 질문카드 불러오기
+// ListPage 카드 데이터 받아오기
 export async function getSubjects(params = {}) {
   // 현재 네트워크 request url 예시
   // BASE_URL/subjects/?sort=createdAt&limit=8
