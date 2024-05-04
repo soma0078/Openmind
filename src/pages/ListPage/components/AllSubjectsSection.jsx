@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
-import UserCard from './UserCard.jsx';
-import { getSubjects } from '../../../api/api.jsx';
+import { useEffect, useState } from "react";
+import UserCard from "./UserCard.jsx";
+import { getSubjects } from "../../../api/api.jsx";
+import PaginationBar from "./PaginationBar.jsx";
 import DropdownMenu from './DropdownMenu.jsx';
 
 // md (min-width: 768px)
@@ -26,10 +27,12 @@ function AllSubjectsSection() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [subjectList, setSubjectList] = useState([]);
+  const [totalPageNum, setTotalPageNum] = useState(0);
 
   const fetchSortedData = async ({ sort, page, pageSize }) => {
     const subjects = await getSubjects({ sort, page, pageSize });
     setSubjectList(subjects.results);
+    setTotalPageNum(Math.ceil(subjects.count / pageSize));
   };
 
   const handleSortSelection = (sortOption) => {
@@ -68,7 +71,14 @@ function AllSubjectsSection() {
           <UserCard item={subject} key={subject.id} />
         ))}
       </div>
-    </div>
+      <div className="pt-[40px] pb-[80px]">
+        <PaginationBar
+          activePageNum={page}
+          totalPageNum={totalPageNum}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </>
   );
 }
 
