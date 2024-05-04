@@ -53,10 +53,6 @@ function AllSubjectsSection() {
   }, [orderBy, page, pageSize]);
 
   const onPageChange = (pageNumber) => {
-    const offset = (pageNumber - 1) * pageSize;
-    fetchSortedData(
-      `https://openmind-api.vercel.app/6-13/subjects/?limit=${pageSize}&offset=${offset}`
-    );
     setPage(pageNumber);
   };
 
@@ -67,11 +63,13 @@ function AllSubjectsSection() {
           <UserCard item={subject} key={subject.id} />
         ))}
       </div>
-      <PaginationBar
-        activePageNum={page}
-        totalPageNum={totalPageNum}
-        onPageChange={onPageChange}
-      />
+      <div className="pt-[40px] pb-[80px]">
+        <PaginationBar
+          activePageNum={page}
+          totalPageNum={totalPageNum}
+          onPageChange={onPageChange}
+        />
+      </div>
     </>
   );
 }
