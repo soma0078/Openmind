@@ -25,15 +25,12 @@ function AllSubjectsSection() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [subjectList, setSubjectList] = useState([]);
-  const [subjectTotalCount, setSubjectTotalCount] = useState(0);
+  const [totalPageNum, setTotalPageNum] = useState(0);
 
-  const fetchSortedData = async () => {
+  const fetchSortedData = async ({ orderBy, page, pageSize }) => {
     const subjects = await getSubjects({ orderBy, page, pageSize });
-    console.log("Fetched subjects: ", subjects); // API 응답 로그 출력
     setSubjectList(subjects.results);
-    console.log("Updated subjectList: ", subjects.results); // subjectList 업데이트 로그 출력
-    setSubjectTotalCount(subjects.count);
-    console.log("Updated subjectTotalCount: ", subjects.count); // subjectTotalCount 업데이트 로그 출력
+    setTotalPageNum(Math.ceil(subjects.count / pageSize));
   };
 
   const handleSortSelection = (sortOption) => {
@@ -56,8 +53,11 @@ function AllSubjectsSection() {
   }, [orderBy, page, pageSize]);
 
   const onPageChange = (pageNumber) => {
+    const offset = (pageNumber - 1) * pageSize;
+    fetchSortedData(
+      `https://openmind-api.vercel.app/6-13/subjects/?limit=${pageSize}&offset=${offset}`
+    );
     setPage(pageNumber);
-    console.log("Page updated: ", pageNumber); // 페이지 업데이트 로그 출력
   };
 
   return (
@@ -68,9 +68,8 @@ function AllSubjectsSection() {
         ))}
       </div>
       <PaginationBar
-        activePage={page}
-        subjectCountPerPage={pageSize}
-        subjectTotalCount={subjectTotalCount}
+        activePageNum={page}
+        totalPageNum={totalPageNum}
         onPageChange={onPageChange}
       />
     </>
