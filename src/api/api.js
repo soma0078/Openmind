@@ -69,8 +69,6 @@ export const createQuestionCard = async (name) => {
   }
 };
 
-}
-
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
 export async function getUserData(id) {
   try {

@@ -24,9 +24,9 @@ const getPageSize = () => {
 
 function AllSubjectsSection() {
   // 안 쓰는 부분은 일단 주석 처리 해두겠습니다
-  // const [page, setPage] = useState(1);
-  // const [pageSize, setPageSize] = useState(getPageSize());
-  // const [totalPageNum, setTotalPageNum] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(getPageSize());
+  const [totalPageNum, setTotalPageNum] = useState(0);
 
   const [subjectList, setSubjectList] = useState([]);
   const [sort, setSort] = useState("createdAt");
@@ -60,9 +60,9 @@ function AllSubjectsSection() {
     };
   }, [sort, limit]);
 
-  // const onPageChange = (pageNumber) => {
-  //   setPage(pageNumber);
-  // };
+  const onPageChange = (pageNumber) => {
+    setPage(pageNumber);
+  };
 
   return (
     <div className="flex flex-col gap-[16px] md:gap-[40px]">
@@ -87,7 +87,7 @@ function AllSubjectsSection() {
           onPageChange={onPageChange}
         />
       </div>
-    </>
+    </div>
   );
 }
 
