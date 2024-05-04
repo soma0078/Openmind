@@ -10,7 +10,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/list" element={<ListPage />} />
-        <Route path="/post/:postId/answer" element={<PostPage />} />
+        <Route path="/post/:postId" element={<PostPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
