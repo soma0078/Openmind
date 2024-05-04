@@ -4,11 +4,18 @@ import achoImage from '../../assets/img-acho.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
 import QuestionCard from './components/QuestionCard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Share from './components/Share';
 
 function PostPage() {
   const [questionCardCount, setQuestionCardCount] = useState(1);
+
+  const nav = useNavigate();
+
+  const onMoveBack = () => {
+    nav(-1);
+  };
+
   const popUpModal = () => {
    // 내용 작성
   };
@@ -55,10 +62,7 @@ function PostPage() {
         </div>
       </div>
       <div className='relative flex justify-between bottom-[50px] px-[50px]'>
-        {/* 임시적으로 뒤로 가는 것처럼 구현. 다른 방법을 찾아야 함 */}
-        <Link to='/list'> 
-          <button className='rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]' >뒤로 가기</button>
-        </Link>
+        <button className='rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]' onClick={onMoveBack} >뒤로 가기</button>
         <button className='rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]' onClick={popUpModal}>질문 작성하기</button>
       </div>
     </div>
