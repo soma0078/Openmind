@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import logoImage from '../../assets/img-logo.png';
 import achoImage from '../../assets/img-acho.png';
+import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
-import QuestionCard from './QuestionCard';
+import QuestionCard from './components/QuestionCard';
 import { Link } from 'react-router-dom';
 import Share from './components/Share';
 
 function PostPage() {
-  // const [cardList, setCardList] = useState([]); 카드데이터 받아올 떄, 사용하는 상태
+  const [questionCardCount, setQuestionCardCount] = useState(1);
   const popUpModal = () => {
    // 내용 작성
   };
@@ -27,8 +28,23 @@ function PostPage() {
       <div className='flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]'>
         <div className='flex flex-col items-center w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]'>
           <div className='flex items-center gap-[8px]'>
-            <img className='w-[24px] h-[24px]' src={messageImage} alt="메시지 이모티콘" />
-            <span className='font-[400] text-[20px] text-[#542F1A]'>?개의 질문이 있습니다</span>
+            {questionCardCount === 0 ? (
+              <div className='flex flex-col items-center gap-2 w-[716px] h-[330px]'>
+                <div className='flex justify-center gap-2'>
+                  <img className='w-[24px] h-[24px]' src={messageImage} alt="메시지 이모티콘" />
+                  <span className='font-[400] text-[20px] text-[#542F1A]'>아직 질문이 없습니다.</span>
+                </div>
+                <img className='w-[150px] h-[154px] translate-y-[30%]' src={emptyImage} alt="비어있는 상태 이미지" />
+              </div>
+            ) : (
+              <div className='flex flex-col gap-2'>
+                <div className='flex items-center justify-center gap-2'>
+                  <img className='w-[24px] h-[24px]' src={messageImage} alt="메시지 이모티콘" />
+                  <span className='font-[400] text-[20px] text-[#542F1A]'>{questionCardCount}개의 질문이 있습니다.</span>
+                </div>
+                <QuestionCard isAskPage />
+              </div>
+            )}
           </div>
           {/* 카드 데이터를 받아오게끔 구현 
           {cardList?.map((card) => (
