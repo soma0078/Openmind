@@ -2,10 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 function Header() {
-  const userDataString = localStorage.getItem("user");
-  const userData = JSON.parse(userDataString);
-  console.log("--- userData ---");
-  console.log(userData);
 
   const navigate = useNavigate();
 

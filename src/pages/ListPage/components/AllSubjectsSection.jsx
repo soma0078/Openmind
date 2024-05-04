@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import UserCard from "./UserCard.jsx";
 import { getSubjects } from "../../../api/api.js";
-import DropdownMenu from "./DropdownMenu.jsx";
+import PaginationBar from "./PaginationBar.jsx";
+import DropdownMenu from './DropdownMenu.jsx';
 
 // tailwind media query 적용 시 참고
 // md (min-width: 768px)
@@ -25,6 +26,7 @@ function AllSubjectsSection() {
   // 안 쓰는 부분은 일단 주석 처리 해두겠습니다
   // const [page, setPage] = useState(1);
   // const [pageSize, setPageSize] = useState(getPageSize());
+  // const [totalPageNum, setTotalPageNum] = useState(0);
 
   const [subjectList, setSubjectList] = useState([]);
   const [sort, setSort] = useState("createdAt");
@@ -35,6 +37,7 @@ function AllSubjectsSection() {
   const fetchSortedData = async ({ sort, limit }) => {
     const subjects = await getSubjects({ sort, limit });
     setSubjectList(subjects.results);
+    setTotalPageNum(Math.ceil(subjects.count / pageSize));
   };
 
   const handleSortSelection = (sortOption) => {
@@ -53,7 +56,7 @@ function AllSubjectsSection() {
 
     // Cleanup function
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, [sort, limit]);
 
@@ -77,7 +80,14 @@ function AllSubjectsSection() {
           <UserCard item={subject} key={subject.id} />
         ))}
       </div>
-    </div>
+      <div className="pt-[40px] pb-[80px]">
+        <PaginationBar
+          activePageNum={page}
+          totalPageNum={totalPageNum}
+          onPageChange={onPageChange}
+        />
+      </div>
+    </>
   );
 }
 
