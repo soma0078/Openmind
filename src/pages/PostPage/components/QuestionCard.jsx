@@ -1,6 +1,6 @@
 import React from 'react';
-import thumbsButton from '../../assets/icon-thumbs-up.svg';
-import thumbsDownButton from '../../assets/icon-thumbs-down.svg';
+import thumbsButton from '../../../assets/icon-thumbs-up.svg';
+import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 
 function QuestionCard() {
   return (
