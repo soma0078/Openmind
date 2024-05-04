@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UserCard from "./UserCard.jsx";
 import { getSubjects } from "../../../api/api.jsx";
 import PaginationBar from "./PaginationBar.jsx";
+import DropdownMenu from './DropdownMenu.jsx';
 
 // md (min-width: 768px)
 // xl (min-width: 1280px)
@@ -21,20 +22,21 @@ const getPageSize = () => {
 };
 
 function AllSubjectsSection() {
-  const [orderBy, setOrderBy] = useState("name");
+
+  const [sort, setSort] = useState('name');
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [subjectList, setSubjectList] = useState([]);
   const [totalPageNum, setTotalPageNum] = useState(0);
 
-  const fetchSortedData = async ({ orderBy, page, pageSize }) => {
-    const subjects = await getSubjects({ orderBy, page, pageSize });
+  const fetchSortedData = async ({ sort, page, pageSize }) => {
+    const subjects = await getSubjects({ sort, page, pageSize });
     setSubjectList(subjects.results);
     setTotalPageNum(Math.ceil(subjects.count / pageSize));
   };
 
   const handleSortSelection = (sortOption) => {
-    setOrderBy(sortOption);
+    setSort(sortOption);
   };
 
   useEffect(() => {
@@ -43,22 +45,28 @@ function AllSubjectsSection() {
     };
 
     // 화면 크기 변경할 때마다 pageSize를 다시 계산해 넣음
-    window.addEventListener("resize", handleResize);
-    fetchSortedData({ orderBy, page, pageSize });
+    window.addEventListener('resize', handleResize);
+    fetchSortedData({ sort, page, pageSize });
 
     // Cleanup function
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
-  }, [orderBy, page, pageSize]);
+  }, [sort, page, pageSize]);
 
-  const onPageChange = (pageNumber) => {
-    setPage(pageNumber);
-  };
+  // const onPageChange = (pageNumber) => {
+  //   setPage(pageNumber);
+  // };
 
   return (
-    <>
-      <div className="w-[940px] h-[394px] grid grid-cols-4 gap-[20px]">
+    <div className="flex flex-col gap-[40px]">
+      <div className="z-20 pt-[40px] flex flex-col gap-[20px] justify-center items-center">
+        <p className="w-[341px] h-[48px] text-[40px] font-normal">
+          누구에게 질문할까요?
+        </p>
+        <DropdownMenu onSortSelection={handleSortSelection} />
+      </div>
+      <div className="w-[940px] h-[394px] grid grid-cols-2  md:grid-cols-3 xl:grid-cols-4 gap-[20px]">   
         {subjectList?.map((subject) => (
           <UserCard item={subject} key={subject.id} />
         ))}
