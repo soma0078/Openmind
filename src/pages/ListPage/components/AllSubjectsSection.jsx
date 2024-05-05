@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import UserCard from "./UserCard.jsx";
-import { getSubjects } from "../../../api/api.js";
-import PaginationBar from "./PaginationBar.jsx";
+import { useEffect, useState } from 'react';
+import UserCard from './UserCard.jsx';
+import { getSubjects } from '../../../api/api.js';
+import PaginationBar from './PaginationBar.jsx';
 import DropdownMenu from './DropdownMenu.jsx';
 
 // tailwind media query 적용 시 참고
@@ -22,23 +22,13 @@ const getPageSize = () => {
   }
 };
 
+// limit가 기존의 pageSize와 역할이 같은것 같아서 다시 교체하겠습니다.
 function AllSubjectsSection() {
-  // 안 쓰는 부분은 일단 주석 처리 해두겠습니다
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [totalPageNum, setTotalPageNum] = useState(0);
-
   const [subjectList, setSubjectList] = useState([]);
-  const [sort, setSort] = useState("createdAt");
-  const [limit, setLimit] = useState(getPageSize());
-
-  // 일단 저는 sort, limit만 아규먼트로 전달해주었습니다
-  // 페이지네이션 적용 시에 page, pageSize, ... 필요할 것으로 보입니다
-  const fetchSortedData = async ({ sort, limit }) => {
-    const subjects = await getSubjects({ sort, limit });
-    setSubjectList(subjects.results);
-    setTotalPageNum(Math.ceil(subjects.count / pageSize));
-  };
+  const [sort, setSort] = useState('createdAt');
 
   const handleSortSelection = (sortOption) => {
     setSort(sortOption);
@@ -46,19 +36,26 @@ function AllSubjectsSection() {
 
   useEffect(() => {
     const handleResize = () => {
-      // setPageSize(getPageSize());
-      setLimit(getPageSize());
+      setPageSize(getPageSize());
     };
 
     // 화면 크기 변경할 때마다 pageSize를 다시 계산해 넣음
-    window.addEventListener("resize", handleResize);
-    fetchSortedData({ sort, limit });
+    window.addEventListener('resize', handleResize);
+
+    // 기존의 fetchSortData가 useEffect 밖에 있고 호출만 안에 있었는데 같이 넣었습니다.
+    const fetchData = async () => {
+      const subjects = await getSubjects({ sort, page, pageSize });
+      setSubjectList(subjects.results);
+      setTotalPageNum(Math.ceil(subjects.count / pageSize));
+    };
+
+    fetchData();
 
     // Cleanup function
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [sort, limit]);
+  }, [sort, page, pageSize]);
 
   const onPageChange = (pageNumber) => {
     setPage(pageNumber);
