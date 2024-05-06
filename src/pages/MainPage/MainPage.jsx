@@ -30,9 +30,9 @@ function MainPage() {
   };
 
   return (
-    <div className='h-[100vh] flex justify-center items-center bg-[#F5F1EE]'>
-      <div className='w-[100%] bg-main2 h-[75%]'>
-        <div className='flex flex-col items-center mx-auto w-[1200px] h-full bg-main2 bg-cover gap-[15px]'>
+    <div className='h-[100vh] flex justify-center items-center bg-[#F8F7F7] bg-main2 bg-cover bg-top-center bg-no-repeat'>
+      <div className='w-[100%] h-[75%]'>
+        <div className='flex flex-col items-center mx-auto w-[1200px] h-full gap-[15px]'>
           <img src={logoImage} alt="로고 이미지" />
           <Link to='/list'>
             <button className='absolute flex justify-center items-center w-[161px] h-[46px] rounded-[8px] py-[24px] px-[12px] border-[1px] border-[#542F1A] text-[16px] text-[#542F1A] font-[600] bg-[#F5F1EE] top-[5%] right-[10%]'>질문하러 가기 →</button>
