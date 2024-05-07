@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import arrowUp from "../assets/arrow-up.png";
+import React, { useState } from 'react';
+import arrowUp from '../assets/arrow-up.png';
 
 function DropdownMenu({ onSortSelection }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [sortSelection, setSortSelection] = useState("최신순");
+  const [sortSelection, setSortSelection] = useState('최신순');
 
   const sortingOptions = [
-    { label: "이름순", value: "name" },
-    { label: "최신순", value: "createdAt" },
+    { label: '이름순', value: 'name' },
+    { label: '최신순', value: 'createdAt' },
   ];
 
   const toggleDropdown = () => setIsDropdownVisible(!isDropdownVisible);
@@ -35,15 +35,16 @@ function DropdownMenu({ onSortSelection }) {
 
       {isDropdownVisible && (
         <div
-          className="mt-[5px] w-[79px] h-[68px] rounded-lg border-[1px] bg-[#ffffff
-        border-[#8c8c8c] text-[14px] font-medium text-center cursor-pointer">
+          className="mt-[5px] w-[79px] h-[68px] rounded-lg border-[1px] bg-[#ffffff]
+        border-[#8c8c8c] text-[14px] font-medium text-center cursor-pointer"
+        >
           {sortingOptions.map((option) => (
             <div
               key={option.value}
               className={`w-[79px] h-[30px] px-[6px] py-[8px] text-center ${
                 sortSelection === option.label
-                  ? "text-[#1877F2]"
-                  : "text-[#515151]"
+                  ? 'text-[#1877F2]'
+                  : 'text-[#515151]'
               }`}
               onClick={() => handleSortSelection(option.value, option.label)}
             >
