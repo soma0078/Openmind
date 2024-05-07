@@ -41,33 +41,12 @@ export const createCard = async (name) => {
       },
       body: JSON.stringify({
         name: name,
-        team: '8',
-      }),
-    });
-
-    if (response.ok) return response.json();
-    return new Error('');
-  } catch (e) {
-    if (e instanceof Error) return e;
-  }
-};
-
-// 질문카드 생성
-export const createQuestionCard = async (name) => {
-  try {
-    const response = await fetch(`${BASE_URL}/subjects/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: name,
         team: '13',
       }),
     });
 
     if (response.ok) return response.json();
-    return new Error('');
+    return new Error(`HTTP error: ${response.status}`);
   } catch (e) {
     if (e instanceof Error) return e;
   }
