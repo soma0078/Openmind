@@ -6,6 +6,7 @@ import { setLocalStorage } from '../../util/localStorage';
 import PersonIcon from '../../assets/icon-person.svg';
 
 function MainPage() {
+  const regex = /^[가-힣a-zA-Z0-9]+$/;
   const [nickName, setNickName] = useState(null);
 
   const nav = useNavigate();
@@ -20,14 +21,14 @@ function MainPage() {
 
   const onMovePost = () => {
     const isNickName = checkIsNickName();
-    if (isNickName) {
+    if (isNickName.length >= 3 && regex.test(isNickName)) {
       createCard(nickName).then(result => {
         setLocalStorage(result.id, result.name);
       }
     )
     nav('/list');
     } else {
-      alert("닉네임을 입력해주세요.");
+      alert("올바른 닉네임을 작성해주세요.");
     }
   };
 
