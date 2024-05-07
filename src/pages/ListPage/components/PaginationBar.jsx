@@ -1,6 +1,6 @@
-import React from "react";
-import { ReactComponent as LeftArrow } from "../../../assets/icon-arrow-left.svg";
-import { ReactComponent as RightArrow } from "../../../assets/icon-arrow-right.svg";
+import React from 'react';
+import { ReactComponent as LeftArrow } from '../../../assets/icon-arrow-left.svg';
+import { ReactComponent as RightArrow } from '../../../assets/icon-arrow-right.svg';
 
 const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
   const maxVisiblePages = 5;
@@ -15,14 +15,14 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
 
   const pages = Array.from(
     { length: Math.min(maxVisiblePages, totalPageNum - startPage + 1) },
-    (_, i) => startPage + i
+    (_, i) => startPage + i,
   );
 
   return (
     <div className="flex items-center justify-center space-x-1">
       <button
         className={`text-gray-400 w-[40px] h-[40px] font-semibold text-[16px] ${
-          activePageNum === 1 ? "cursor-default opacity-50" : ""
+          activePageNum === 1 ? 'cursor-default opacity-50' : ''
         }`}
         disabled={activePageNum === 1}
         onClick={() => onPageChange(activePageNum - 1)}
@@ -32,8 +32,10 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
       {pages.map((page) => (
         <button
           key={page}
-          className={`text-gray-400 w-[40px] h-[40px] font-semibold text-[16px] ${
-            activePageNum === page ? "text-[#542f1a]" : ""
+          className={`w-[40px] h-[40px] font-semibold text-[16px] ${
+            activePageNum === page
+              ? 'text-[#542f1a] font-bold'
+              : 'text-gray-400'
           }`}
           onClick={() => onPageChange(page)}
         >
@@ -42,7 +44,7 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
       ))}
       <button
         className={`text-gray-400 w-[40px] h-[40px] font-semibold text-[16px] ${
-          activePageNum === totalPageNum ? "cursor-default opacity-50" : ""
+          activePageNum === totalPageNum ? 'cursor-default opacity-50' : ''
         }`}
         disabled={activePageNum === totalPageNum}
         onClick={() => onPageChange(activePageNum + 1)}

@@ -1,5 +1,36 @@
 const BASE_URL = 'https://openmind-api.vercel.app/6-13';
 
+// ListPage 카드 데이터 받아오기
+export async function getSubjects(params = {}) {
+  // pageSize, page, sort를 rest객체에 추가해서
+  // new URLSearchParams(rest).toString() 를 사용해 쿼리문자열로 변환해서 URL에 추가 합니다.
+  const { pageSize, page, sort, ...rest } = params;
+
+  if (pageSize && page) {
+    rest.limit = pageSize;
+    rest.offset = (page - 1) * pageSize;
+  }
+  if (sort) {
+    rest.sort = sort;
+  }
+
+  const query = new URLSearchParams(rest).toString();
+
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/?${query}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const body = await response.json();
+    console.log('body');
+    console.log(body);
+    return body;
+  } catch (error) {
+    console.error('Failed to fetch products:', error);
+    throw error;
+  }
+}
+
 // 닉네임의 신규 피드 생성
 export const createCard = async (name) => {
   try {
@@ -20,25 +51,6 @@ export const createCard = async (name) => {
     if (e instanceof Error) return e;
   }
 };
-
-// ListPage 카드 데이터 받아오기
-export async function getSubjects(params = {}) {
-  const query = new URLSearchParams(params).toString();
-
-  try {
-    const response = await fetch(`${BASE_URL}/subjects/?${query}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error: ${response.status}`);
-    }
-    const body = await response.json();
-    console.log('body');
-    console.log(body);
-    return body;
-  } catch (error) {
-    console.error('Failed to fetch products:', error);
-    throw error;
-  }
-}
 
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
 export async function getUserData(id) {
