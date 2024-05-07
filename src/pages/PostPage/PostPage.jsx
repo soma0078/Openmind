@@ -61,8 +61,8 @@ function PostPage() {
           <QuestionCard />
         </div>
       </div>
-      <div className='relative flex justify-between bottom-[50px] px-[50px]'>
-        <button className='rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]' onClick={onMoveBack} >뒤로 가기</button>
+      <div className='relative flex justify-between bottom-[80px] px-[30px]'>
+        <button className='rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]' onClick={onMoveBack}>뒤로 가기</button>
         <button className='rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]' onClick={popUpModal}>질문 작성하기</button>
       </div>
     </div>
