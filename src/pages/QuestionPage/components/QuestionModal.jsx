@@ -33,57 +33,60 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="rounded-full bg-amber-950 text-white px-6 py-3 shadow-xl block"
+        className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
       >
         질문 작성하기
       </button>
       {isModalOpen && (
-        <dialog
-          ref={dialogRef}
-          className="rounded-3xl shadow-xl p-9 max-md:p-6 absolute top-1 bottom-1 right-1 left-1"
-          open={true}
-        >
-          <div className="flex gap-1 mb-9">
-            <img src={iconMessage} alt="메세지 아이콘" />
-            <h2 className="text-2xl max-md:text-xl">질문을 작성하세요</h2>
-          </div>
-          <button
-            onClick={() => setIsModalOpen(false)}
-            className="absolute top-9 right-9 max-md:top-6 max-md:right-6"
+        <>
+          <div className="fixed inset-0 bg-black bg-opacity-50 z-50"></div>
+          <dialog
+            ref={dialogRef}
+            className="fixed top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 z-50 rounded-3xl shadow-xl p-9 max-md:p-6"
+            open={true}
           >
-            <img src={iconClose} alt="닫기 버튼 아이콘" />
-          </button>
-          <form onSubmit={handleSubmit}>
-            <label
-              htmlFor={textareaId}
-              className="flex items-center gap-1 text-lg"
-            >
-              To.
-              <img
-                src={userData.imageSource}
-                alt={userData.imageSource}
-                className="w-7 h-7 rounded-full"
-              />
-              {userData.name}
-            </label>
-            <textarea
-              id={textareaId}
-              value={questionContent}
-              onChange={handleContentChange}
-              placeholder="질문을 입력해주세요"
-              className="w-[33rem] min-w-72 h-44 rounded-md block bg-slate-100 p-3 mt-3 mb-2 outline-[#542F1A]/40 resize-none max-md:w-full max-md:h-96"
-            />
+            <div className="flex gap-1 mb-9">
+              <img src={iconMessage} alt="메세지 아이콘" />
+              <h2 className="text-2xl max-md:text-xl">질문을 작성하세요</h2>
+            </div>
             <button
-              type="submit"
-              disabled={!questionContent.trim()} // textarea 값이 비어있으면 비활성화
-              className={`w-full rounded-md bg-amber-950 text-white px-6 py-3 block ${
-                !questionContent.trim() && 'opacity-30' // textarea 값이 비어있으면 스타일 변경
-              }`}
+              onClick={() => setIsModalOpen(false)}
+              className="absolute top-9 right-9 max-md:top-6 max-md:right-6"
             >
-              질문 보내기
+              <img src={iconClose} alt="닫기 버튼 아이콘" />
             </button>
-          </form>
-        </dialog>
+            <form onSubmit={handleSubmit}>
+              <label
+                htmlFor={textareaId}
+                className="flex items-center gap-1 text-lg"
+              >
+                To.
+                <img
+                  src={userData.imageSource}
+                  alt={userData.imageSource}
+                  className="w-7 h-7 rounded-full"
+                />
+                {userData.name}
+              </label>
+              <textarea
+                id={textareaId}
+                value={questionContent}
+                onChange={handleContentChange}
+                placeholder="질문을 입력해주세요"
+                className="w-[33rem] min-w-72 h-44 rounded-md block bg-slate-100 p-3 mt-3 mb-2 outline-[#542F1A]/40 resize-none max-md:w-full max-md:h-96"
+              />
+              <button
+                type="submit"
+                disabled={!questionContent.trim()} // textarea 값이 비어있으면 비활성화
+                className={`w-full rounded-md bg-amber-950 text-white px-6 py-3 block ${
+                  !questionContent.trim() && 'opacity-30' // textarea 값이 비어있으면 스타일 변경
+                }`}
+              >
+                질문 보내기
+              </button>
+            </form>
+          </dialog>
+        </>
       )}
     </>
   );
