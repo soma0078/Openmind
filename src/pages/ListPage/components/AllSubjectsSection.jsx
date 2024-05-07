@@ -22,9 +22,9 @@ const getPageSize = () => {
   }
 };
 
-// limit가 기존의 pageSize와 역할이 같은것 같아서 다시 교체하겠습니다.
 function AllSubjectsSection() {
-  const [page, setPage] = useState(1);
+  const pageFromStorage = Number(sessionStorage.getItem('page')) || 1;
+  const [page, setPage] = useState(pageFromStorage);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [totalPageNum, setTotalPageNum] = useState(0);
   const [subjectList, setSubjectList] = useState([]);
@@ -35,6 +35,9 @@ function AllSubjectsSection() {
   };
 
   useEffect(() => {
+    // 페이지가 변경될때마다 세션스토리지 업데이트
+    sessionStorage.setItem('page', page);
+
     const handleResize = () => {
       setPageSize(getPageSize());
     };
@@ -77,13 +80,11 @@ function AllSubjectsSection() {
           <UserCard item={subject} key={subject.id} />
         ))}
       </div>
-      <div className="pt-[40px] pb-[80px]">
-        <PaginationBar
-          activePageNum={page}
-          totalPageNum={totalPageNum}
-          onPageChange={onPageChange}
-        />
-      </div>
+      <PaginationBar
+        activePageNum={page}
+        totalPageNum={totalPageNum}
+        onPageChange={onPageChange}
+      />
     </div>
   );
 }
