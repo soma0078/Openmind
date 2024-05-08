@@ -3,6 +3,7 @@ import UserCard from './UserCard.jsx';
 import { getSubjects } from '../../../api/api.js';
 import PaginationBar from './PaginationBar.jsx';
 import DropdownMenu from './DropdownMenu.jsx';
+import Loading from './Loading.jsx';
 
 // tailwind media query 적용 시 참고
 // md (min-width: 768px)
@@ -34,11 +35,13 @@ function AllSubjectsSection() {
   const [subjectList, setSubjectList] = useState([]);
   const [sort, setSort] = useState('createdAt');
   const [limit, setLimit] = useState(getPageSize());
+  const [loading, setLoading] = useState(true);
 
   // 일단 저는 sort, limit만 아규먼트로 전달해주었습니다
   // 페이지네이션 적용 시에 page, pageSize, ... 필요할 것으로 보입니다
   const fetchSortedData = async ({ sort, limit }) => {
     const subjects = await getSubjects({ sort, limit });
+    setLoading(false);
     setSubjectList(subjects.results);
     setTotalPageNum(Math.ceil(subjects.count / pageSize));
   };
@@ -68,21 +71,29 @@ function AllSubjectsSection() {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-[16px] tablet-1:gap-[40px]">
-      <div className="z-20 px-[20px] pt-[40px] flex tablet-1:flex-col gap-[40px] tablet-1:gap-[20px] justify-between items-center">
+    <div className="flex flex-col gap-[16px] tablet-1:gap-[40px]">
+      <div className="px-[24px] z-20 pt-[40px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
         <p className="w-[214px] tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
           누구에게 질문할까요?
         </p>
         <DropdownMenu onSortSelection={handleSortSelection} />
       </div>
-      <div
-        className="w-[327px] tablet-1:w-[700px] tablet-2:w-[940px] tablet-2:min-w-[804px] pc:w-[940px] grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
-      gap-[16px] tablet-1:gap-[20px]"
-      >
-        {subjectList?.map((subject) => (
-          <UserCard className="" item={subject} key={subject.id} />
-        ))}
-      </div>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="flex justify-center">
+          <div
+            className="w-[327px] tablet-1:w-[700px] tablet-2:w-[940px] tablet-2:min-w-[804px] pc:w-[940px] 
+            grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
+            gap-[16px] tablet-1:gap-[20px]"
+          >
+            {subjectList?.map((subject) => (
+              <UserCard item={subject} key={subject.id} />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="pt-[40px] pb-[80px]">
         <PaginationBar
           activePageNum={page}
