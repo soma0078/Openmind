@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logoImage from '../../assets/img-logo.png';
 import { Link, useNavigate } from 'react-router-dom';
-import { createCard } from '../../api/api';
+import { createCard, getSubjects } from '../../api/api';
 import { setLocalStorage } from '../../util/localStorage';
 import PersonIcon from '../../assets/icon-person.svg';
 
@@ -21,7 +21,7 @@ function MainPage() {
 
   const onMovePost = () => {
     const isNickName = checkIsNickName();
-    if (isNickName.length >= 3 && regex.test(isNickName)) {
+    if (isNickName.length >= 3 && regex.test(isNickName) && isNickName.length <= 10) {
       createCard(nickName).then(result => {
         setLocalStorage(result.id, result.name);
       }
@@ -42,10 +42,10 @@ function MainPage() {
         <form className="flex flex-col items-center gap-y-[16px] w-[440px] rounded-[16px] p-[32px] bg-[#FFFFFF]">
           <img src={PersonIcon} alt="사람 아이콘" />
           <input
-            className="w-[336px] h-[46px] rounded-[8px] py-[12px] px-[16px] border-[1px] border-[#818181] text-[16px] text-[#818181] font-[400]"
+            className="w-[336px] h-[46px] rounded-[8px] py-[12px] px-[16px] border-[1px] border-[#818181] text-[16px] text-[#818181] font-[400] text-center"
             onChange={handleChangeNickName}
             type="text"
-            placeholder="이름을 입력하세요"
+            placeholder="공백없는 세 글자 닉네임을 작성해주세요."
           />
           <button
             className="w-[336px] h-[46px] rounded-[8px] py-[12px] px-[24px] bg-[#542F1A] text-[16px] text-[#FFFFFF] font-[400]"
