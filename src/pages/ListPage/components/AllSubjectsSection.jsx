@@ -54,6 +54,7 @@ function AllSubjectsSection() {
     sessionStorage.setItem('page', page);
 
     const handleResize = () => {
+      setLimit(getPageSize());
       setPageSize(getPageSize());
     };
 
@@ -65,7 +66,7 @@ function AllSubjectsSection() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [sort, page, pageSize]);
+  }, [sort, limit, page, pageSize]);
 
   const onPageChange = (pageNumber) => {
     setPage(pageNumber);
