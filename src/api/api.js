@@ -117,3 +117,17 @@ export async function fetchQuestionsByUser(userData, setQuestionData) {
     console.error('질문을 불러오는데 실패했습니다.', error);
   }
 }
+
+// 피드를 삭제하는 함수
+export async function deleteCard(id) {
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/${id}/`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) return response.json();
+    return new Error(`HTTP error: ${response.status}`);
+  } catch (e) {
+    if (e instanceof Error) return e;
+  }
+}
