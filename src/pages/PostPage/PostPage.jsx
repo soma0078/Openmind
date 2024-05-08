@@ -14,8 +14,6 @@ function PostPage() {
   const [userData, setUserData] = useState('');
   const [questionData, setQuestionData] = useState([]);
   const { postId } = useParams();
-  const [subject, setSubject] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const onMoveBack = () => {
     nav(-1);
@@ -60,37 +58,6 @@ function PostPage() {
     setQuestionCardCount((prevCount) => prevCount + 1);
     setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
   };
-
-  const BASE_URL = 'https://openmind-api.vercel.app/6-13';
-  const getSubject = async (id) => {
-    const subject = await fetch(`${BASE_URL}/subjects/${id}/`);
-    return subject.json();
-  };
-
-  const getSubjectProfile = async (id) => {
-    const subject = await getSubject(id);
-    setSubject(subject)
-    setLoading(false);
-  };
-
-  // 피드 삭제 버튼 (개선작업중, 안 되면 기능 삭제)
-  const deleteSubject = async (id) => {
-    const subject = await fetch(`${BASE_URL}/subjects/${id}/`, {
-      method: 'DELETE',
-    });
-    return subject.json();
-  };
-
-  const deleteSubjectCard = async (id) => {
-    const subjectCard = await deleteSubject(id);
-    setSubject(subjectCard)
-  }
-
-  useEffect(() => {
-    getSubjectProfile(postId)
-  }, [postId]);
-
-  if (loading) return null;
 
   return (
     <div className="flex flex-col h-[234px]">
