@@ -83,9 +83,9 @@ function AllSubjectsSection() {
       ) : (
         <div className="px-[24px] flex justify-center">
           <div
-            className="w-[327px] tablet-1:w-[700px] tablet-2:w-[940px] tablet-2:min-w-[804px] pc:w-[940px] 
+            className="
             grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
-            gap-[16px] tablet-1:gap-fixed-[20px]"
+            gap-[16px] tablet-1:gap-[20px]"
           >
             {subjectList?.map((subject) => (
               <UserCard item={subject} key={subject.id} />
