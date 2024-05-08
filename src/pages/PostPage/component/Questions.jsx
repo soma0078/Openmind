@@ -3,7 +3,7 @@ import React from 'react';
 function Question({question}) {
   
   return (
-    <div>
+    <div className='text-[18px] text-[400]'>
       {question.content}
     </div>
   );

@@ -6,6 +6,7 @@ function AnswersForm({ question }) {
 
   const addAnswer = async (e) => {
     try {
+      // e.preventDefault(); // 기본 동작(페이지 새로고침) 방지
       const response = await submitAnswers(
         `${question.id}`,
         answerTitle,
@@ -21,16 +22,30 @@ function AnswersForm({ question }) {
     }
   };
 
+  const isInputNotEmpty = answerTitle.trim() !== "";
+
   return (
     <>
-      <form onSubmit={addAnswer}>
-        <input
-          type="text"
-          value={answerTitle}
-          onChange={(e) => setAnswerTitle(e.target.value)}
-        />
-        <button type="submit">등록하기</button>
-      </form>
+      <div>
+        <form onSubmit={addAnswer} className="font-[400] text-[16px] gap-[10px]" >
+          <textarea
+            type="text"
+            value={answerTitle}
+            onChange={(e) => setAnswerTitle(e.target.value)}
+            placeholder="답변을 입력해주세요"
+            className="w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-40)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
+          />
+          <button
+            className={`w-[532px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+              isInputNotEmpty ? "bg-[var(--Brown-40)]" : "bg-[var(--Brown-30)] cursor-not-allowed"
+            }`}
+            type="submit"
+            disabled={!isInputNotEmpty}
+          >
+            등록하기
+          </button>
+        </form>
+      </div>
     </>
   );
 }

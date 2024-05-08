@@ -16,6 +16,7 @@ function PostPage() {
   console.log(question);
   const id = question.id;
   const subjectId = 5637;
+  // 5924, 5741, 5637
   
 
   useEffect(() => {
@@ -58,7 +59,7 @@ function PostPage() {
         <div className='flex flex-col items-center w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]'>
           <div className='flex items-center gap-[8px]'>
             <img className='w-[24px] h-[24px]' src={messageImage} alt="메시지 이모티콘" />
-            <span className='font-[400] text-[20px] text-[#542F1A]'>?개의 질문이 있습니다</span>
+            <span className='font-[400] text-[20px] text-[#542F1A]'>{question.length}개의 질문이 있습니다</span>
           </div>
           {question.map((question) => 
             <QuestionCard key={question.id} question={question} />

@@ -7,22 +7,33 @@ import AnswersForm from './component/AnswersForm';
 function QuestionCard({question}) {
   return (
     <div className='flex flex-col p-[32px] w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px]'>
-      {question.answer ? <div>답변</div> : <div>미답변</div>}
+      {question.answer ? 
+      <div className='w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-indigo-600 border-solid border-[var(--Brown-40)]'>
+        <div className='text-[14px] font-medium text-center text-[var(--Brown-40)]'>
+          답변
+        </div>
+      </div>
+        : 
+      <div className='w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-indigo-600 border-solid border-[var(--Grayscale-40)]'>
+        <div className='text-[14px] font-medium text-center text-[var(--Grayscale-40)]'>
+          미답변
+        </div>
+      </div>}
       <div>
-        <span>질문 * 기간</span>
+        <span className='text-[14px] text-[500] text-[var(--Grayscale-40)]'>질문 * 기간</span>
         <Questions id={question.id} question={question} /> 
       </div>
       {!question.answer ? <div className='flex'>
         <img src="" alt="프로필 사진" />
         <div className='flex flex-col'>
-          <h3>작성자 <span>기간</span></h3>
+          <h3>작성자 {question.answer && <span>기간</span>}</h3>
           <AnswersForm question={question} />
         </div> 
       </div> : <>
       <div className='flex'>
         <img src="" alt="프로필 사진" />
         <div className='flex flex-col'>
-          <h3>작성자 <span>기간</span></h3>
+          <h3>작성자 <span className='text-[14px] text-[500] text-[var(--Grayscale-40)]'>기간</span></h3>
           {question.answer.content}
         </div> 
       </div>
