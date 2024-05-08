@@ -72,7 +72,7 @@ function AllSubjectsSection() {
 
   return (
     <div className="flex flex-col gap-[16px] tablet-1:gap-[40px]">
-      <div className="px-[24px] tablet-1:px-[32px] z-20 pt-[40px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
+      <div className="px-[24px] tablet-1:px-[32px] z-20 pt-[30px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
         <p className="w-[214px] tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
           누구에게 질문할까요?
         </p>
