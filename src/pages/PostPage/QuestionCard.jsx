@@ -4,25 +4,29 @@ import thumbsDownButton from '../../assets/icon-thumbs-down.svg';
 import Questions from './component/Questions';
 import AnswersForm from './component/AnswersForm';
 
-function QuestionCard() {
-  const [questionData, setQuestionData] = React.useState(null);
-  const isAnsweringEnabled = questionData && questionData.length === 0;
-
+function QuestionCard({question}) {
   return (
     <div className='flex flex-col p-[32px] w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px]'>
-      <div>답변</div>
+      {question.answer ? <div>답변</div> : <div>미답변</div>}
       <div>
         <span>질문 * 기간</span>
-        <Questions subjectId = {5637} setQuestionData={setQuestionData}/> 
-        {/* 임시값 */}
+        <Questions id={question.id} question={question} /> 
       </div>
+      {!question.answer ? <div className='flex'>
+        <img src="" alt="프로필 사진" />
+        <div className='flex flex-col'>
+          <h3>작성자 <span>기간</span></h3>
+          <AnswersForm question={question} />
+        </div> 
+      </div> : <>
       <div className='flex'>
         <img src="" alt="프로필 사진" />
         <div className='flex flex-col'>
           <h3>작성자 <span>기간</span></h3>
-          <AnswersForm isAnsweringEnabled={isAnsweringEnabled} />
+          {question.answer.content}
         </div> 
       </div>
+      </>}
       <div className='flex items-center gap-[32px]'>
         <div className='flex gap-[6px]'>
           <img className='w-[24px] h-[24px] cursor-pointer' src={thumbsButton} alt="좋아요 버튼" />

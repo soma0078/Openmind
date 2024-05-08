@@ -115,3 +115,59 @@ export async function fetchQuestionsByUser(userData, setQuestionData) {
     console.error('질문을 불러오는데 실패했습니다.', error);
   }
 }
+
+//답변 보내기
+export async function submitAnswers(question_id, starting, value) {
+  const requestData = { 
+    questionId: question_id,
+    content: starting,
+    isRejected: value,
+    };
+  try {
+    const response = await fetch(`${BASE_URL}/questions/${question_id}/answers/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const responseData = await response.json();
+    console.log('답변 보내기를 성공했습니다.', responseData);
+    return responseData;
+  } catch (error) {
+    console.error('답변 보내기를 실패했습니다.', error);
+    throw error;
+  }
+}
+
+// 답변 수정하기 함수
+export async function updateAnswer(answerId, updatedContent, value) {
+  const requestData = { 
+    content: updatedContent,
+    isRejected: value,
+    };
+
+  try {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestData)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    
+    const responseData = await response.json();
+    console.log('답변 수정 성공:', responseData);
+    return responseData;
+  } catch (error) {
+    console.error('답변 수정 실패:', error);
+    throw error;
+  }
+}

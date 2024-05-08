@@ -1,78 +1,35 @@
 import React, { useState } from "react";
+import { submitAnswers } from "../../../api/api";
 
-function AnswersForm() {
-  const [answers, setAnswers] = useState([]);
+function AnswersForm({ question }) {
   const [answerTitle, setAnswerTitle] = useState("");
-  const [editingAnswerId, setEditingAnswerId] = useState(null);
-  const [editingAnswerTitle, setEditingAnswerTitle] = useState("");
 
-  const addAnswer = (e) => {
-    e.preventDefault(); // 폼의 기본 동작(페이지 새로고침) 방지
-    setAnswers([
-      ...answers,
-      { id: crypto.randomUUID(), title: answerTitle, isDone: false },
-    ]);
-    setAnswerTitle(""); // 입력 필드 초기화
+  const addAnswer = async (e) => {
+    try {
+      const response = await submitAnswers(
+        `${question.id}`,
+        answerTitle,
+        false
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      // 서버로부터 응답을 받고 나면 입력 필드 초기화
+      setAnswerTitle("");
+    } catch (error) {
+      console.error("답변 추가 중 에러 발생:", error);
+    }
   };
-
-  const deleteAnswer = (id) => {
-    setAnswers(answers.filter((answer) => answer.id !== id));
-  };
-
-  const startEditing = (id, title) => {
-    setEditingAnswerId(id);
-    setEditingAnswerTitle(title);
-  };
-
-  const saveEditing = (id) => {
-    setAnswers(
-      answers.map((answer) =>
-        answer.id === id ? { ...answer, title: editingAnswerTitle } : answer
-      )
-    );
-    setEditingAnswerId(null);
-    setEditingAnswerTitle("");
-  };
-
-  const isAnsweringEnabled = answers.length === 0;
-  // 답변이 없는 경우에만 답변 입력 가능하도록 함
 
   return (
     <>
-      <ul>
-        {answers.map((answer) => (
-          <div key={answer.id}>
-            {editingAnswerId === answer.id ? (
-              <>
-                <input
-                  type="text"
-                  value={editingAnswerTitle}
-                  onChange={(e) => setEditingAnswerTitle(e.target.value)}
-                />
-                <button onClick={() => saveEditing(answer.id)}>저장</button>
-              </>
-            ) : (
-              <>
-                <span>{answer.title}</span>
-                <button onClick={() => deleteAnswer(answer.id)}>삭제</button>
-                <button onClick={() => startEditing(answer.id, answer.title)}>
-                  수정
-                </button>
-              </>
-            )}
-          </div>
-        ))}
-      </ul>
       <form onSubmit={addAnswer}>
         <input
           type="text"
           value={answerTitle}
           onChange={(e) => setAnswerTitle(e.target.value)}
-          disabled={!isAnsweringEnabled}
         />
-        <button type="submit" disabled={!isAnsweringEnabled}>
-          등록하기
-        </button>
+        <button type="submit">등록하기</button>
       </form>
     </>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import logoImage from '../../assets/img-logo.png';
 import achoImage from '../../assets/img-acho.png';
 import linkImage from '../../assets/icon-link.svg';
@@ -6,8 +6,40 @@ import kakaoImage from '../../assets/icon-kakaotalk.svg';
 import facebookImage from '../../assets/icon-facebook.svg';
 import messageImage from '../../assets/icon-messages.svg';
 import QuestionCard from './QuestionCard';
+import { getQuestionsByUserId } from '../../api/api';
 
 function PostPage() {
+  const [question, setQuestion] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  console.log(question);
+  const id = question.id;
+  const subjectId = 5637;
+  
+
+  useEffect(() => {
+    async function fetchQuestions() {
+      try {
+        const questionsData = await getQuestionsByUserId(id, subjectId);
+        setQuestion(questionsData);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    }
+    fetchQuestions();
+  }, [id, subjectId]);
+
+  if (loading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className='flex flex-col h-[234px]'>
       <div className='bg-[#F9F9F9] bg-main1 bg-contain bg-no-repeat'>
@@ -28,9 +60,9 @@ function PostPage() {
             <img className='w-[24px] h-[24px]' src={messageImage} alt="메시지 이모티콘" />
             <span className='font-[400] text-[20px] text-[#542F1A]'>?개의 질문이 있습니다</span>
           </div>
-          <QuestionCard />
-          <QuestionCard />
-          <QuestionCard />
+          {question.map((question) => 
+            <QuestionCard key={question.id} question={question} />
+          )}
         </div>
       </div>
     </div>
