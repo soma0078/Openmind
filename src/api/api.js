@@ -90,14 +90,16 @@ export async function submitQuestion(id, questionContent) {
 }
 
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
-export async function getQuestionsByUserId(id) {
+export async function getQuestionsByUserId(subjectId) {
   try {
-    const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`);
+    const response = await fetch(
+      `${BASE_URL}/subjects/${subjectId}/questions/`,
+    );
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const questionData = await response.json();
-    return questionData.results;
+    return questionData; // 질문 데이터 배열 전체를 반환
   } catch (error) {
     console.error('질문을 불러오는데 실패했습니다.', error);
     throw error;
@@ -105,15 +107,22 @@ export async function getQuestionsByUserId(id) {
 }
 
 // 사용자 데이터를 기반으로 질문 데이터를 가져와 상태를 설정하는 함수
-export async function fetchQuestionsByUser(userData, setQuestionData) {
+export async function fetchQuestionsByUser(userData) {
   try {
     if (!userData || !userData.id) {
       console.error('사용자 데이터 또는 사용자 ID를 가져올 수 없습니다.');
-      return;
+      return null; // null을 반환하여 호출자에게 알림
     }
-    const questionsData = await getQuestionsByUserId(userData.id);
-    setQuestionData(questionsData);
+    const fetchedQuestionData = await getQuestionsByUserId(userData.id);
+    if (fetchedQuestionData && Array.isArray(fetchedQuestionData.results)) {
+      // results를 사용하여 배열인지 확인
+      return fetchedQuestionData.results; // 배열 반환
+    } else {
+      console.error('질문 데이터가 올바르지 않습니다.');
+      return null; // null을 반환하여 호출자에게 알림
+    }
   } catch (error) {
     console.error('질문을 불러오는데 실패했습니다.', error);
+    throw error; // 에러를 호출자에게 전파
   }
 }
