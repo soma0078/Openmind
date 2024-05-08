@@ -1,4 +1,4 @@
-const BASE_URL = "https://openmind-api.vercel.app/6-13";
+const BASE_URL = 'https://openmind-api.vercel.app/6-13';
 
 // ListPage 카드 데이터 받아오기
 export async function getSubjects(params = {}) {
@@ -11,24 +11,22 @@ export async function getSubjects(params = {}) {
   const query = new URLSearchParams(params).toString();
 
   try {
-    const response = await fetch(
-      `${BASE_URL}/subjects/?${query}`
-    );
+    const response = await fetch(`${BASE_URL}/subjects/?${query}`);
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const body = await response.json();
-    console.log("body");
+    console.log('body');
     console.log(body);
     return body;
   } catch (error) {
-    console.error("Failed to fetch products:", error);
+    console.error('Failed to fetch products:', error);
     throw error;
   }
 }
 
 // 닉네임의 신규 피드 생성
-export const createCard = async (name )=> {
+export const createCard = async (name) => {
   try {
     const response = await fetch(`${BASE_URL}/subjects/`, {
       method: 'POST',
@@ -52,18 +50,18 @@ export const createCard = async (name )=> {
 export const createQuestionCard = async (name) => {
   try {
     const response = await fetch(`${BASE_URL}/subjects/`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         name: name,
-        team: "13",
+        team: '13',
       }),
     });
 
     if (response.ok) return response.json();
-    return new Error("");
+    return new Error('');
   } catch (e) {
     if (e instanceof Error) return e;
   }
@@ -72,9 +70,7 @@ export const createQuestionCard = async (name) => {
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
 export async function getUserData(id) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/subjects/${id}/`,
-    );
+    const response = await fetch(`${BASE_URL}/subjects/${id}/`);
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
@@ -89,16 +85,13 @@ export async function getUserData(id) {
 // 모달창에서 사용자가 입력한 질문을 서버로 전송하는 함수
 export async function submitQuestion(id, questionContent) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/subjects/${id}/questions/`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ content: questionContent }),
+    const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ content: questionContent }),
+    });
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
@@ -114,9 +107,7 @@ export async function submitQuestion(id, questionContent) {
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
 export async function getQuestionsByUserId(id) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/subjects/${id}/questions/`,
-    );
+    const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`);
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }

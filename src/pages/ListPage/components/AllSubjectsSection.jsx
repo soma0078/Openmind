@@ -72,7 +72,7 @@ function AllSubjectsSection() {
 
   return (
     <div className="flex flex-col gap-[16px] tablet-1:gap-[40px]">
-      <div className="px-[24px] z-20 pt-[40px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
+      <div className="px-[24px] tablet-1:px-[32px] z-20 pt-[40px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
         <p className="w-[214px] tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
           누구에게 질문할까요?
         </p>
@@ -81,11 +81,11 @@ function AllSubjectsSection() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex justify-center">
+        <div className="px-[24px] flex justify-center">
           <div
             className="w-[327px] tablet-1:w-[700px] tablet-2:w-[940px] tablet-2:min-w-[804px] pc:w-[940px] 
             grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
-            gap-[16px] tablet-1:gap-[20px]"
+            gap-[16px] tablet-1:gap-fixed-[20px]"
           >
             {subjectList?.map((subject) => (
               <UserCard item={subject} key={subject.id} />
