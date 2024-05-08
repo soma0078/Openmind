@@ -9,17 +9,15 @@ import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
 
 function PostPage() {
-  const [questionCardCount, setQuestionCardCount] = useState(1);
-
+  const [questionCardCount, setQuestionCardCount] = useState(0);
   const nav = useNavigate();
+  const [userData, setUserData] = useState('');
+  const [questionData, setQuestionData] = useState([]);
+  const { postId } = useParams();
 
   const onMoveBack = () => {
     nav(-1);
   };
-
-  const [userData, setUserData] = useState('');
-  const [questionData, setQuestionData] = useState([]);
-  const { postId } = useParams();
 
   // 컴포넌트가 마운트될 때 API를 호출해 사용자 데이터 가져옴
   useEffect(() => {
@@ -41,6 +39,7 @@ function PostPage() {
         const fetchedQuestionData = await fetchQuestionsByUser(userData);
         if (Array.isArray(fetchedQuestionData)) {
           setQuestionData(fetchedQuestionData);
+          setQuestionCardCount(fetchedQuestionData.length); // 이미 있는 질문 데이터의 개수로 초기값 설정
         } else {
           console.error('질문 데이터가 올바르지 않습니다.');
         }
@@ -55,6 +54,8 @@ function PostPage() {
 
   // 새로운 질문을 추가해 상태 업데이트
   const addQuestion = (newQuestion) => {
+    // 새로운 질문이 추가될 때마다 questionCardCount를 증가
+    setQuestionCardCount((prevCount) => prevCount + 1);
     setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
   };
 
@@ -83,7 +84,8 @@ function PostPage() {
       <div className="flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]">
         <div className="flex flex-col items-center w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
-            {questionCardCount === 0 ? (
+            {/* 질문이 없을 때 */}
+            {questionCardCount === 0 && (
               <div className="flex flex-col items-center gap-2 w-[716px] h-[330px]">
                 <div className="flex justify-center gap-2">
                   <img
@@ -101,8 +103,11 @@ function PostPage() {
                   alt="비어있는 상태 이미지"
                 />
               </div>
-            ) : (
-              <div className="flex flex-col gap-2">
+            )}
+            {/* 질문이 있을 때 */}
+
+            <div className="flex flex-col gap-2">
+              {questionCardCount > 0 && (
                 <div className="flex items-center justify-center gap-2">
                   <img
                     className="w-[24px] h-[24px]"
@@ -113,8 +118,8 @@ function PostPage() {
                     {questionCardCount}개의 질문이 있습니다.
                   </span>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
           <div className="questionlist">
             <QuestionList questionData={questionData} />
