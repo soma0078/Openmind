@@ -1,6 +1,7 @@
 import React from 'react';
 import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
+import { formatDateAge } from '../../../utils/utils';
 
 function QuestionCard({ question }) {
   return (
@@ -8,7 +9,7 @@ function QuestionCard({ question }) {
       <div>답변 상태</div>
       <div>
         <span className="text-sm text-[#818181] font-medium">
-          질문 &#183; 기간
+          질문 &#183; {formatDateAge(question.createdAt)}
         </span>
         <h3 className="text-lg">{question.content}</h3>
       </div>
