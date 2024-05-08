@@ -1,8 +1,8 @@
 import React, { useRef, useId, useState } from 'react';
-import { submitQuestion } from '../../../api/api';
-import useOnClickOutside from '../../../hooks/useOnClickOutside';
-import iconClose from '../../../assets/icon-close.svg';
-import iconMessage from '../../../assets/icon-messages.svg';
+import { submitQuestion } from '../api/api';
+import useOnClickOutside from '../hooks/useOnClickOutside';
+import iconClose from '../assets/icon-close.svg';
+import iconMessage from '../assets/icon-messages.svg';
 
 function QuestionModal({ userData, onQuestionSubmitted }) {
   const dialogRef = useRef();
@@ -30,7 +30,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
   };
 
   return (
-    <>
+    <div>
       <button
         onClick={() => setIsModalOpen(true)}
         className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
@@ -42,7 +42,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50"></div>
           <dialog
             ref={dialogRef}
-            className="fixed top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 z-50 rounded-3xl shadow-xl p-9 max-md:p-6"
+            className="fixed top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 rounded-3xl shadow-xl p-9 max-md:p-6 z-50"
             open={true}
           >
             <div className="flex gap-1 mb-9">
@@ -88,7 +88,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
           </dialog>
         </>
       )}
-    </>
+    </div>
   );
 }
 

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getUserData, fetchQuestionsByUser } from '../../api/api';
+import QuestionList from './components/QuestionList';
+import Share from './components/Share';
+import Modal from '../../components/Modal';
 import logoImage from '../../assets/img-logo.png';
-import achoImage from '../../assets/img-acho.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
-import QuestionCard from './components/QuestionCard';
-import Share from './components/Share';
-import QuestionModal from '../QuestionPage/components/QuestionModal';
 
 function PostPage() {
   const [questionCardCount, setQuestionCardCount] = useState(1);
@@ -18,33 +17,41 @@ function PostPage() {
     nav(-1);
   };
 
-  const popUpModal = () => {
-    // 내용 작성
-  };
-
   const [userData, setUserData] = useState('');
   const [questionData, setQuestionData] = useState([]);
+  const { postId } = useParams();
 
-  // 컴포넌트가 마운트될 때 API를 호출해 이름 가져옴
+  // 컴포넌트가 마운트될 때 API를 호출해 사용자 데이터 가져옴
   useEffect(() => {
-    async function fetchName() {
+    async function fetchUserData() {
       try {
-        const userDatas = await getUserData(5637);
-        setUserData(userDatas);
+        const userData = await getUserData(postId);
+        setUserData(userData);
       } catch (error) {
-        console.error('데이터를 불러오는데 실패했습니다.', error);
+        console.error('사용자 데이터를 불러오는데 실패했습니다.', error);
       }
     }
-    fetchName();
-  }, []);
+    fetchUserData();
+  }, [postId]);
 
   // 사용자 데이터가 변경될 때마다 질문 데이터를 가져와 상태 설정
   useEffect(() => {
-    async function fetchQuestionsWrapper() {
-      await fetchQuestionsByUser(userData, setQuestionData);
+    async function fetchQuestions() {
+      try {
+        const fetchedQuestionData = await fetchQuestionsByUser(userData);
+        if (Array.isArray(fetchedQuestionData)) {
+          setQuestionData(fetchedQuestionData);
+        } else {
+          console.error('질문 데이터가 올바르지 않습니다.');
+        }
+      } catch (error) {
+        console.error('질문을 불러오는데 실패했습니다.', error);
+      }
     }
-    fetchQuestionsWrapper();
-  }, [userData]);
+    if (userData) {
+      fetchQuestions();
+    }
+  }, [userData, setQuestionData]);
 
   // 새로운 질문을 추가해 상태 업데이트
   const addQuestion = (newQuestion) => {
@@ -63,12 +70,12 @@ function PostPage() {
             />
           </Link>
           <img
-            className="w-[136px] h-[136px]"
-            src={achoImage}
+            className="w-[136px] h-[136px] rounded-full"
+            src={userData.imageSource}
             alt="프로필 사진"
           />
           <h2 className="font-[400] text-[32px] text-[#000000]">
-            아초는 고양이
+            {userData.name}
           </h2>
           <Share />
         </div>
@@ -106,16 +113,12 @@ function PostPage() {
                     {questionCardCount}개의 질문이 있습니다.
                   </span>
                 </div>
-                <QuestionCard isAskPage />
               </div>
             )}
           </div>
-          {/* 카드 데이터를 받아오게끔 구현 
-          {cardList?.map((card) => (
-            <QuestionCard item={card} key={card.id} />
-          ))}
-          */}
-          <QuestionCard />
+          <div className="questionlist">
+            <QuestionList questionData={questionData} />
+          </div>
         </div>
       </div>
       <div className="relative flex justify-between bottom-[80px] px-[30px]">
@@ -125,7 +128,7 @@ function PostPage() {
         >
           뒤로 가기
         </button>
-        <QuestionModal
+        <Modal
           userData={userData}
           onQuestionSubmitted={addQuestion}
           className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"

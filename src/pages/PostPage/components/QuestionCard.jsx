@@ -2,13 +2,13 @@ import React from 'react';
 import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 
-function QuestionCard() {
+function QuestionCard({ question }) {
   return (
     <div className="flex flex-col p-[32px] w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px]">
-      <div>답변</div>
+      <div>답변 상태</div>
       <div>
-        <span>질문 * 기간</span>
-        <h3>질문</h3>
+        <span>질문 &#183; 기간</span>
+        <h3>{question.content}</h3>
       </div>
       <div className="flex">
         <img src="" alt="프로필 사진" />
