@@ -33,14 +33,14 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
     <>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="rounded-full bg-amber-950 text-white px-6 py-3 shadow-xl block"
+        className="block px-6 py-3 text-white rounded-full shadow-xl bg-amber-950"
       >
         질문 작성하기
       </button>
       {isModalOpen && (
         <dialog
           ref={dialogRef}
-          className="rounded-3xl shadow-xl p-9 max-md:p-6 absolute top-1 bottom-1 right-1 left-1"
+          className="absolute shadow-xl rounded-3xl p-9 max-md:p-6 top-1 bottom-1 right-1 left-1"
           open={true}
         >
           <div className="flex gap-1 mb-9">
@@ -62,7 +62,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
               <img
                 src={userData.imageSource}
                 alt={userData.imageSource}
-                className="w-7 h-7 rounded-full"
+                className="rounded-full w-7 h-7"
               />
               {userData.name}
             </label>
