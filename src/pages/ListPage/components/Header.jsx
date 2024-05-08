@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import arrowRight from "../assets/arrow-right.png";
 
 function Header() {
+
   const navigate = useNavigate();
 
   // "답변하러 가기" 버튼 클릭 시,

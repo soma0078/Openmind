@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function UserCard({ item }) {
   return (
-    <Link to={`/post/${item.id}`}>
+    <Link to={`/post/${item.id}`} className="w-[220px] h-[187px]">
       <div className="w-[220px] h-[187px] bg-[#ffffff] border-solid border-[1px] border-[#818181] rounded-2xl p-[20px]">
         <img
           className="w-[60px] h-[60px] rounded-full"
@@ -14,8 +14,8 @@ function UserCard({ item }) {
         <p className="text-[20px] font-normal text-[#000000] pt-[12px] pb-[25px]">
           {item.name}
         </p>
-        <div className="flex flex-row justify-center justify-between text-[16px] font-normal text-[#818181]">
-          <div className="flex flex-row justify-center items-center gap-[4px]">
+        <div className="flex justify-between text-[16px] font-normal text-[#818181]">
+          <div className="flex justify-center items-center gap-[4px]">
             <img
               className="w-[18px] h-[18px]"
               src={messageIcon}
