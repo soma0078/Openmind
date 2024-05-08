@@ -46,7 +46,28 @@ export const createCard = async (name) => {
     });
 
     if (response.ok) return response.json();
-    return new Error(`HTTP error: ${response.status}`);
+    return new Error('');
+  } catch (e) {
+    if (e instanceof Error) return e;
+  }
+};
+
+// 질문카드 생성
+export const createQuestionCard = async (name) => {
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        team: '13',
+      }),
+    });
+
+    if (response.ok) return response.json();
+    return new Error('');
   } catch (e) {
     if (e instanceof Error) return e;
   }
@@ -92,9 +113,7 @@ export async function submitQuestion(id, questionContent) {
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
 export async function getQuestionsByUserId(subjectId) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/subjects/${subjectId}/questions/`,
-    );
+    const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`);
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
