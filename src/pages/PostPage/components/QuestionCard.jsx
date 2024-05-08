@@ -4,11 +4,13 @@ import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 
 function QuestionCard({ question }) {
   return (
-    <div className="flex flex-col p-[32px] w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px]">
+    <div className="flex flex-col p-[32px] w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
       <div>답변 상태</div>
       <div>
-        <span>질문 &#183; 기간</span>
-        <h3>{question.content}</h3>
+        <span className="text-sm text-[#818181] font-medium">
+          질문 &#183; 기간
+        </span>
+        <h3 className="text-lg">{question.content}</h3>
       </div>
       <div className="flex">
         <img src="" alt="프로필 사진" />
@@ -19,7 +21,7 @@ function QuestionCard({ question }) {
           <p>내용</p>
         </div>
       </div>
-      <div className="flex items-center gap-[32px]">
+      <div className="flex items-center gap-[32px] border-t border-[#cfcfcf] pt-6">
         <div className="flex gap-[6px]">
           <img
             className="w-[24px] h-[24px] cursor-pointer"
