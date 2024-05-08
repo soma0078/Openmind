@@ -27,9 +27,10 @@ function UserCard({ item }) {
             />
             <p>받은 질문</p>
           </div>
+          <p>{item.questionCount}개</p>
         </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 }
 

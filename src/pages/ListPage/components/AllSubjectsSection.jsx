@@ -102,7 +102,6 @@ function AllSubjectsSection() {
           onPageChange={onPageChange}
         />
       </div>
-
     </div>
   );
 }
