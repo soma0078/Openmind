@@ -27,11 +27,10 @@ const getPageSize = () => {
 };
 
 function AllSubjectsSection() {
-  // 안 쓰는 부분은 일단 주석 처리 해두겠습니다
-  const [page, setPage] = useState(1);
+  const pageFromStorage = Number(sessionStorage.getItem('page')) || 1;
+  const [page, setPage] = useState(pageFromStorage);
   const [pageSize, setPageSize] = useState(getPageSize());
   const [totalPageNum, setTotalPageNum] = useState(0);
-
   const [subjectList, setSubjectList] = useState([]);
   const [sort, setSort] = useState('createdAt');
   const [limit, setLimit] = useState(getPageSize());
@@ -51,9 +50,11 @@ function AllSubjectsSection() {
   };
 
   useEffect(() => {
+    // 페이지가 변경될때마다 세션스토리지 업데이트
+    sessionStorage.setItem('page', page);
+
     const handleResize = () => {
-      // setPageSize(getPageSize());
-      setLimit(getPageSize());
+      setPageSize(getPageSize());
     };
 
     // 화면 크기 변경할 때마다 pageSize를 다시 계산해 넣음
@@ -64,7 +65,7 @@ function AllSubjectsSection() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [sort, limit]);
+  }, [sort, page, pageSize]);
 
   const onPageChange = (pageNumber) => {
     setPage(pageNumber);
@@ -101,6 +102,7 @@ function AllSubjectsSection() {
           onPageChange={onPageChange}
         />
       </div>
+
     </div>
   );
 }

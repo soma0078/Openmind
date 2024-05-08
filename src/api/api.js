@@ -2,13 +2,19 @@ const BASE_URL = 'https://openmind-api.vercel.app/6-13';
 
 // ListPage 카드 데이터 받아오기
 export async function getSubjects(params = {}) {
-  // 현재 네트워크 request url 예시
-  // BASE_URL/subjects/?sort=createdAt&limit=8
-  // 페이지네이션 작업 시, 필요한 params를 더 추가하면 될 것 같습니다
+  // pageSize, page, sort를 rest객체에 추가해서
+  // new URLSearchParams(rest).toString() 를 사용해 쿼리문자열로 변환해서 URL에 추가 합니다.
+  const { pageSize, page, sort, ...rest } = params;
 
-  // limit: 몇 개 받을 것인지
-  // offset: 몇 번부터 받을 것인지
-  const query = new URLSearchParams(params).toString();
+  if (pageSize && page) {
+    rest.limit = pageSize;
+    rest.offset = (page - 1) * pageSize;
+  }
+  if (sort) {
+    rest.sort = sort;
+  }
+
+  const query = new URLSearchParams(rest).toString();
 
   try {
     const response = await fetch(`${BASE_URL}/subjects/?${query}`);
@@ -35,7 +41,7 @@ export const createCard = async (name) => {
       },
       body: JSON.stringify({
         name: name,
-        team: '8',
+        team: '13',
       }),
     });
 
@@ -105,14 +111,14 @@ export async function submitQuestion(id, questionContent) {
 }
 
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
-export async function getQuestionsByUserId(id) {
+export async function getQuestionsByUserId(subjectId) {
   try {
     const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`);
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const questionData = await response.json();
-    return questionData.results;
+    return questionData; // 질문 데이터 배열 전체를 반환
   } catch (error) {
     console.error('질문을 불러오는데 실패했습니다.', error);
     throw error;
@@ -120,15 +126,22 @@ export async function getQuestionsByUserId(id) {
 }
 
 // 사용자 데이터를 기반으로 질문 데이터를 가져와 상태를 설정하는 함수
-export async function fetchQuestionsByUser(userData, setQuestionData) {
+export async function fetchQuestionsByUser(userData) {
   try {
     if (!userData || !userData.id) {
       console.error('사용자 데이터 또는 사용자 ID를 가져올 수 없습니다.');
-      return;
+      return null; // null을 반환하여 호출자에게 알림
     }
-    const questionsData = await getQuestionsByUserId(userData.id);
-    setQuestionData(questionsData);
+    const fetchedQuestionData = await getQuestionsByUserId(userData.id);
+    if (fetchedQuestionData && Array.isArray(fetchedQuestionData.results)) {
+      // results를 사용하여 배열인지 확인
+      return fetchedQuestionData.results; // 배열 반환
+    } else {
+      console.error('질문 데이터가 올바르지 않습니다.');
+      return null; // null을 반환하여 호출자에게 알림
+    }
   } catch (error) {
     console.error('질문을 불러오는데 실패했습니다.', error);
+    throw error; // 에러를 호출자에게 전파
   }
 }
