@@ -3,7 +3,7 @@ import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
 import AnswersForm from './AnswersForm';
-import moreImage from '../../../assets/icon-more.svg';
+import KebabButton from './KebabButton';
 
 function QuestionCard({ question, userData }) {
   const img = userData.imageSource;
@@ -29,13 +29,9 @@ function QuestionCard({ question, userData }) {
             </span>
           )}
         </div>
-        <img
-          src={moreImage}
-          alt="더보기 버튼"
-          className="flex w-[26px] h-[26px]"
-        />
+        <KebabButton question={question} userData={userData} />
       </div>
-      <div className="w-full">
+      <div>
         <span className="text-sm text-[#818181] font-medium">
           질문 &#183; {formatDateAge(question.createdAt)}
         </span>

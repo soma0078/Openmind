@@ -1,21 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal';
 
-function Footer({ userData, questionCardCount, questionData }) {
-  const nav = useNavigate();
-
-  const onMoveBack = () => {
-    nav(-1);
-  };
-
-  // 새로운 질문을 추가해 상태 업데이트
-  const addQuestion = (newQuestion) => {
-    // 새로운 질문이 추가될 때마다 questionCardCount를 증가
-    questionCardCount((prevCount) => prevCount + 1);
-    questionData((prevQuestions) => [newQuestion, ...prevQuestions]);
-  };
-
+function Footer({ userData, onMoveBack, addQuestion }) {
   return (
     <div className="fixed bottom-[40px] left-[10px] right-[10px] shadow-black-500/50">
       <div className="relative flex justify-between px-[30px]">

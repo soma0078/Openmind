@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getUserData, fetchQuestionsByUser } from '../../api/api';
 import QuestionList from './components/QuestionList';
 import Share from './components/Share';
@@ -11,9 +11,14 @@ import DeleteButton from './components/DeleteButton';
 
 function PostPage() {
   const [questionCardCount, setQuestionCardCount] = useState(0);
+  const nav = useNavigate();
   const [userData, setUserData] = useState('');
   const [questionData, setQuestionData] = useState([]);
   const { postId } = useParams();
+
+  const onMoveBack = () => {
+    nav(-1);
+  };
 
   // 컴포넌트가 마운트될 때 API를 호출해 사용자 데이터 가져옴
   useEffect(() => {
@@ -53,6 +58,13 @@ function PostPage() {
     }
   }, [userData, setQuestionData]);
 
+  // 새로운 질문을 추가해 상태 업데이트
+  const addQuestion = (newQuestion) => {
+    // 새로운 질문이 추가될 때마다 questionCardCount를 증가
+    setQuestionCardCount((prevCount) => prevCount + 1);
+    setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
+  };
+
   return (
     <div className="flex flex-col h-[234px]">
       <div className="bg-[#F9F9F9] bg-main1 bg-contain bg-no-repeat">
@@ -76,7 +88,7 @@ function PostPage() {
         </div>
       </div>
       <DeleteButton />
-      <div className="flex justify-center pt-[30px] pb1-[80px] bg-[#F9F9F9]">
+      <div className="flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]">
         <div className="flex flex-col items-center max-w-[716px] min-w-[327px] w-full p-[16px] m-[24px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
             {/* 질문이 없을 때 */}
@@ -123,8 +135,8 @@ function PostPage() {
       </div>
       <Footer
         userData={userData}
-        questionCardCount={questionCardCount}
-        questionData={questionData}
+        onMoveBack={onMoveBack}
+        addQuestion={addQuestion}
       />
     </div>
   );
