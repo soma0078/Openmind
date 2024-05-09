@@ -6,7 +6,7 @@ function AnswersForm({ question }) {
 
   const addAnswer = async (e) => {
     try {
-      // e.preventDefault(); // 기본 동작(페이지 새s로고침) 방지
+      e.preventDefault(); // 기본 동작(페이지 새로고침) 방지
       const response = await submitAnswers(
         `${question.id}`,
         answerTitle,
@@ -24,6 +24,11 @@ function AnswersForm({ question }) {
 
   const isInputNotEmpty = answerTitle.trim() !== '';
 
+  const handleChange = (e) => {
+    // 입력 필드 값이 변경될 때마다 answerTitle 상태를 업데이트
+    setAnswerTitle(e.target.value);
+  };
+
   return (
     <>
       <div>
@@ -34,7 +39,7 @@ function AnswersForm({ question }) {
           <textarea
             type="text"
             value={answerTitle}
-            onChange={(e) => setAnswerTitle(e.target.value)}
+            onChange={handleChange} // 입력 필드 값 변경 시 handleChange 함수 호출
             placeholder="답변을 입력해주세요"
             className="w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
           />
