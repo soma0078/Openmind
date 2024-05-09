@@ -36,10 +36,10 @@ function AnswersForm({ question }) {
             value={answerTitle}
             onChange={(e) => setAnswerTitle(e.target.value)}
             placeholder="답변을 입력해주세요"
-            className="w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
+            className="w-[203px] md:w-[548px] xl:w-[560px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
           />
           <button
-            className={`w-[532px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+            className={`w-[203px] md:w-[548px] xl:w-[560px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
               isInputNotEmpty
                 ? 'bg-[var(--Brown-40)]'
                 : 'bg-[var(--Brown-30)] cursor-not-allowed'

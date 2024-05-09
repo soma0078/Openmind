@@ -3,6 +3,7 @@ import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
 import AnswersForm from './AnswersForm';
+// 답변에 프로필 사진 들어갔을 때 어떻게 동작하는지 보려고 임시로 프로필 넣어놨습니다!!
 import tempProfile from './temp-profile.jpg';
 
 function QuestionCard({ question }) {
@@ -28,22 +29,26 @@ function QuestionCard({ question }) {
         <h3 className="text-lg">{question.content}</h3>
       </div>
       {!question.answer ? (
-        <div className="flex">
-          <img src="" alt="프로필 사진" />
+        <div className="flex gap-[12px]">
+          <img
+            className="rounded-full object-cover w-[32px] h-[32px] md:w-[48px] md:h-[48px]"
+            src={tempProfile}
+            alt="프로필 사진"
+          />
           <div className="flex flex-col">
-            <h3>작성자 {question.answer && <span>기간</span>}</h3>
+            <h3>작성자</h3>
             <AnswersForm question={question} />
           </div>
         </div>
       ) : (
         <>
-          <div className="flex">
+          <div className="flex gap-[12px]">
             <img
               className="rounded-full object-cover w-[32px] h-[32px] md:w-[48px] md:h-[48px]"
               src={tempProfile}
               alt="프로필 사진"
             />
-            <div className="flex flex-col">
+            <div className="flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
               <h3 className="text-[18px] text-[400]">
                 작성자
                 <span className="text-[14px] text-[500] text-[var(--Grayscale-40)]">
