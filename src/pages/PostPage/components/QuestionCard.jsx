@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
@@ -9,6 +9,12 @@ function QuestionCard({ question }) {
   const [reaction, setReaction] = useState(
     localStorage.getItem(question.id) || null,
   );
+  const [likeCount, setLikeCount] = useState(question.like);
+  const [dislikeCount, setDislikeCount] = useState(question.dislike);
+
+  useEffect(() => {
+    localStorage.setItem(question.id, reaction);
+  }, [question.id, reaction]);
 
   const handleReaction = async (newReaction) => {
     const previousReaction = localStorage.getItem(question.id);
@@ -21,6 +27,18 @@ function QuestionCard({ question }) {
     setReaction(newReaction);
     await postQuestionReaction(question.id, newReaction);
     localStorage.setItem(question.id, newReaction);
+
+    if (newReaction === 'like') {
+      setLikeCount(likeCount + 1);
+      if (previousReaction === 'dislike') {
+        setDislikeCount(dislikeCount - 1);
+      }
+    } else if (newReaction === 'dislike') {
+      setDislikeCount(dislikeCount + 1);
+      if (previousReaction === 'like') {
+        setLikeCount(likeCount - 1);
+      }
+    }
   };
 
   return (
@@ -40,7 +58,7 @@ function QuestionCard({ question }) {
       )}
       <div>
         <span className="text-sm text-[#818181] font-medium">
-          질문 &#183; {formatDateAge(question.createdAt)}
+          질문 · {formatDateAge(question.createdAt)}
         </span>
         <h3 className="text-lg">{question.content}</h3>
       </div>
@@ -60,7 +78,7 @@ function QuestionCard({ question }) {
               <h3 className="text-[18px] text-[400]">
                 작성자
                 <span className="text-[14px] text-[500] text-[var(--Grayscale-40)]">
-                  &nbsp; {formatDateAge(question.answer.createdAt)}
+                    {formatDateAge(question.answer.createdAt)}
                 </span>
               </h3>
               {question.answer.content}
@@ -76,7 +94,7 @@ function QuestionCard({ question }) {
             alt="좋아요 버튼"
             onClick={() => handleReaction('like')}
           />
-          <span>{question.like} 좋아요</span>
+          <span>{likeCount} 좋아요</span>
         </div>
         <div className="flex gap-[6px]">
           <img
@@ -85,7 +103,7 @@ function QuestionCard({ question }) {
             alt="싫어요 버튼"
             onClick={() => handleReaction('dislike')}
           />
-          <span>{question.dislike} 싫어요</span>
+          <span>{dislikeCount} 싫어요</span>
         </div>
       </div>
     </div>
