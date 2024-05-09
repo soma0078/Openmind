@@ -115,7 +115,7 @@ function PostPage() {
                     alt="메시지 이모티콘"
                   />
                   <span className="font-[400] text-[20px] text-[#542F1A]">
-                    {questionCardCount}개의 질문이 있습니다.
+                    {userData.questionCount}개의 질문이 있습니다.
                   </span>
                 </div>
               )}

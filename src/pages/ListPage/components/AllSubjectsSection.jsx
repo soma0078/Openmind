@@ -33,17 +33,7 @@ function AllSubjectsSection() {
   const [totalPageNum, setTotalPageNum] = useState(0);
   const [subjectList, setSubjectList] = useState([]);
   const [sort, setSort] = useState('createdAt');
-  const [limit, setLimit] = useState(getPageSize());
   const [loading, setLoading] = useState(true);
-
-  // 일단 저는 sort, limit만 아규먼트로 전달해주었습니다
-  // 페이지네이션 적용 시에 page, pageSize, ... 필요할 것으로 보입니다
-  const fetchSortedData = async ({ sort, limit }) => {
-    const subjects = await getSubjects({ sort, limit });
-    setLoading(false);
-    setSubjectList(subjects.results);
-    setTotalPageNum(Math.ceil(subjects.count / pageSize));
-  };
 
   const handleSortSelection = (sortOption) => {
     setSort(sortOption);
@@ -54,19 +44,27 @@ function AllSubjectsSection() {
     sessionStorage.setItem('page', page);
 
     const handleResize = () => {
-      setLimit(getPageSize());
       setPageSize(getPageSize());
     };
 
     // 화면 크기 변경할 때마다 pageSize를 다시 계산해 넣음
     window.addEventListener('resize', handleResize);
-    fetchSortedData({ sort, limit });
+
+    // 기존의 fetchSortData가 useEffect 밖에 있고 호출만 안에 있었는데 같이 넣었습니다.
+    const fetchData = async () => {
+      const subjects = await getSubjects({ sort, page, pageSize });
+      setLoading(false);
+      setSubjectList(subjects.results);
+      setTotalPageNum(Math.ceil(subjects.count / pageSize));
+    };
+
+    fetchData();
 
     // Cleanup function
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, [sort, limit, page, pageSize]);
+  }, [sort, page, pageSize]);
 
   const onPageChange = (pageNumber) => {
     setPage(pageNumber);
@@ -95,7 +93,6 @@ function AllSubjectsSection() {
           </div>
         </div>
       )}
-
       <div className="pt-[40px] pb-[80px]">
         <PaginationBar
           activePageNum={page}
