@@ -1,4 +1,4 @@
-import React, { useRef, useId, useState } from 'react';
+import React, { useRef, useId, useState, useEffect } from 'react';
 import { submitQuestion } from '../api/api';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import iconClose from '../assets/icon-close.svg';
@@ -9,6 +9,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
   const textareaId = useId();
   const [questionContent, setQuestionContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [buttonText, setButtonText] = useState('질문 보내기'); // 버튼 텍스트 상태 추가
   useOnClickOutside(dialogRef, () => setIsModalOpen(false));
 
   const handleContentChange = (e) => {
@@ -29,13 +30,34 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
     }
   };
 
+  useEffect(() => {
+    const updateButtonText = () => {
+      const windowWidth = window.innerWidth;
+
+      if (windowWidth < 768) {
+        setButtonText('질문 작성');
+      } else {
+        setButtonText('질문 작성하기');
+      }
+    };
+
+    // 페이지 로드시 한번 실행
+    updateButtonText();
+
+    // 윈도우 사이즈 변경시마다 실행
+    window.addEventListener('resize', updateButtonText);
+
+    // Clean up
+    return () => window.removeEventListener('resize', updateButtonText);
+  }, []);
+
   return (
     <div>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
+        className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
       >
-        질문 작성하기
+        {buttonText}
       </button>
       {isModalOpen && (
         <>

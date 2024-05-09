@@ -7,6 +7,7 @@ import Modal from '../../components/Modal';
 import logoImage from '../../assets/img-logo.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
+import headerImage from '../../assets/img-openmind1.png';
 
 function PostPage() {
   const [questionCardCount, setQuestionCardCount] = useState(0);
@@ -128,16 +129,12 @@ function PostPage() {
       </div>
       <div className="relative flex justify-between bottom-[80px] px-[30px]">
         <button
-          className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
+          className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
           onClick={onMoveBack}
         >
           뒤로 가기
         </button>
-        <Modal
-          userData={userData}
-          onQuestionSubmitted={addQuestion}
-          className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
-        />
+        <Modal userData={userData} onQuestionSubmitted={addQuestion} />
       </div>
     </div>
   );
