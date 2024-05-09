@@ -35,7 +35,7 @@ function QuestionCard({ question }) {
             src={tempProfile}
             alt="프로필 사진"
           />
-          <div className="flex flex-col">
+          <div className="flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
             <h3>작성자</h3>
             <AnswersForm question={question} />
           </div>
