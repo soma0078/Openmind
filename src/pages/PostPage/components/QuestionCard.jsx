@@ -3,10 +3,11 @@ import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
 import AnswersForm from './AnswersForm';
+import tempProfile from './temp-profile.jpg';
 
 function QuestionCard({ question }) {
   return (
-    <div className="flex flex-col p-[32px] w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
+    <div className="flex flex-col p-[32px] w-[295px] md:w-[672px] xl:w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
       {question.answer ? (
         <div className="w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-40)]">
           <div className="text-[14px] font-medium text-center text-[var(--Brown-40)]">
@@ -37,7 +38,11 @@ function QuestionCard({ question }) {
       ) : (
         <>
           <div className="flex">
-            <img src="" alt="프로필 사진" />
+            <img
+              className="rounded-full object-cover w-[32px] h-[32px] md:w-[48px] md:h-[48px]"
+              src={tempProfile}
+              alt="프로필 사진"
+            />
             <div className="flex flex-col">
               <h3 className="text-[18px] text-[400]">
                 작성자

@@ -65,24 +65,24 @@ function PostPage() {
         <div className="pt-[50px] gap-[20px] flex flex-col items-center justify-center">
           <Link to="/">
             <img
-              className="w-[170px] h-[67px]"
+              className="w-[124px] h-[49px] md:w-[170px] md:h-[67px]"
               src={logoImage}
               alt="로고 이미지"
             />
           </Link>
           <img
-            className="w-[136px] h-[136px] rounded-full"
+            className="w-[104px] h-[104px] md:w-[136px] md:h-[136px] rounded-full"
             src={userData.imageSource}
             alt="프로필 사진"
           />
-          <h2 className="font-[400] text-[32px] text-[#000000]">
+          <h2 className="font-[400] text-[24px] md:text-[32px] text-[#000000]">
             {userData.name}
           </h2>
           <Share />
         </div>
       </div>
       <div className="flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]">
-        <div className="flex flex-col items-center w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
+        <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
             {/* 질문이 없을 때 */}
             {questionCardCount === 0 && (
