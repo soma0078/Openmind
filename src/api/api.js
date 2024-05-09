@@ -118,6 +118,7 @@ export async function getQuestionsByUserId(id) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const questionData = await response.json();
+    // console.log(questionData); // 질문 데이터 배열을 콘솔에 출력
     return questionData; // 질문 데이터 배열 전체를 반환
   } catch (error) {
     console.error('질문을 불러오는데 실패했습니다.', error);
@@ -143,5 +144,25 @@ export async function fetchQuestionsByUser(userData) {
   } catch (error) {
     console.error('질문을 불러오는데 실패했습니다.', error);
     throw error; // 에러를 호출자에게 전파
+  }
+}
+
+// 좋아요 싫어요 포스트하는 함수
+export async function postQuestionReaction(id, reactionType) {
+  console.log(`Posting reaction: id = ${id}, reactionType = ${reactionType}`); // 로그 출력
+  try {
+    const response = await fetch(`${BASE_URL}/questions/${id}/reaction/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: `${reactionType}`,
+      }),
+    });
+    if (response.ok) return response.json();
+    return new Error('');
+  } catch (error) {
+    console.error('좋아요를 추가하는데 실패했습니다.', error);
   }
 }
