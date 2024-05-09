@@ -52,6 +52,27 @@ export const createCard = async (name) => {
   }
 };
 
+// 질문카드 생성
+export const createQuestionCard = async (name) => {
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        team: '13',
+      }),
+    });
+
+    if (response.ok) return response.json();
+    return new Error('');
+  } catch (e) {
+    if (e instanceof Error) return e;
+  }
+};
+
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
 export async function getUserData(id) {
   try {
@@ -90,11 +111,9 @@ export async function submitQuestion(id, questionContent) {
 }
 
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
-export async function getQuestionsByUserId(subjectId) {
+export async function getQuestionsByUserId(id) {
   try {
-    const response = await fetch(
-      `${BASE_URL}/subjects/${subjectId}/questions/`,
-    );
+    const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`);
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
@@ -127,16 +146,61 @@ export async function fetchQuestionsByUser(userData) {
   }
 }
 
-// 피드를 삭제하는 함수
-export async function deleteCard(id) {
+//답변 보내기
+export async function submitAnswers(question_id, starting, value) {
+  const requestData = {
+    questionId: question_id,
+    content: starting,
+    isRejected: value,
+  };
   try {
-    const response = await fetch(`${BASE_URL}/subjects/${id}/`, {
-      method: 'DELETE',
+    const response = await fetch(
+      `${BASE_URL}/questions/${question_id}/answers/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      },
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const responseData = await response.json();
+    console.log('답변 보내기를 성공했습니다.', responseData);
+    return responseData;
+  } catch (error) {
+    console.error('답변 보내기를 실패했습니다.', error);
+    throw error;
+  }
+}
+
+// 답변 수정하기 함수
+export async function updateAnswer(answerId, updatedContent, value) {
+  const requestData = {
+    content: updatedContent,
+    isRejected: value,
+  };
+
+  try {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
     });
 
-    if (response.ok) return response.json();
-    return new Error(`HTTP error: ${response.status}`);
-  } catch (e) {
-    if (e instanceof Error) return e;
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+
+    const responseData = await response.json();
+    console.log('답변 수정 성공:', responseData);
+    return responseData;
+  } catch (error) {
+    console.error('답변 수정 실패:', error);
+    throw error;
   }
 }
