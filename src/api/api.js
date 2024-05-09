@@ -46,7 +46,7 @@ export const createCard = async (name) => {
     });
 
     if (response.ok) return response.json();
-    return new Error('');
+    return new Error(`HTTP error: ${response.status}`);
   } catch (e) {
     if (e instanceof Error) return e;
   }
@@ -148,19 +148,22 @@ export async function fetchQuestionsByUser(userData) {
 
 //답변 보내기
 export async function submitAnswers(question_id, starting, value) {
-  const requestData = { 
+  const requestData = {
     questionId: question_id,
     content: starting,
     isRejected: value,
-    };
+  };
   try {
-    const response = await fetch(`${BASE_URL}/questions/${question_id}/answers/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+    const response = await fetch(
+      `${BASE_URL}/questions/${question_id}/answers/`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
       },
-      body: JSON.stringify(requestData)
-    });
+    );
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
@@ -175,24 +178,24 @@ export async function submitAnswers(question_id, starting, value) {
 
 // 답변 수정하기 함수
 export async function updateAnswer(answerId, updatedContent, value) {
-  const requestData = { 
+  const requestData = {
     content: updatedContent,
     isRejected: value,
-    };
+  };
 
   try {
     const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(requestData)
+      body: JSON.stringify(requestData),
     });
-    
+
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
-    
+
     const responseData = await response.json();
     console.log('답변 수정 성공:', responseData);
     return responseData;
