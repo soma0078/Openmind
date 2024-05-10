@@ -132,7 +132,7 @@ function PostPage() {
           </div>
         </div>
       </div>
-      <div className="relative flex justify-between bottom-[80px] px-[30px]">
+      <div className="relative mt-[20px] flex justify-between bottom-[80px] px-[30px]">
         <button
           className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
           onClick={onMoveBack}
