@@ -9,9 +9,6 @@ function QuestionCard({ question, userData }) {
   const img = userData.imageSource;
 
   return (
-    //흰 배경 반응형 구현 실패.
-    //w-full을 넣어도 안에 있는 요소들이 자리를 자동으로 차지하고 있어서 안되는 듯.
-    //최대 크기만 맞추면 되는데 ㅠㅠ
     <div className="flex flex-col p-[32px] max-w-[684px] min-w-[295px] w-full bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
       <div className="flex justify-between">
         <div className="flex">
@@ -66,7 +63,13 @@ function QuestionCard({ question, userData }) {
                   &nbsp; {formatDateAge(question.answer.createdAt)}
                 </span>
               </h3>
-              {question.answer.content}
+              {question.answer.isRejected === true ? (
+                <div className="text-[16px] text-[400] text-[var(--Red-50)]">
+                  답변 거절
+                </div>
+              ) : (
+                question.answer.content
+              )}
             </div>
           </div>
         </>

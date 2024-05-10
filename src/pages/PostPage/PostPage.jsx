@@ -7,7 +7,6 @@ import logoImage from '../../assets/img-logo.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
 import Footer from './components/Footer';
-import DeleteButton from './components/DeleteButton';
 
 function PostPage() {
   const [questionCardCount, setQuestionCardCount] = useState(0);
@@ -40,9 +39,6 @@ function PostPage() {
         //더보기 버튼 만들기 위함 next 링크
         const fetchedQuestionData = await fetchQuestionsByUser(userData);
         const fetchedQuestionResults = fetchedQuestionData.results;
-        console.log('--------------------------------222');
-        console.log(fetchedQuestionData);
-        console.log('--------------------------------222');
         if (Array.isArray(fetchedQuestionResults)) {
           setQuestionData(fetchedQuestionResults);
           setQuestionCardCount(fetchedQuestionResults.length); // 이미 있는 질문 데이터의 개수로 초기값 설정
@@ -87,7 +83,6 @@ function PostPage() {
           <Share />
         </div>
       </div>
-      <DeleteButton />
       <div className="flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]">
         <div className="flex flex-col items-center max-w-[716px] min-w-[327px] w-full p-[16px] m-[24px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
