@@ -52,6 +52,27 @@ export const createCard = async (name) => {
   }
 };
 
+// 질문카드 생성
+export const createQuestionCard = async (name) => {
+  try {
+    const response = await fetch(`${BASE_URL}/subjects/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: name,
+        team: '13',
+      }),
+    });
+
+    if (response.ok) return response.json();
+    return new Error('');
+  } catch (e) {
+    if (e instanceof Error) return e;
+  }
+};
+
 // 주어진 ID를 사용해 사용자 데이터를 가져오는 함수
 export async function getUserData(id) {
   try {
@@ -90,10 +111,11 @@ export async function submitQuestion(id, questionContent) {
 }
 
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
-export async function getQuestionsByUserId(subjectId) {
+export async function getQuestionsByUserId(subject_id, offset, limit) {
   try {
+    const questionQuery = `offset=${offset}&limit=${limit}`;
     const response = await fetch(
-      `${BASE_URL}/subjects/${subjectId}/questions/`,
+      `${BASE_URL}/subjects/${subject_id}/questions/?${questionQuery}`,
     );
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
@@ -107,16 +129,26 @@ export async function getQuestionsByUserId(subjectId) {
 }
 
 // 사용자 데이터를 기반으로 질문 데이터를 가져와 상태를 설정하는 함수
-export async function fetchQuestionsByUser(userData) {
+export async function fetchQuestionsByUser(userData, offset, limit) {
   try {
     if (!userData || !userData.id) {
       console.error('사용자 데이터 또는 사용자 ID를 가져올 수 없습니다.');
-      return null; // null을 반환하여 호출자에게 알림
+      return null;
     }
-    const fetchedQuestionData = await getQuestionsByUserId(userData.id);
+
+    // 이전에 이미 가져온 데이터가 있다면, 새로운 데이터를 가져오지 않고 그대로 반환합니다.
+    if (userData.questions) {
+      return userData.questions.slice(offset, offset + limit);
+    }
+
+    const fetchedQuestionData = await getQuestionsByUserId(
+      userData.id,
+      offset,
+      limit,
+    );
     if (fetchedQuestionData && Array.isArray(fetchedQuestionData.results)) {
       // results를 사용하여 배열인지 확인
-      return fetchedQuestionData; //next 가져오기 위해 변경
+      return fetchedQuestionData.results; // 배열 반환
     } else {
       console.error('질문 데이터가 올바르지 않습니다.');
       return null; // null을 반환하여 호출자에게 알림
@@ -128,15 +160,15 @@ export async function fetchQuestionsByUser(userData) {
 }
 
 //답변 보내기
-export async function submitAnswers(questionId, starting, value) {
+export async function submitAnswers(question_id, starting, value) {
   const requestData = {
-    questionId: questionId,
+    questionId: question_id,
     content: starting,
     isRejected: value,
   };
   try {
     const response = await fetch(
-      `${BASE_URL}/questions/${questionId}/answers/`,
+      `${BASE_URL}/questions/${question_id}/answers/`,
       {
         method: 'POST',
         headers: {
@@ -149,7 +181,7 @@ export async function submitAnswers(questionId, starting, value) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const responseData = await response.json();
-    console.log('답변 보내기를 성공했습니다.');
+    console.log('답변 보내기를 성공했습니다.', responseData);
     return responseData;
   } catch (error) {
     console.error('답변 보내기를 실패했습니다.', error);
@@ -165,7 +197,7 @@ export async function updateAnswer(answerId, updatedContent, value) {
   };
 
   try {
-    const response = await fetch(`${BASE_URL}/answers/${answerId}/`, {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

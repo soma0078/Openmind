@@ -3,6 +3,7 @@ import UserCard from './UserCard.jsx';
 import { getSubjects } from '../../../api/api.js';
 import PaginationBar from './PaginationBar.jsx';
 import DropdownMenu from './DropdownMenu.jsx';
+import Loading from './Loading.jsx';
 
 // tailwind media query 적용 시 참고
 // md (min-width: 768px)
@@ -13,9 +14,12 @@ const getPageSize = () => {
   if (width < 768) {
     // Mobile viewport
     return 6;
-  } else if (width < 1280) {
-    // Tablet viewport
+  } else if (width < 868) {
+    // Tablet-1 viewport
     return 6;
+  } else if (width < 1280) {
+    // Tablet-2 viewport
+    return 8;
   } else {
     // Desktop viewport
     return 8;
@@ -29,6 +33,7 @@ function AllSubjectsSection() {
   const [totalPageNum, setTotalPageNum] = useState(0);
   const [subjectList, setSubjectList] = useState([]);
   const [sort, setSort] = useState('createdAt');
+  const [loading, setLoading] = useState(true);
 
   const handleSortSelection = (sortOption) => {
     setSort(sortOption);
@@ -48,6 +53,7 @@ function AllSubjectsSection() {
     // 기존의 fetchSortData가 useEffect 밖에 있고 호출만 안에 있었는데 같이 넣었습니다.
     const fetchData = async () => {
       const subjects = await getSubjects({ sort, page, pageSize });
+      setLoading(false);
       setSubjectList(subjects.results);
       setTotalPageNum(Math.ceil(subjects.count / pageSize));
     };
@@ -65,26 +71,35 @@ function AllSubjectsSection() {
   };
 
   return (
-    <div className="flex flex-col gap-[16px] md:gap-[40px]">
-      <div className="z-20 pt-[40px] flex md:flex-col gap-[20px] justify-center items-center">
-        <p className="w-[341px] h-[48px] text-[24px] md:text-[40px] font-normal">
+    <div className="flex flex-col gap-[16px] tablet-1:gap-[40px]">
+      <div className="px-[24px] tablet-1:px-[32px] z-20 pt-[30px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
+        <p className="w-[214px] tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
           누구에게 질문할까요?
         </p>
         <DropdownMenu onSortSelection={handleSortSelection} />
       </div>
-      <div
-        className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 
-      gap-[16px] md:gap-[20px]"
-      >
-        {subjectList?.map((subject) => (
-          <UserCard item={subject} key={subject.id} />
-        ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="px-[24px] flex justify-center">
+          <div
+            className="
+            grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
+            gap-[16px] tablet-1:gap-[20px]"
+          >
+            {subjectList?.map((subject) => (
+              <UserCard item={subject} key={subject.id} />
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="pt-[40px] pb-[80px]">
+        <PaginationBar
+          activePageNum={page}
+          totalPageNum={totalPageNum}
+          onPageChange={onPageChange}
+        />
       </div>
-      <PaginationBar
-        activePageNum={page}
-        totalPageNum={totalPageNum}
-        onPageChange={onPageChange}
-      />
     </div>
   );
 }
