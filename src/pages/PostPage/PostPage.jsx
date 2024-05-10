@@ -61,7 +61,7 @@ function PostPage() {
   };
 
   return (
-    <div className="flex flex-col h-[234px]">
+    <div className="flex flex-col">
       <div className="bg-[#F9F9F9] bg-main1 bg-contain bg-no-repeat">
         <div className="pt-[50px] gap-[20px] flex flex-col items-center justify-center">
           <Link to="/">

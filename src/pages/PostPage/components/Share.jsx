@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { shareKakao, shareFacebook } from '../utils/SharesUtils';
-import linkImage from '../../../assets/icon-link.png';
+import linkImage from '../../../assets/icon-link.svg';
 import kakaoImage from '../../../assets/icon-kakaotalk.svg';
 import facebookImage from '../../../assets/icon-facebook.svg';
 import Toast from './Toast';
