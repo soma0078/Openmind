@@ -61,9 +61,9 @@ function PostPage() {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className="bg-[#F9F9F9] bg-main1 bg-contain bg-no-repeat">
-        <div className="pt-[50px] gap-[20px] flex flex-col items-center justify-center">
+    <div className="flex flex-col bg-[#F9F9F9]">
+      <div className="relative flex flex-col justify-center items-center">
+        <div className="mt-[50px] z-10 gap-[20px] flex flex-col items-center justify-center">
           <Link to="/">
             <img
               className="w-[124px] h-[49px] md:w-[170px] md:h-[67px]"
@@ -81,8 +81,13 @@ function PostPage() {
           </h2>
           <Share />
         </div>
+        <img
+          className="absolute top-0 object-cover w-[1200px] h-[177px] md:h-[234px]"
+          src={headerImage}
+          alt="헤더 이미지"
+        />
       </div>
-      <div className="flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]">
+      <div className="flex justify-center pt-[30px] pb-[80px]">
         <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
             {/* 질문이 없을 때 */}
