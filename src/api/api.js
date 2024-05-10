@@ -204,3 +204,10 @@ export async function updateAnswer(answerId, updatedContent, value) {
     throw error;
   }
 }
+
+// 전체 피드 삭제
+export const deleteAll = async (id) => {
+  await fetch(`https://openmind-api.vercel.app/6-13/subjects/${id}/`, {
+    method: 'DELETE',
+  });
+};

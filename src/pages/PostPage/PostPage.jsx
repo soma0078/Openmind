@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getUserData, fetchQuestionsByUser } from '../../api/api';
+import { getUserData, fetchQuestionsByUser, deleteAll } from '../../api/api';
 import QuestionList from './components/QuestionList';
 import Share from './components/Share';
 import Modal from '../../components/Modal';
@@ -59,6 +59,12 @@ function PostPage() {
     setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
   };
 
+  const deletePeed = async () => {
+    window.localStorage.removeItem(postId);
+    await deleteAll(postId);
+    nav('/list', {replace: true});
+  };
+
   return (
     <div className="flex flex-col h-[234px]">
       <div className="bg-[#F9F9F9] bg-main1 bg-contain bg-no-repeat">
@@ -75,9 +81,12 @@ function PostPage() {
             src={userData.imageSource}
             alt="프로필 사진"
           />
-          <h2 className="font-[400] text-[32px] text-[#000000]">
-            {userData.name}
-          </h2>
+          <div className='relative'>
+            <button className='absolute w-20 -top-5 left-full rounded-full py-1 px-2 bg-[#542F1A] text-[#FFFFFF]' onClick={deletePeed}>피드 삭제</button>
+            <h2 className="font-[400] text-[32px] text-[#000000]">
+              {userData.name}
+            </h2>
+          </div>
           <Share />
         </div>
       </div>
