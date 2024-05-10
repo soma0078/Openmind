@@ -17,6 +17,7 @@ function PostPage() {
   const [questionData, setQuestionData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [displayMode, setDisplayMode] = useState('all'); // 모든 질문, 답변 질문 보기, 미답변 질문 보기
 
   const { postId } = useParams();
   const nav = useNavigate();
