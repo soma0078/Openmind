@@ -4,13 +4,28 @@ import useOnClickOutside from '../hooks/useOnClickOutside';
 import iconClose from '../assets/icon-close.svg';
 import iconMessage from '../assets/icon-messages.svg';
 
-function QuestionModal({ userData, onQuestionSubmitted }) {
+function Modal({ userData, onQuestionSubmitted }) {
   const dialogRef = useRef();
   const textareaId = useId();
   const [questionContent, setQuestionContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [buttonText, setButtonText] = useState('질문 보내기'); // 버튼 텍스트 상태 추가
-  useOnClickOutside(dialogRef, () => setIsModalOpen(false));
+
+  //모달이 닫힐 때 상태 초기화
+  const resetModalState = () => {
+    setQuestionContent(''); // 입력한 내용 초기화
+    setIsModalOpen(false);
+  };
+
+  // 모달 닫기 버튼 클릭 시 모달 상태 초기화
+  const handleCloseModal = () => {
+    resetModalState();
+  };
+
+  // 모달 외부 클릭 시 모달 상태 초기화
+  useOnClickOutside(dialogRef, () => {
+    resetModalState();
+  });
 
   const handleContentChange = (e) => {
     setQuestionContent(e.target.value);
@@ -22,7 +37,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
       const newQuestion = await submitQuestion(userData.id, questionContent);
       console.log('질문이 성공적으로 전송되었습니다.', questionContent);
       // 질문 전송 후 입력창 비우기
-      setQuestionContent('');
+      resetModalState();
       // 질문이 등록되면 상태를 업데이트
       onQuestionSubmitted(newQuestion);
     } catch (error) {
@@ -72,7 +87,7 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
               <h2 className="text-2xl max-md:text-xl">질문을 작성하세요</h2>
             </div>
             <button
-              onClick={() => setIsModalOpen(false)}
+              onClick={handleCloseModal}
               className="absolute top-9 right-9 max-md:top-6 max-md:right-6"
             >
               <img src={iconClose} alt="닫기 버튼 아이콘" />
@@ -114,4 +129,4 @@ function QuestionModal({ userData, onQuestionSubmitted }) {
   );
 }
 
-export default QuestionModal;
+export default Modal;
