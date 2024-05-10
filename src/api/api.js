@@ -111,9 +111,12 @@ export async function submitQuestion(id, questionContent) {
 }
 
 // 주어진 ID를 사용해 질문 데이터를 가져오는 함수
-export async function getQuestionsByUserId(id) {
+export async function getQuestionsByUserId(subject_id, offset = 0, limit = 5) {
   try {
-    const response = await fetch(`${BASE_URL}/subjects/${id}/questions/`);
+    const questionQuery = `offset=${offset}&limit=${limit}`;
+    const response = await fetch(
+      `${BASE_URL}/subjects/${subject_id}/questions/?${questionQuery}`,
+    );
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
