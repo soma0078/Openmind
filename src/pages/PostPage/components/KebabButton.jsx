@@ -5,18 +5,23 @@ import {
   deleteQuestion,
   rejectedUpdate,
   submitAnswers,
+  updateAnswer,
 } from '../../../api/api';
 
-function KebabButton({ question, userData }) {
+function KebabButton({ question }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const questionId = question.id;
+  const answer = question.answer;
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  const updatedContent = '테스트 변경 값';
 
   const handleOptionClick = (option) => {
     console.log(`선택된 옵션: ${option}`);
     setIsMenuOpen(false);
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
   };
 
   async function handleDeleteAnswer() {
@@ -35,12 +40,24 @@ function KebabButton({ question, userData }) {
     }
   }
 
+  async function handleCorrectionAnswer() {
+    try {
+      if (answer === null) {
+        console.log('수정할 대상이 아닙니다.');
+      } else {
+        const answerId = answer.id;
+        await updateAnswer(answerId, updatedContent, false);
+      }
+    } catch (error) {
+      console.log('답변 수정 중 오류가 발생했습니다:', error);
+    }
+  }
+
   async function handleRejectedAnswer() {
     try {
       if (question.answer === null) {
         //답변이 없다면 거절된 답변으로 변경
         const string = '거절된 답변입니다.';
-        const questionId = question.id;
         const addAnswer = await submitAnswers(questionId, string, true);
         console.log('답변이 성공적으로 거절되었습니다:', addAnswer);
       } else if (question.answer.isRejected === true) {
@@ -75,7 +92,7 @@ function KebabButton({ question, userData }) {
           <div className="block text-[14px] text-[600] absolute right-0 mt-2 w-[125px] bg-white shadow-lg rounded-lg">
             <div
               className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-              onClick={() => handleOptionClick('답변 수정하기')}
+              onClick={() => handleCorrectionAnswer()}
               aria-label="답변 수정하기 버튼"
             >
               답변 수정하기

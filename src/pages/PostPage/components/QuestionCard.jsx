@@ -26,7 +26,7 @@ function QuestionCard({ question, userData }) {
             </span>
           )}
         </div>
-        <KebabButton question={question} userData={userData} />
+        <KebabButton question={question} />
       </div>
       <div>
         <span className="text-sm text-[#818181] font-medium">

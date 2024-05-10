@@ -184,7 +184,7 @@ export async function submitAnswers(question_id, starting, value) {
     console.log('답변 보내기를 성공했습니다.', responseData);
     return responseData;
   } catch (error) {
-    console.error('답변 보내기를 실패했습니다.', error);
+    console.error(error);
     throw error;
   }
 }
@@ -197,7 +197,7 @@ export async function updateAnswer(answerId, updatedContent, value) {
   };
 
   try {
-    const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -210,10 +210,10 @@ export async function updateAnswer(answerId, updatedContent, value) {
     }
 
     const responseData = await response.json();
-    console.log('답변 수정 성공:', responseData);
+    console.log('답변 수정 성공했습니다:', responseData);
     return responseData;
   } catch (error) {
-    console.error('답변 수정 실패:', error);
+    console.error(error);
     throw error;
   }
 }
@@ -227,10 +227,10 @@ export async function deleteAnswer(answerId) {
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
-    const responseData = console.log('답변 삭제 성공');
+    const responseData = console.log('답변 삭제 성공했습니다.');
     return responseData;
   } catch (error) {
-    console.error('답변 삭제 실패:', error);
+    console.error(error);
     throw error;
   }
 }
@@ -244,10 +244,10 @@ export async function deleteQuestion(questionsId) {
     if (!response.ok) {
       throw new Error(`HTTP error: ${response.status}`);
     }
-    const responseData = console.log('질문 삭제 성공');
+    const responseData = console.log('질문 삭제 성공했습니다.');
     return responseData;
   } catch (error) {
-    console.error('질문 삭제 실패:', error);
+    console.error(error);
     throw error;
   }
 }
@@ -272,7 +272,7 @@ export async function rejectedUpdate(answerId) {
     const responseData = await response.json();
     return responseData;
   } catch (error) {
-    console.error('답변 거절 실패:', error);
+    console.error(error);
     throw error;
   }
 }
