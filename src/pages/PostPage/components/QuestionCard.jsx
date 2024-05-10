@@ -41,7 +41,7 @@ function QuestionCard({ question }) {
             <div className="flex flex-col">
               <h3 className="text-[18px] text-[400]">
                 작성자
-                <span className="text-[14px] text-[500] text-[var(--Grayscale-40)]">
+                <span className="text-[14px] font-[500] text-[var(--Grayscale-40)]">
                   &nbsp; {formatDateAge(question.answer.createdAt)}
                 </span>
               </h3>
