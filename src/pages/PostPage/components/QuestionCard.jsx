@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
@@ -6,38 +6,35 @@ import { postQuestionReaction } from '../../../api/api';
 import AnswersForm from './AnswersForm';
 
 function QuestionCard({ question }) {
+  const userId = localStorage.getItem('userId');
   const [reaction, setReaction] = useState(
-    localStorage.getItem(question.id) || null,
+    localStorage.getItem(`${question.id}-${userId}`) || null,
   );
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
 
-  useEffect(() => {
-    localStorage.setItem(question.id, reaction);
-  }, [question.id, reaction]);
-
   const handleReaction = async (newReaction) => {
-    const previousReaction = localStorage.getItem(question.id);
+    const previousReaction = localStorage.getItem(`${question.id}-${userId}`);
 
-    if (previousReaction === newReaction) {
-      alert('이미 같은 반응을 선택하셨습니다.');
+    if (previousReaction) {
+      alert('이미 반응을 선택하셨습니다.');
       return;
     }
 
     setReaction(newReaction);
     await postQuestionReaction(question.id, newReaction);
-    localStorage.setItem(question.id, newReaction);
+
+    // 로컬스토리지에 리액션 등록
+    localStorage.setItem(`${question.id}-${userId}`, newReaction);
 
     if (newReaction === 'like') {
       setLikeCount(likeCount + 1);
-      if (previousReaction === 'dislike') {
-        setDislikeCount(dislikeCount - 1);
-      }
+      const nickname = localStorage.getItem('userId'); // 로컬스토리지의 유저이름이 나오나 확인 로그
+      console.log(`${nickname}가 질문에 좋아요를 했습니다.`);
     } else if (newReaction === 'dislike') {
       setDislikeCount(dislikeCount + 1);
-      if (previousReaction === 'like') {
-        setLikeCount(likeCount - 1);
-      }
+      const nickname = localStorage.getItem('userId'); // 로컬스토리지의 유저이름이 나오나 확인 로그
+      console.log(`${nickname}가 질문에 싫어요를 했습니다.`);
     }
   };
 
