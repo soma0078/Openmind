@@ -46,7 +46,7 @@ function MainPage() {
             className="w-[336px] h-[46px] rounded-[8px] py-[12px] px-[16px] border-[1px] border-[#818181] text-[16px] text-[#818181] font-[400] text-center"
             onChange={handleChangeNickName}
             type="text"
-            placeholder="공백없는 세 글자 닉네임을 작성해주세요."
+            placeholder="공백없는 3~10글자 닉네임을 작성해주세요."
           />
           <button
             className="w-[336px] h-[46px] rounded-[8px] py-[12px] px-[24px] bg-[#542F1A] text-[16px] text-[#FFFFFF] font-[400]"

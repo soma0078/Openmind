@@ -217,3 +217,10 @@ export async function updateAnswer(answerId, updatedContent, value) {
     throw error;
   }
 }
+
+// 전체 피드 삭제
+export const deleteAll = async (id) => {
+  await fetch(`${BASE_URL}/subjects/${id}/`, {
+    method: 'DELETE',
+  });
+};
