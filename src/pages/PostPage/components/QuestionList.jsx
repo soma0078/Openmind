@@ -10,26 +10,29 @@ function QuestionList({ questionData }) {
   }
   return (
     <>
-      <div className="flex justify-end gap-[20px] mr-[20px] mb-[20px] ">
-        <button
-          onClick={() => setDisplayMode('all')}
-          className={`text-[15px] font-[400] ${displayMode === 'all' ? 'text-[#1877f2]' : 'text-[#000000]'}`}
-        >
-          모든 질문
-        </button>
-        <button
-          onClick={() => setDisplayMode('answered')}
-          className={`text-[15px] font-[400] ${displayMode === 'answered' ? 'text-[#1877f2]' : 'text-[#000000]'}`}
-        >
-          답변 완료
-        </button>
-        <button
-          onClick={() => setDisplayMode('unanswered')}
-          className={`text-[15px] font-[400] ${displayMode === 'unanswered' ? 'text-[#1877f2]' : 'text-[#000000]'}`}
-        >
-          미답변
-        </button>
-      </div>
+      {questionData.length !== 0 && (
+        <div className="flex justify-end gap-[20px] mr-[20px] mb-[20px] ">
+          <button
+            onClick={() => setDisplayMode('all')}
+            className={`text-[15px] font-[400] ${displayMode === 'all' ? 'text-[#1877f2]' : 'text-[#000000]'}`}
+          >
+            모든 질문
+          </button>
+          <button
+            onClick={() => setDisplayMode('answered')}
+            className={`text-[15px] font-[400] ${displayMode === 'answered' ? 'text-[#1877f2]' : 'text-[#000000]'}`}
+          >
+            답변 완료
+          </button>
+          <button
+            onClick={() => setDisplayMode('unanswered')}
+            className={`text-[15px] font-[400] ${displayMode === 'unanswered' ? 'text-[#1877f2]' : 'text-[#000000]'}`}
+          >
+            미답변
+          </button>
+        </div>
+      )}
+
       <div>
         {displayMode === 'all' && (
           <ul>
