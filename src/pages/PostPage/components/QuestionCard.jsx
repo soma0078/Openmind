@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
@@ -6,7 +6,14 @@ import AnswersForm from './AnswersForm';
 import KebabButton from './KebabButton';
 
 function QuestionCard({ question, userData }) {
+  const [showForm, setShowForm] = useState(false);
   const img = userData.imageSource;
+
+  console.log(!question.answer);
+  //true 일때 수정 입력 창 open
+  function handleDataChange() {
+    setShowForm(!showForm);
+  }
 
   return (
     <div className="flex flex-col p-[32px] max-w-[684px] min-w-[295px] w-full bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
@@ -26,7 +33,7 @@ function QuestionCard({ question, userData }) {
             </span>
           )}
         </div>
-        <KebabButton question={question} />
+        <KebabButton question={question} handleDataChange={handleDataChange} />
       </div>
       <div>
         <span className="text-sm text-[#818181] font-medium">
@@ -34,7 +41,7 @@ function QuestionCard({ question, userData }) {
         </span>
         <h3 className="text-lg">{question.content}</h3>
       </div>
-      {!question.answer ? (
+      {showForm ? (
         <div className="flex w-full gap-[12px]">
           <img
             src={img}
@@ -43,7 +50,21 @@ function QuestionCard({ question, userData }) {
           />
           <div className="flex flex-col">
             <h3 className="text-[18px] text-[400] gap-[4px]">
-              {userData.name} {question.answer && <span>기간</span>}
+              {userData.name}
+            </h3>
+            <AnswersForm question={question} showForm={showForm} />
+          </div>
+        </div>
+      ) : !question.answer ? (
+        <div className="flex w-full gap-[12px]">
+          <img
+            src={img}
+            alt="프로필 사진"
+            className="w-[48px] h-[48px] rounded-full"
+          />
+          <div className="flex flex-col">
+            <h3 className="text-[18px] text-[400] gap-[4px]">
+              {userData.name}
             </h3>
             <AnswersForm question={question} />
           </div>
@@ -74,6 +95,7 @@ function QuestionCard({ question, userData }) {
           </div>
         </>
       )}
+
       <div className="flex w-full items-center gap-[32px] border-t border-[#cfcfcf] pt-6">
         <div className="flex gap-[6px]">
           <img

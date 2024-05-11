@@ -6,7 +6,7 @@ import Share from './components/Share';
 import logoImage from '../../assets/img-logo.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
-import Footer from './components/Footer';
+import Modal from '../../components/Modal';
 
 const LIMIT = 5;
 
@@ -16,7 +16,6 @@ function PostPage() {
   const [questionData, setQuestionData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
-
   const { postId } = useParams();
   const nav = useNavigate();
 
@@ -103,9 +102,25 @@ function PostPage() {
   }, [handleScroll]);
 
   // 새로운 질문을 추가해 questionCardCount 상태 업데이트
-  const addQuestion = (newQuestion) => {
-    setQuestionCardCount((prevCount) => prevCount + 1);
-    setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
+  const addQuestion = async (newQuestion) => {
+    try {
+      // 새로운 질문이 전달될 때마다 사용자 데이터를 다시 가져와서 질문 수 업데이트
+      const updateUserData = await getUserData(userData.id);
+
+      // 새로운 질문 데이터를 포함해 질문 데이터 상태 업데이트
+      setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
+
+      // 질문 수 업데이트
+      setQuestionCardCount((prevCount) => prevCount + 1);
+
+      // 사용자 데이터 업데이트
+      setUserData(updateUserData);
+    } catch (error) {
+      console.error(
+        '질문 데이터를 업데이트하는 동안 오류가 발생했습니다.',
+        error,
+      );
+    }
   };
 
   return (
@@ -175,11 +190,21 @@ function PostPage() {
           </div>
         </div>
       </div>
-      <Footer
-        userData={userData}
-        onMoveBack={onMoveBack}
-        addQuestion={addQuestion}
-      />
+      <div className="bottom-[40px] left-[10px] right-[10px] shadow-black-500/50">
+        <div className="flex justify-between px-[30px]">
+          <button
+            className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
+            onClick={onMoveBack}
+          >
+            뒤로 가기
+          </button>
+          <Modal
+            userData={userData}
+            onQuestionSubmitted={addQuestion}
+            className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
+          />
+        </div>
+      </div>
     </div>
   );
 }

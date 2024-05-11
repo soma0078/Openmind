@@ -22,8 +22,6 @@ export async function getSubjects(params = {}) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const body = await response.json();
-    console.log('body');
-    console.log(body);
     return body;
   } catch (error) {
     console.error('Failed to fetch products:', error);
@@ -181,7 +179,7 @@ export async function submitAnswers(question_id, starting, value) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const responseData = await response.json();
-    console.log('답변 보내기를 성공했습니다.', responseData);
+    console.log('답변 보내기를 성공했습니다.');
     return responseData;
   } catch (error) {
     console.error(error);
