@@ -208,7 +208,7 @@ export async function updateAnswer(answerId, updatedContent, value) {
     }
 
     const responseData = await response.json();
-    console.log('답변 수정 성공했습니다:', responseData);
+    console.log('답변 수정 성공했습니다');
     return responseData;
   } catch (error) {
     console.error(error);

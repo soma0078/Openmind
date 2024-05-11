@@ -9,17 +9,22 @@ function QuestionCard({ question, userData }) {
   const [showForm, setShowForm] = useState(false);
   const img = userData.imageSource;
 
-  console.log(!question.answer);
   //true 일때 수정 입력 창 open
-  function handleDataChange() {
+  const handleDataChange = () => {
     setShowForm(!showForm);
-  }
+  };
 
   return (
     <div className="flex flex-col p-[32px] max-w-[684px] min-w-[295px] w-full bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
       <div className="flex justify-between">
         <div className="flex">
-          {question.answer ? (
+          {showForm ? (
+            <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-50)] bg-[var(--Brown-40)]">
+              <div className="text-[14px] font-medium text-center text-[var(--Brown-10)]">
+                수정 중
+              </div>
+            </span>
+          ) : question.answer ? (
             <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-40)]">
               <div className="text-[14px] font-medium text-center text-[var(--Brown-40)]">
                 답변 완료

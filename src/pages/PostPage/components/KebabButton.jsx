@@ -5,15 +5,6 @@ import KebabModal from './KebabModal';
 
 function KebabButton({ question, handleDataChange }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  console.log(question);
-  // const answer = question.answer;
-
-  // const updatedContent = '테스트 변경 값';
-
-  // const handleOptionClick = (option) => {
-  //   console.log(`선택된 옵션: ${option}`);
-  //   setIsMenuOpen(false);
-  // };
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,12 +13,7 @@ function KebabButton({ question, handleDataChange }) {
   return (
     <div className="group/item hover:bg-slate-100">
       <div className="relative group/edit group-hover/item:visible">
-        <button
-          onClick={toggleMenu}
-          // onBlur={() => {
-          //   setIsMenuOpen((isMenuOpen) => !isMenuOpen);
-          // }}
-        >
+        <button onClick={toggleMenu}>
           <img
             src={moreImage}
             alt="더보기 버튼"

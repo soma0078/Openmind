@@ -8,7 +8,6 @@ import {
 
 function KebabModal({ question, handleDataChange }) {
   const questionId = question.id;
-  console.log(question);
 
   async function handleDeleteAnswer() {
     try {
