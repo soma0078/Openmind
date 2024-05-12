@@ -6,36 +6,35 @@ import { postQuestionReaction } from '../../../api/api';
 import AnswersForm from './AnswersForm';
 
 function QuestionCard({ question }) {
-  const userId = localStorage.getItem('userId');
-  const [reaction, setReaction] = useState(
-    localStorage.getItem(`${question.id}-${userId}`) || null,
-  );
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
+  const [likeReaction, setLikeReaction] = useState(
+    sessionStorage.getItem(`like-${question.id}`) || 0,
+  );
+  const [dislikeReaction, setDislikeReaction] = useState(
+    sessionStorage.getItem(`dislike-${question.id}`) || 0,
+  );
 
-  const handleReaction = async (newReaction) => {
-    const previousReaction = localStorage.getItem(`${question.id}-${userId}`);
-
-    if (previousReaction) {
-      alert('이미 반응을 선택하셨습니다.');
-      return;
-    }
-
-    setReaction(newReaction);
-    await postQuestionReaction(question.id, newReaction);
-
-    // 로컬스토리지에 리액션 등록
-    localStorage.setItem(`${question.id}-${userId}`, newReaction);
-
-    if (newReaction === 'like') {
+  const handleReaction = async (type) => {
+    if (type === 'like') {
+      if (likeReaction === 1) {
+        alert('이미 반응을 선택하셨습니다.');
+        return;
+      }
       setLikeCount(likeCount + 1);
-      const nickname = localStorage.getItem('userId'); // 로컬스토리지의 유저이름이 나오나 확인 로그
-      console.log(`${nickname}가 질문에 좋아요를 했습니다.`);
-    } else if (newReaction === 'dislike') {
+      setLikeReaction(1);
+      sessionStorage.setItem(`like-${question.id}`, 1);
+    } else if (type === 'dislike') {
+      if (dislikeReaction === 1) {
+        alert('이미 반응을 선택하셨습니다.');
+        return;
+      }
       setDislikeCount(dislikeCount + 1);
-      const nickname = localStorage.getItem('userId'); // 로컬스토리지의 유저이름이 나오나 확인 로그
-      console.log(`${nickname}가 질문에 싫어요를 했습니다.`);
+      setDislikeReaction(1);
+      sessionStorage.setItem(`dislike-${question.id}`, 1);
     }
+
+    await postQuestionReaction(question.id, type);
   };
 
   return (
@@ -86,7 +85,7 @@ function QuestionCard({ question }) {
       <div className="flex items-center gap-[32px] border-t border-[#cfcfcf] pt-6">
         <div className="flex gap-[6px]">
           <img
-            className={`w-[24px] h-[24px] cursor-pointer ${reaction === 'like' ? 'text-blue-500' : ''}`}
+            className={`w-[24px] h-[24px] cursor-pointer ${likeReaction === 1 ? 'text-blue-500' : ''}`}
             src={thumbsButton}
             alt="좋아요 버튼"
             onClick={() => handleReaction('like')}
@@ -95,7 +94,7 @@ function QuestionCard({ question }) {
         </div>
         <div className="flex gap-[6px]">
           <img
-            className={`w-[24px] h-[24px] cursor-pointer ${reaction === 'dislike' ? 'text-red-500' : ''}`}
+            className={`w-[24px] h-[24px] cursor-pointer ${dislikeReaction === 1 ? 'text-red-500' : ''}`}
             src={thumbsDownButton}
             alt="싫어요 버튼"
             onClick={() => handleReaction('dislike')}
