@@ -24,7 +24,7 @@ function QuestionCard({ question }) {
     fetchUserData();
   }, []);
 
-  //true 일때 수정 입력 창 open
+  //답변 수정 입력 창 상태관리
   const handleDataChange = () => {
     setShowForm(!showForm);
   };
@@ -32,6 +32,7 @@ function QuestionCard({ question }) {
   return (
     <div className="flex flex-col p-[32px] w-[295px] md:w-[672px] xl:w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
       <div className="flex justify-between">
+        {/* showForm = true 일때 수정 중/ 답변이 있을 때 답변 완료/ 답변이 없을 때 미답변 */}
         {showForm ? (
           <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-50)] bg-[var(--Brown-40)]">
             <div className="text-[14px] font-medium text-center text-[var(--Brown-10)]">
@@ -61,6 +62,8 @@ function QuestionCard({ question }) {
           {question.content}
         </p>
       </div>
+      {/* showForm = true 일때 수정 완료 버튼/ 답변이 없을 때 답변 완료 버튼/
+        답변이 있을 때 질문- isRejected = true 이면 답변 거절 출력 */}
       {showForm ? (
         <div className="flex gap-[12px]">
           <img
