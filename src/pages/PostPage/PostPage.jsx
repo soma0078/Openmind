@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getUserData, fetchQuestionsByUser, deleteAll } from '../../api/api';
+import { updateButtonText } from '../../utils/utils';
 import QuestionList from './components/QuestionList';
 import Share from './components/Share';
 import Modal from '../../components/Modal';
@@ -134,24 +135,19 @@ function PostPage() {
   };
 
   useEffect(() => {
-    const updateDeleteButtonText = () => {
-      const windowWidth = window.innerWidth;
-
-      if (windowWidth < 768) {
-        setDeleteButtonText('피드 삭제');
-      } else {
-        setDeleteButtonText('피드 삭제하기');
-      }
-    };
-
     // 페이지 로드시 한번 실행
-    updateDeleteButtonText();
+    updateButtonText(setDeleteButtonText, '피드 삭제', '피드 삭제하기');
 
     // 윈도우 사이즈 변경시마다 실행
-    window.addEventListener('resize', updateDeleteButtonText);
+    window.addEventListener('resize', () =>
+      updateButtonText(setDeleteButtonText, '피드 삭제', '피드 삭제하기'),
+    );
 
     // Clean up
-    return () => window.removeEventListener('resize', updateDeleteButtonText);
+    return () =>
+      window.removeEventListener('resize', () =>
+        updateButtonText(setDeleteButtonText, '피드 삭제', '피드 삭제하기'),
+      );
   }, []);
 
   return (
@@ -176,7 +172,7 @@ function PostPage() {
             </h2>
           </div>
           <Share />
-          <div className="w-[327px] md:w-[704px] flex justify-between">
+          <div className="w-[327px] md:w-[704px] flex justify-between items-center">
             <button
               className="flex justify-center items-center w-12 h-12 rounded-full bg-[#C7BBB5]"
               onClick={onMoveBack}
