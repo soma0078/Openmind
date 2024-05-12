@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getUserData, fetchQuestionsByUser } from '../../api/api';
+import { getUserData, fetchQuestionsByUser, deleteAll } from '../../api/api';
 import QuestionList from './components/QuestionList';
 import Share from './components/Share';
+import Modal from '../../components/Modal';
 import logoImage from '../../assets/img-logo.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
-import Modal from '../../components/Modal';
+import headerImage from '../../assets/img-openmind1.png';
 
 const LIMIT = 5;
 
@@ -16,6 +17,7 @@ function PostPage() {
   const [questionData, setQuestionData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
+
   const { postId } = useParams();
   const nav = useNavigate();
 
@@ -123,34 +125,53 @@ function PostPage() {
     }
   };
 
+  const deletePeed = async () => {
+    window.localStorage.removeItem(postId);
+    await deleteAll(postId);
+    nav('/list', { replace: true });
+  };
+
   return (
-    <div className="flex flex-col h-[234px]">
-      <div className="bg-[#F9F9F9] bg-main1 bg-contain bg-no-repeat">
-        <div className="pt-[50px] gap-[20px] flex flex-col items-center justify-center">
+    <div className="flex flex-col bg-[#F9F9F9]">
+      <div className="relative flex flex-col items-center justify-center">
+        <div className="mt-[50px] z-10 gap-[20px] flex flex-col items-center justify-center">
           <Link to="/">
             <img
-              className="w-[170px] h-[67px]"
+              className="w-[124px] h-[49px] md:w-[170px] md:h-[67px]"
               src={logoImage}
               alt="로고 이미지"
             />
           </Link>
           <img
-            className="w-[136px] h-[136px] rounded-full"
+            className="w-[104px] h-[104px] md:w-[136px] md:h-[136px] rounded-full"
             src={userData.imageSource}
             alt="프로필 사진"
           />
-          <h2 className="font-[400] text-[32px] text-[#000000]">
-            {userData.name}
-          </h2>
+          <div className="relative">
+            <button
+              className="absolute w-20 -top-5 left-full rounded-full py-1 px-2 bg-[#542F1A] text-[#FFFFFF]"
+              onClick={deletePeed}
+            >
+              피드 삭제
+            </button>
+            <h2 className="font-[400] text-[32px] text-[#000000]">
+              {userData.name}
+            </h2>
+          </div>
           <Share />
         </div>
+        <img
+          className="absolute top-0 object-cover w-[1200px] h-[177px] md:h-[234px]"
+          src={headerImage}
+          alt="헤더 이미지"
+        />
       </div>
-      <div className="flex justify-center pt-[30px] pb-[80px] bg-[#F9F9F9]">
-        <div className="flex flex-col items-center max-w-[716px] min-w-[327px] w-full p-[16px] m-[24px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
+      <div className="flex justify-center pt-[30px] pb-[80px]">
+        <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
             {/* 질문이 없을 때 */}
             {questionCardCount === 0 && (
-              <div className="flex flex-col items-center gap-2 max-w-[716px] min-w-[327px] w-full h-[330px]">
+              <div className="flex flex-col items-center gap-2 w-[716px] h-[330px]">
                 <div className="flex justify-center gap-2">
                   <img
                     className="w-[24px] h-[24px]"
@@ -186,24 +207,18 @@ function PostPage() {
             </div>
           </div>
           <div className="questionlist">
-            <QuestionList questionData={questionData} userData={userData} />
+            <QuestionList questionData={questionData} />
           </div>
         </div>
       </div>
-      <div className="bottom-[40px] left-[10px] right-[10px] shadow-black-500/50">
-        <div className="flex justify-between px-[30px]">
-          <button
-            className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
-            onClick={onMoveBack}
-          >
-            뒤로 가기
-          </button>
-          <Modal
-            userData={userData}
-            onQuestionSubmitted={addQuestion}
-            className="rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
-          />
-        </div>
+      <div className="relative mt-[20px] flex justify-between bottom-[80px] px-[30px]">
+        <button
+          className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
+          onClick={onMoveBack}
+        >
+          뒤로 가기
+        </button>
+        <Modal userData={userData} onQuestionSubmitted={addQuestion} />
       </div>
     </div>
   );

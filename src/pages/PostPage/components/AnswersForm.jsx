@@ -3,14 +3,20 @@ import { submitAnswers, updateAnswer } from '../../../api/api';
 
 function AnswersForm({ question, showForm }) {
   const answer = question.answer;
-  const answerText = question.answer.content;
   const [answerTitle, setAnswerTitle] = useState('');
-  const [editingAnswerTitle, setEditingAnswerTitle] = useState(answerText);
 
   const addAnswer = async (e) => {
     try {
-      e.preventDefault(); // 기본 동작(페이지 새로고침) 방지
-      await submitAnswers(`${question.id}`, answerTitle, false);
+      e.preventDefault(); // 기본 동작(페이지 새s로고침) 방지
+      const response = await submitAnswers(
+        `${question.id}`,
+        answerTitle,
+        false,
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP error: ${response.status}`);
+      }
+      // 서버로부터 응답을 받고 나면 입력 필드 초기화
       setAnswerTitle('');
     } catch (error) {
       console.error('답변 추가 중 에러 발생:', error);
@@ -19,6 +25,7 @@ function AnswersForm({ question, showForm }) {
 
   async function handleCorrectionAnswer(e) {
     try {
+      e.preventDefault();
       if (answer === null) {
         alert('수정할 대상이 아닙니다.');
       } else {
@@ -32,16 +39,16 @@ function AnswersForm({ question, showForm }) {
   }
 
   const isInputNotEmpty = answerTitle.trim() !== '';
-  const isInputChangeNotEmpty = editingAnswerTitle.trim() !== '';
+  // const isInputChangeNotEmpty = editingAnswerTitle.trim() !== '';
 
   const handleChange = (e) => {
     // 입력 필드 값이 변경될 때마다 answerTitle 상태를 업데이트
     setAnswerTitle(e.target.value);
   };
 
-  const handleTextChange = (e) => {
-    setEditingAnswerTitle(e.target.value);
-  };
+  // const handleTextChange = (e) => {
+  //   setEditingAnswerTitle(e.target.value);
+  // };
 
   return (
     <>
@@ -50,20 +57,17 @@ function AnswersForm({ question, showForm }) {
           <form className="font-[400] text-[16px] gap-[10px]">
             <textarea
               type="text"
-              value={editingAnswerTitle}
-              onChange={handleTextChange} // 입력 필드 값 변경 시 handleChange 함수 호출
+              value={answerTitle}
+              onChange={handleChange} // 입력 필드 값 변경 시 handleChange 함수 호출
               placeholder="답변을 입력해주세요"
               className={`w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] ${
-                isInputChangeNotEmpty
+                isInputNotEmpty
                   ? ' rounded-lg outline-none whitespace-normal resize-none'
                   : ' rounded-lg border-[var(--Brown-40)] border-2 whitespace-normal resize-none cursor-not-allowed'
               }`}
             />
             <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleCorrectionAnswer(e);
-              }}
+              onClick={handleCorrectionAnswer}
               className={`w-[532px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
                 isInputNotEmpty
                   ? 'bg-[var(--Brown-40)]'
@@ -81,11 +85,11 @@ function AnswersForm({ question, showForm }) {
               value={answerTitle}
               onChange={handleChange} // 입력 필드 값 변경 시 handleChange 함수 호출
               placeholder="답변을 입력해주세요"
-              className="w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
+              className="w-full h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
             />
             <button
               onClick={addAnswer}
-              className={`w-[532px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+              className={`w-full h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
                 isInputNotEmpty
                   ? 'bg-[var(--Brown-40)]'
                   : 'bg-[var(--Brown-30)] cursor-not-allowed'

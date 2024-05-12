@@ -22,6 +22,8 @@ export async function getSubjects(params = {}) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const body = await response.json();
+    console.log('body');
+    console.log(body);
     return body;
   } catch (error) {
     console.error('Failed to fetch products:', error);
@@ -179,10 +181,10 @@ export async function submitAnswers(question_id, starting, value) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const responseData = await response.json();
-    console.log('답변 보내기를 성공했습니다.');
+    console.log('답변 보내기를 성공했습니다.', responseData);
     return responseData;
   } catch (error) {
-    console.error(error);
+    console.error('답변 보내기를 실패했습니다.', error);
     throw error;
   }
 }
@@ -208,10 +210,10 @@ export async function updateAnswer(answerId, updatedContent, value) {
     }
 
     const responseData = await response.json();
-    console.log('답변 수정 성공했습니다');
+    console.log('답변 수정 성공:', responseData);
     return responseData;
   } catch (error) {
-    console.error(error);
+    console.error('답변 수정 실패:', error);
     throw error;
   }
 }
@@ -274,3 +276,10 @@ export async function rejectedUpdate(answerId) {
     throw error;
   }
 }
+
+// 전체 피드 삭제
+export const deleteAll = async (id) => {
+  await fetch(`${BASE_URL}/subjects/${id}/`, {
+    method: 'DELETE',
+  });
+};
