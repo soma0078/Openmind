@@ -24,9 +24,10 @@ function MainPage() {
     const isNickName = checkIsNickName();
     if (
       isNickName &&
+      nickName !== window.localStorage.getItem('user') &&
       isNickName.length >= 3 &&
       regex.test(isNickName) &&
-      isNickName.length <= 10
+      isNickName.length <= 7
     ) {
       createCard(nickName).then((result) => {
         setLocalStorage(result.id, result.name);
