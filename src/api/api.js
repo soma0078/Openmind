@@ -181,15 +181,15 @@ export async function submitAnswers(question_id, starting, value) {
       throw new Error(`HTTP error: ${response.status}`);
     }
     const responseData = await response.json();
-    console.log('답변 보내기를 성공했습니다.', responseData);
+    console.log('답변 보내기를 성공했습니다.');
     return responseData;
   } catch (error) {
-    console.error('답변 보내기를 실패했습니다.', error);
+    console.error(error);
     throw error;
   }
 }
 
-// 답변 수정하기 함수
+// 답변 수정하기
 export async function updateAnswer(answerId, updatedContent, value) {
   const requestData = {
     content: updatedContent,
@@ -197,7 +197,7 @@ export async function updateAnswer(answerId, updatedContent, value) {
   };
 
   try {
-    const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export async function updateAnswer(answerId, updatedContent, value) {
 
 // 전체 피드 삭제
 export const deleteAll = async (id) => {
-  await fetch(`https://openmind-api.vercel.app/6-13/subjects/${id}/`, {
+  await fetch(`${BASE_URL}/subjects/${id}/`, {
     method: 'DELETE',
   });
 };
