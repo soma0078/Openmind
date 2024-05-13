@@ -86,6 +86,9 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           } else if (question.answer.isRejected === true) {
             alert('이미 거절된 답변입니다.');
             toggleMenu();
+          } else {
+            alert('답변이 있어 거절할 수 없습니다.');
+            toggleMenu();
           }
         }}
         aria-label="답변 거절하기 버튼"
