@@ -25,8 +25,8 @@ function QuestionCard({ question }) {
   }, []);
 
   //답변 수정 입력 창 상태관리
-  const handleDataChange = () => {
-    setShowForm(!showForm);
+  const handleDataChange = (e) => {
+    setShowForm(e);
   };
 
   return (
@@ -34,22 +34,16 @@ function QuestionCard({ question }) {
       <div className="flex justify-between">
         {/* showForm = true 일때 수정 중/ 답변이 있을 때 답변 완료/ 답변이 없을 때 미답변 */}
         {showForm ? (
-          <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-50)] bg-[var(--Brown-40)]">
-            <div className="text-[14px] font-medium text-center text-[var(--Brown-10)]">
-              수정 중
-            </div>
+          <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-50)] bg-[var(--Brown-40)] text-[14px] font-medium text-center text-[var(--Brown-10)]">
+            수정 중
           </span>
         ) : question.answer ? (
-          <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-40)]">
-            <div className="text-[14px] font-medium text-center text-[var(--Brown-40)]">
-              답변 완료
-            </div>
+          <span className="w-[76px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-40)] text-[14px] font-medium text-center text-[var(--Brown-40)]">
+            답변 완료
           </span>
         ) : (
-          <span className="w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Grayscale-40)]">
-            <div className="text-[14px] font-medium text-center text-[var(--Grayscale-40)]">
-              미답변
-            </div>
+          <span className="w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Grayscale-40)] text-[14px] font-medium text-center text-[var(--Grayscale-40)]">
+            미답변
           </span>
         )}
         <KebabButton question={question} handleDataChange={handleDataChange} />

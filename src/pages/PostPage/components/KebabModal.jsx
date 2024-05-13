@@ -3,12 +3,11 @@ import {
   deleteQuestion,
   rejectedUpdate,
   submitAnswers,
-  // updateAnswer,
 } from '../../../api/api';
 
-function KebabModal({ question, handleDataChange }) {
+function KebabModal({ question, handleDataChange, toggleMenu }) {
   const questionId = question.id;
-
+  console.log(question);
   async function handleDeleteAnswer() {
     try {
       await deleteAnswer(question.answer.id);
@@ -49,28 +48,56 @@ function KebabModal({ question, handleDataChange }) {
     <div className="block text-[14px] text-[600] absolute right-0 mt-2 w-[125px] bg-white shadow-lg rounded-lg">
       <div
         className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-        onClick={handleDataChange}
+        onClick={() => {
+          if (question.answer === null) {
+            alert('수정할 대상이 아닙니다.');
+            handleDataChange(false);
+            toggleMenu();
+          } else {
+            handleDataChange(true);
+            toggleMenu();
+          }
+        }}
         aria-label="답변 수정하기 버튼"
       >
         답변 수정하기
       </div>
       <div
         className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-        onClick={handleDeleteAnswer}
+        onClick={() => {
+          if (question.answer === null) {
+            alert('삭제할 질문이 없습니다.');
+            toggleMenu();
+          } else {
+            handleDeleteAnswer();
+            toggleMenu();
+          }
+        }}
         aria-label="답변 삭제하기 버튼"
       >
         답변 삭제하기
       </div>
       <div
         className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-        onClick={handleRejectedAnswer}
+        onClick={() => {
+          if (question.answer.isRejected === true) {
+            alert('이미 거절된 답변입니다.');
+            toggleMenu();
+          } else {
+            handleRejectedAnswer();
+            toggleMenu();
+          }
+        }}
         aria-label="답변 거절하기 버튼"
       >
         답변 거절하기
       </div>
       <div
         className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
-        onClick={handleDeleteQuestion}
+        onClick={() => {
+          handleDeleteQuestion();
+          toggleMenu();
+        }}
         aria-label="질문 삭제하기 버튼"
       >
         질문 삭제하기

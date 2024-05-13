@@ -8,15 +8,14 @@ function AnswersForm({ question, showForm }) {
 
   const addAnswer = async (e) => {
     try {
-      e.preventDefault(); // 기본 동작(페이지 새s로고침) 방지
+      e.preventDefault();
       await submitAnswers(`${question.id}`, answerTitle, false);
-      // 서버로부터 응답을 받고 나면 입력 필드 초기화
       setAnswerTitle('');
     } catch (error) {
       console.error('답변 추가 중 에러 발생:', error);
     }
   };
-  console.log(answer);
+
   async function handleCorrectionAnswer(e) {
     try {
       e.preventDefault();
@@ -36,7 +35,6 @@ function AnswersForm({ question, showForm }) {
   const isInputChangeNotEmpty = editingAnswerTitle.trim() !== '';
 
   const handleChange = (e) => {
-    // 입력 필드 값이 변경될 때마다 answerTitle 상태를 업데이트
     setAnswerTitle(e.target.value);
   };
 
@@ -44,9 +42,11 @@ function AnswersForm({ question, showForm }) {
     setEditingAnswerTitle(e.target.value);
   };
 
-  //답변 존재 유무 상태관리
+  //답변 존재 유무 상태관리 + 수정 입력창 답변 관리
   useEffect(() => {
     if (answer === null) {
+      setEditingAnswerTitle(editingAnswerTitle);
+    } else if (answer.isRejected === true) {
       setEditingAnswerTitle(editingAnswerTitle);
     } else {
       setEditingAnswerTitle(answer.content);
@@ -61,7 +61,7 @@ function AnswersForm({ question, showForm }) {
             <textarea
               type="text"
               value={editingAnswerTitle}
-              onChange={handleTextChange} // 입력 필드 값 변경 시 handleChange 함수 호출
+              onChange={handleTextChange}
               placeholder="답변을 입력해주세요"
               className={`w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] ${
                 isInputChangeNotEmpty
@@ -86,7 +86,7 @@ function AnswersForm({ question, showForm }) {
             <textarea
               type="text"
               value={answerTitle}
-              onChange={handleChange} // 입력 필드 값 변경 시 handleChange 함수 호출
+              onChange={handleChange}
               placeholder="답변을 입력해주세요"
               className="w-full h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
             />
