@@ -2,15 +2,19 @@ import React, { useEffect, useState } from 'react';
 import thumbsButton from '../../../assets/icon-thumbs-up.svg';
 import thumbsDownButton from '../../../assets/icon-thumbs-down.svg';
 import { formatDateAge } from '../../../utils/utils';
+import { postQuestionReaction } from '../../../api/api';
 import AnswersForm from './AnswersForm';
 import { getUserData } from '../../../api/api';
 import { useParams } from 'react-router-dom';
+import { setLocalStorage } from '../../../utils/localStorage';
 import KebabButton from './KebabButton';
 
 function QuestionCard({ question }) {
   const [userData, setUserData] = useState('');
   const [showForm, setShowForm] = useState(false);
   const { postId } = useParams();
+  const [likeCount, setLikeCount] = useState(question.like);
+  const [dislikeCount, setDislikeCount] = useState(question.dislike);
 
   useEffect(() => {
     async function fetchUserData() {
@@ -23,6 +27,31 @@ function QuestionCard({ question }) {
     }
     fetchUserData();
   }, []);
+
+  //좋아요와 싫어요를 로컬스토리지와 비교해서 좋아요와 싫어요가 1이상이면 각 리액션에 알림창이 뜸
+  const handleReaction = async (type) => {
+    const key = `${question.id}-${type}`;
+
+    const reaction = localStorage.getItem(key);
+
+    if (reaction) {
+      alert('이미 반응을 선택하셨습니다.');
+      return;
+    }
+
+    const success = setLocalStorage(question.id, null, type);
+
+    if (success) {
+      await postQuestionReaction(question.id, type);
+      if (type === 'like') {
+        setLikeCount(likeCount + 1);
+      } else if (type === 'dislike') {
+        setDislikeCount(dislikeCount + 1);
+      }
+    } else {
+      alert('이미 반응을 선택하셨습니다.');
+    }
+  };
 
   //답변 수정 입력 창 상태관리
   const handleDataChange = (e) => {
@@ -78,7 +107,9 @@ function QuestionCard({ question }) {
             alt="프로필 사진"
           />
           <div className="flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
-            <p className="text-[14px] font-[400] md:text-[18px]">작성자</p>
+            <p className="text-[14px] font-[400] md:text-[18px]">
+              {userData.name}
+            </p>
             <AnswersForm question={question} />
           </div>
         </div>
@@ -111,19 +142,31 @@ function QuestionCard({ question }) {
       <div className="flex items-center gap-[32px] border-t border-[#cfcfcf] pt-6">
         <div className="flex gap-[6px]">
           <img
-            className="w-[24px] h-[24px] cursor-pointer"
+            className={`w-[24px] h-[24px] cursor-pointer ${localStorage.getItem(`${question.id}-like`) === 1 ? 'text-blue-500' : ''}`}
             src={thumbsButton}
             alt="좋아요 버튼"
+            onClick={() => handleReaction('like')}
           />
-          <span>좋아요</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => handleReaction('like')}
+          >
+            좋아요 {likeCount}개
+          </span>
         </div>
         <div className="flex gap-[6px]">
           <img
-            className="w-[24px] h-[24px] cursor-pointer"
+            className={`w-[24px] h-[24px] cursor-pointer${localStorage.getItem(`${question.id}-dislike`) === 1 ? 'text-red-500' : ''}`}
             src={thumbsDownButton}
             alt="싫어요 버튼"
+            onClick={() => handleReaction('dislike')}
           />
-          <span>싫어요</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => handleReaction('dislike')}
+          >
+            싫어요 {dislikeCount}개
+          </span>
         </div>
       </div>
     </div>

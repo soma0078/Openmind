@@ -19,9 +19,11 @@ function MainPage() {
     setNickName(e.target.value);
   };
 
-  const onMovePost = () => {
+  const onMovePost = (e) => {
+    e.preventDefault();
     const isNickName = checkIsNickName();
     if (
+      isNickName &&
       isNickName.length >= 3 &&
       regex.test(isNickName) &&
       isNickName.length <= 10
@@ -30,6 +32,8 @@ function MainPage() {
         setLocalStorage(result.id, result.name);
       });
       nav('/list');
+    } else if (!isNickName) {
+      alert('닉네임을 작성해주세요.');
     } else {
       alert('올바른 닉네임을 작성해주세요.');
     }

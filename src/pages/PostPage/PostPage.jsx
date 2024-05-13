@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getUserData, fetchQuestionsByUser, deleteAll } from '../../api/api';
+import { updateButtonText } from '../../utils/utils';
 import QuestionList from './components/QuestionList';
 import Share from './components/Share';
 import Modal from '../../components/Modal';
@@ -8,6 +9,7 @@ import logoImage from '../../assets/img-logo.png';
 import emptyImage from '../../assets/img-no-questions-asked.png';
 import messageImage from '../../assets/icon-messages.svg';
 import headerImage from '../../assets/img-openmind1.png';
+import backwardIcon from '../../assets/icon-backward.svg';
 
 const LIMIT = 5;
 
@@ -17,6 +19,7 @@ function PostPage() {
   const [questionData, setQuestionData] = useState([]);
   const [offset, setOffset] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [deleteButtonText, setDeleteButtonText] = useState('피드 삭제하기');
 
   const { postId } = useParams();
   const nav = useNavigate();
@@ -131,6 +134,22 @@ function PostPage() {
     nav('/list', { replace: true });
   };
 
+  useEffect(() => {
+    // 페이지 로드시 한번 실행
+    updateButtonText(setDeleteButtonText, '피드 삭제', '피드 삭제하기');
+
+    // 윈도우 사이즈 변경시마다 실행
+    window.addEventListener('resize', () =>
+      updateButtonText(setDeleteButtonText, '피드 삭제', '피드 삭제하기'),
+    );
+
+    // Clean up
+    return () =>
+      window.removeEventListener('resize', () =>
+        updateButtonText(setDeleteButtonText, '피드 삭제', '피드 삭제하기'),
+      );
+  }, []);
+
   return (
     <div className="flex flex-col bg-[#F9F9F9]">
       <div className="relative flex flex-col items-center justify-center">
@@ -148,17 +167,32 @@ function PostPage() {
             alt="프로필 사진"
           />
           <div className="relative">
-            <button
-              className="absolute w-20 -top-5 left-full rounded-full py-1 px-2 bg-[#542F1A] text-[#FFFFFF]"
-              onClick={deletePeed}
-            >
-              피드 삭제
-            </button>
             <h2 className="font-[400] text-[32px] text-[#000000]">
               {userData.name}
             </h2>
           </div>
           <Share />
+          <div className="w-[327px] md:w-[704px] flex justify-between items-center">
+            <button
+              className="flex justify-center items-center w-12 h-12 rounded-full bg-[#C7BBB5]"
+              onClick={onMoveBack}
+            >
+              <img
+                src={backwardIcon}
+                alt="뒤로가기 아이콘"
+                className="w-8 h-8"
+              />
+            </button>
+            <div className="flex gap-1 md:gap-3 justify-between bottom-[80px]">
+              <Modal userData={userData} onQuestionSubmitted={addQuestion} />
+              <button
+                className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#B93333] text-[20px] text-[#FFFFFF] font-[400]"
+                onClick={deletePeed}
+              >
+                {deleteButtonText}
+              </button>
+            </div>
+          </div>
         </div>
         <img
           className="absolute top-0 object-cover w-[1200px] h-[177px] md:h-[234px]"
@@ -210,15 +244,6 @@ function PostPage() {
             <QuestionList questionData={questionData} />
           </div>
         </div>
-      </div>
-      <div className="relative mt-[20px] flex justify-between bottom-[80px] px-[30px]">
-        <button
-          className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
-          onClick={onMoveBack}
-        >
-          뒤로 가기
-        </button>
-        <Modal userData={userData} onQuestionSubmitted={addQuestion} />
       </div>
     </div>
   );

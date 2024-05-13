@@ -80,11 +80,11 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
       <div
         className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
         onClick={() => {
-          if (question.answer.isRejected === true) {
-            alert('이미 거절된 답변입니다.');
-            toggleMenu();
-          } else {
+          if (question.answer === null) {
             handleRejectedAnswer();
+            toggleMenu();
+          } else if (question.answer.isRejected === true) {
+            alert('이미 거절된 답변입니다.');
             toggleMenu();
           }
         }}
