@@ -153,7 +153,7 @@ function PostPage() {
   }, []);
 
   return (
-    <div className="flex flex-col bg-[#F9F9F9]">
+    <div className="w-[100vw] flex flex-col bg-[#F9F9F9]">
       <div className="relative flex flex-col items-center justify-center">
         <div className="mt-[50px] z-10 gap-[20px] flex flex-col items-center justify-center">
           <Link to="/">
