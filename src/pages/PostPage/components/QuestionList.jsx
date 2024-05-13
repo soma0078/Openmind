@@ -12,7 +12,7 @@ function QuestionList({ questionData }) {
   return (
     <>
       {questionData.length !== 0 && (
-        <div className="flex justify-end gap-[20px] mr-[20px] mb-[20px] ">
+        <div className="w-[275px] md:w-[652px] flex justify-end gap-[20px] mr-[20px] mb-[20px]">
           <button
             onClick={() => setDisplayMode('all')}
             className={`text-[15px] font-[400] ${displayMode === 'all' ? 'text-[#1877f2]' : 'text-[#542F1A]'}`}
