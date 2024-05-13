@@ -218,7 +218,7 @@ export async function updateAnswer(answerId, updatedContent, value) {
   };
 
   try {
-    const response = await fetch(`${BASE_URL}/answers/${answerId}`, {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}/`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -235,6 +235,65 @@ export async function updateAnswer(answerId, updatedContent, value) {
     return responseData;
   } catch (error) {
     console.error('답변 수정 실패:', error);
+    throw error;
+  }
+}
+
+//답변 삭제하기
+export async function deleteAnswer(answerId) {
+  try {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}/`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const responseData = console.log('답변 삭제 성공했습니다.');
+    return responseData;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+//질문 삭제하기
+export async function deleteQuestion(questionsId) {
+  try {
+    const response = await fetch(`${BASE_URL}/questions/${questionsId}/`, {
+      method: 'DELETE',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const responseData = console.log('질문 삭제 성공했습니다.');
+    return responseData;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+
+// 답변 거절하기 함수
+export async function rejectedUpdate(answerId) {
+  const requestData = {
+    content: '거절된 답변입니다.',
+    isRejected: true,
+  };
+  try {
+    const response = await fetch(`${BASE_URL}/answers/${answerId}/`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error: ${response.status}`);
+    }
+    const responseData = await response.json();
+    return responseData;
+  } catch (error) {
+    console.error(error);
     throw error;
   }
 }
