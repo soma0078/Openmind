@@ -114,7 +114,12 @@ function QuestionCard({ question }) {
             alt="좋아요 버튼"
             onClick={() => handleReaction('like')}
           />
-          <span>{likeCount} 좋아요</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => handleReaction('like')}
+          >
+            좋아요 {likeCount}개
+          </span>
         </div>
         <div className="flex gap-[6px]">
           <img
@@ -123,7 +128,12 @@ function QuestionCard({ question }) {
             alt="싫어요 버튼"
             onClick={() => handleReaction('dislike')}
           />
-          <span>{dislikeCount} 싫어요</span>
+          <span
+            className="cursor-pointer"
+            onClick={() => handleReaction('dislike')}
+          >
+            싫어요 {dislikeCount}개
+          </span>
         </div>
       </div>
     </div>

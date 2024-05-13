@@ -24,7 +24,6 @@ export const setLocalStorage = (id, name, reactionType) => {
     userData[reactionKey] = '1';
   }
 
-  userData[id] = name;
   localStorage.setItem('user', JSON.stringify(userData));
   return true;
 };
