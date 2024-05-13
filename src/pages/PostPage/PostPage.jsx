@@ -126,9 +126,11 @@ function PostPage() {
   };
 
   const deletePeed = async () => {
-    window.localStorage.removeItem(postId);
-    await deleteAll(postId);
-    nav('/list', {replace: true});
+    if (window.confirm("피드를 삭제하시겠습니까? 삭제시, 복구되지 않습니다.")) {
+      window.localStorage.removeItem(postId);
+      await deleteAll(postId);
+      nav('/list', {replace: true});
+    } else return;
   };
 
   return (
