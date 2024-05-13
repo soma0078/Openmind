@@ -15,10 +15,22 @@ function QuestionCard({ question }) {
   const { postId } = useParams();
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
-  const [likeClicked, setLikeClicked] = useState(false);
-  const [dislikeClicked, setDislikeClicked] = useState(false);
+  //로컬스토리지에서 좋아요 싫어요 상태가져오고 해당값으로 초기화 하기
+  const [likeClicked, setLikeClicked] = useState(
+    localStorage.getItem(`${question.id}-like`) ? true : false,
+  );
+  const [dislikeClicked, setDislikeClicked] = useState(
+    localStorage.getItem(`${question.id}-dislike`) ? true : false,
+  );
 
   useEffect(() => {
+    //로컬스토리지에서 좋아요와 싫어요 상태를 가져옴
+    const likeStatus = localStorage.getItem(`${question.id}-like`);
+    const dislikeStatus = localStorage.getItem(`${question.id}-dislike`);
+
+    setLikeClicked(likeStatus ? true : false);
+    setDislikeClicked(dislikeStatus ? true : false);
+
     async function fetchUserData() {
       try {
         const userData = await getUserData(postId);
@@ -33,7 +45,6 @@ function QuestionCard({ question }) {
   //좋아요와 싫어요를 로컬스토리지와 비교해서 좋아요와 싫어요가 1이상이면 각 리액션에 알림창이 뜸
   const handleReaction = async (type) => {
     const key = `${question.id}-${type}`;
-
     const reaction = localStorage.getItem(key);
 
     if (reaction) {
