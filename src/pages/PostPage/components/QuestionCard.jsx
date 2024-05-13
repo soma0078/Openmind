@@ -98,7 +98,7 @@ function QuestionCard({ question }) {
         <span className="text-[14px] text-[#818181] font-[500]">
           질문 &#183; {formatDateAge(question.createdAt)}
         </span>
-        <p className="text-[16px] font-[400] md:text-[18px]">
+        <p className="text-[16px] font-[400] md:text-[18px] whitespace-pre-wrap">
           {question.content}
         </p>
       </div>
@@ -138,7 +138,7 @@ function QuestionCard({ question }) {
               src={userData.imageSource}
               alt="프로필 사진"
             />
-            <div className="text-[16px] font-[400] flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
+            <div className="text-[16px] font-[400] flex flex-col w-[203px] md:w-[548px] xl:w-[560px] whitespace-pre-wrap">
               <p className="text-[14px] font-[400] md:text-[18px]">
                 작성자
                 <span className="text-[14px] font-[500] text-[var(--Grayscale-40)]">
