@@ -19,12 +19,11 @@ function MainPage() {
     setNickName(e.target.value);
   };
 
-  const onMovePost = (e) => {
+  const createPeed = (e) => {
     e.preventDefault();
     const isNickName = checkIsNickName();
     if (
       isNickName &&
-      nickName !== window.localStorage.getItem('user') &&
       isNickName.length >= 3 &&
       regex.test(isNickName) &&
       isNickName.length <= 7
@@ -59,7 +58,7 @@ function MainPage() {
           />
           <button
             className="w-[257px] h-[46px] rounded-[8px] py-[12px] px-[24px] bg-[#542F1A] text-[16px] text-[#FFFFFF] font-[400] tablet-2:w-[336px]"
-            onClick={onMovePost}
+            onClick={createPeed}
             type="submit"
           >
             피드 생성
