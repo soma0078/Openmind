@@ -1,5 +1,6 @@
 import React, { useRef, useId, useState, useEffect } from 'react';
 import { submitQuestion } from '../api/api';
+import { updateButtonText } from '../utils/utils';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import iconClose from '../assets/icon-close.svg';
 import iconMessage from '../assets/icon-messages.svg';
@@ -9,7 +10,7 @@ function Modal({ userData, onQuestionSubmitted }) {
   const textareaId = useId();
   const [questionContent, setQuestionContent] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [buttonText, setButtonText] = useState('질문 보내기'); // 버튼 텍스트 상태 추가
+  const [buttonText, setButtonText] = useState('질문 작성하기'); // 버튼 텍스트 상태 추가
 
   //모달이 닫힐 때 상태 초기화
   const resetModalState = () => {
@@ -46,24 +47,19 @@ function Modal({ userData, onQuestionSubmitted }) {
   };
 
   useEffect(() => {
-    const updateButtonText = () => {
-      const windowWidth = window.innerWidth;
-
-      if (windowWidth < 768) {
-        setButtonText('질문 작성');
-      } else {
-        setButtonText('질문 작성하기');
-      }
-    };
-
     // 페이지 로드시 한번 실행
-    updateButtonText();
+    updateButtonText(setButtonText, '질문 작성', '질문 작성하기');
 
     // 윈도우 사이즈 변경시마다 실행
-    window.addEventListener('resize', updateButtonText);
+    window.addEventListener('resize', () =>
+      updateButtonText(setButtonText, '질문 작성', '질문 작성하기'),
+    );
 
     // Clean up
-    return () => window.removeEventListener('resize', updateButtonText);
+    return () =>
+      window.removeEventListener('resize', () =>
+        updateButtonText(setButtonText, '질문 작성', '질문 작성하기'),
+      );
   }, []);
 
   return (
