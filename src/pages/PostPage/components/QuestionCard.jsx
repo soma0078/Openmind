@@ -6,7 +6,7 @@ import { postQuestionReaction } from '../../../api/api';
 import AnswersForm from './AnswersForm';
 import { getUserData } from '../../../api/api';
 import { useParams } from 'react-router-dom';
-import { setLocalStorage } from '../../../utils/localStorage';
+import { setReactionStorage } from '../../../utils/localStorage';
 import KebabButton from './KebabButton';
 
 function QuestionCard({ question }) {
@@ -39,7 +39,7 @@ function QuestionCard({ question }) {
       return;
     }
 
-    const success = setLocalStorage(question.id, null, type);
+    const success = setReactionStorage(question.id, null, type);
 
     if (success) {
       await postQuestionReaction(question.id, type);
