@@ -33,3 +33,9 @@ export function formatDateAge(dateString) {
     return `${diffWeeks}주 전`;
   }
 }
+
+// 윈도우 너비에 따라 버튼 텍스트 업데이트
+export const updateButtonText = (setButtonText, shortText, longText) => {
+  const windowWidth = window.innerWidth;
+  setButtonText(windowWidth < 768 ? shortText : longText);
+};
