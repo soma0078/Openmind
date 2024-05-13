@@ -104,9 +104,25 @@ function PostPage() {
   }, [handleScroll]);
 
   // 새로운 질문을 추가해 questionCardCount 상태 업데이트
-  const addQuestion = (newQuestion) => {
-    setQuestionCardCount((prevCount) => prevCount + 1);
-    setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
+  const addQuestion = async (newQuestion) => {
+    try {
+      // 새로운 질문이 전달될 때마다 사용자 데이터를 다시 가져와서 질문 수 업데이트
+      const updateUserData = await getUserData(userData.id);
+
+      // 새로운 질문 데이터를 포함해 질문 데이터 상태 업데이트
+      setQuestionData((prevQuestions) => [newQuestion, ...prevQuestions]);
+
+      // 질문 수 업데이트
+      setQuestionCardCount((prevCount) => prevCount + 1);
+
+      // 사용자 데이터 업데이트
+      setUserData(updateUserData);
+    } catch (error) {
+      console.error(
+        '질문 데이터를 업데이트하는 동안 오류가 발생했습니다.',
+        error,
+      );
+    }
   };
 
   const deletePeed = async () => {
