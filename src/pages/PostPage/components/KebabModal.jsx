@@ -47,7 +47,7 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
   return (
     <div className="block text-[14px] text-[600] absolute right-0 mt-2 w-[125px] bg-white shadow-lg rounded-lg">
       <div
-        className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
         onClick={() => {
           if (question.answer === null) {
             alert('수정할 대상이 아닙니다.');
@@ -63,7 +63,7 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         답변 수정하기
       </div>
       <div
-        className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
         onClick={() => {
           if (question.answer === null) {
             alert('삭제할 질문이 없습니다.');
@@ -78,7 +78,7 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         답변 삭제하기
       </div>
       <div
-        className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
         onClick={() => {
           if (question.answer === null) {
             handleRejectedAnswer();
@@ -93,7 +93,7 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         답변 거절하기
       </div>
       <div
-        className="py-2 px-4 hover:bg-gray-100 cursor-pointer"
+        className="px-4 py-2 cursor-pointer hover:bg-gray-100"
         onClick={() => {
           handleDeleteQuestion();
           toggleMenu();
