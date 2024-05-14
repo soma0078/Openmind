@@ -4,7 +4,7 @@ function Loading() {
   return (
     <div className="h-[536px] tablet-1:h-[394px] flex justify-center items-center">
       <img
-        className="animate-spin w-[20px] h-[20px]"
+        className="w-5 h-5 animate-spinw"
         src={spinnerIcon}
         alt="loading spinner"
       />

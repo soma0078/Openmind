@@ -3,7 +3,7 @@ import AllSubjectsSection from './components/AllSubjectsSection';
 
 function ListPage() {
   return (
-    <div className="h-[100vh] flex flex-col bg-[#F9F9F9]">
+    <div className="h-[100vh] flex flex-col bg-[var(--Grayscale-20)]">
       <Header />
       <AllSubjectsSection />
     </div>

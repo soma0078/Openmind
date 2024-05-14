@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import moreImage from '../../../assets/icon-more.svg';
-
 import KebabModal from './KebabModal';
+import moreImage from '../../../assets/icon-more.svg';
 
 function KebabButton({ question, handleDataChange }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,7 +15,7 @@ function KebabButton({ question, handleDataChange }) {
         <img
           src={moreImage}
           alt="더보기 버튼"
-          className="flex w-[26px] h-[26px]"
+          className="flex w-6 h-6 tablet-1:w-7 tablet-1:h-7"
         ></img>
       </button>
       {isMenuOpen && (

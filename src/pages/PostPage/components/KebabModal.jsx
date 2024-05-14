@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   deleteAnswer,
   deleteQuestion,
@@ -10,7 +11,6 @@ import rejectionButton from '../../../assets/icon-rejection.svg';
 import editButtonBlue from '../../../assets/icon-edit-blue.svg';
 import closeButtonBlue from '../../../assets/icon-close-blue.svg';
 import rejectionButtonBlue from '../../../assets/icon-rejection-blue.svg';
-import { useState } from 'react';
 
 function KebabModal({ question, handleDataChange, toggleMenu }) {
   const [hoverEdit, setHoverEdit] = useState(false);
@@ -59,9 +59,9 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
   }
 
   return (
-    <div className="block text-[14px] text-[600] absolute right-0 mt-2 w-[130px] bg-white shadow-lg rounded-lg">
+    <div className="block text-sm font-medium absolute right-0 mt-2 w-[130px] bg-white shadow-lg rounded-lg">
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-[500]"
+        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium"
         onClick={() => {
           if (question.answer === null) {
             alert('수정할 대상이 아닙니다.');
@@ -83,14 +83,14 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         }}
       >
         <img
-          className="flex w-[14px] h-[14px]"
+          className="flex w-3 h-3 tablet-1:w-4 tablet-1:h-4"
           src={hoverEdit ? editButtonBlue : editButton}
           alt="버튼"
         />
         <span className="flex">답변 수정하기</span>
       </div>
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer  hover:text-[var(--Blue-50)] hover:font-[500]"
+        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer  hover:text-[var(--Blue-50)] hover:font-medium"
         onClick={() => {
           if (question.answer === null) {
             alert('삭제할 답변이 없습니다.');
@@ -111,14 +111,14 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         }}
       >
         <img
-          className="flex w-[14px] h-[14px]"
+          className="flex w-3 h-3 tablet-1:w-4 tablet-1:h-4"
           src={hoverDeleteAnswer ? closeButtonBlue : closeButton}
           alt="버튼"
         ></img>
         <span className="flex">답변 삭제하기</span>
       </div>
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-[500]"
+        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium"
         onClick={() => {
           if (question.answer === null) {
             handleRejectedAnswer();
@@ -142,14 +142,14 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         }}
       >
         <img
-          className="flex w-[14px] h-[14px]"
+          className="flex w-3 h-3 tablet-1:w-4 tablet-1:h-4"
           src={hoverRejection ? rejectionButtonBlue : rejectionButton}
           alt="버튼"
         ></img>
         <span className="flex">답변 거절하기</span>
       </div>
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-[500]"
+        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium"
         onClick={() => {
           handleDeleteQuestion();
           toggleMenu();
@@ -165,7 +165,7 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
         }}
       >
         <img
-          className="flex w-[14px] h-[14px]"
+          className="flex w-3 h-3 tablet-1:w-4 tablet-1:h-4"
           src={hoverDeleteQuestion ? closeButtonBlue : closeButton}
           alt="버튼"
         ></img>

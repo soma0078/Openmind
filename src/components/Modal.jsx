@@ -66,7 +66,7 @@ function Modal({ userData, onQuestionSubmitted }) {
     <div>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#542F1A] text-[20px] text-[#FFFFFF] font-[400]"
+        className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-full py-3 px-6 bg-[var(--Brown-40)] text-xl text-[var(--Grayscale-10)] font-normal"
       >
         {buttonText}
       </button>
