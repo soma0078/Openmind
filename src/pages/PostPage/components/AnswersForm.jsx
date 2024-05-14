@@ -33,8 +33,8 @@ function AnswersForm({ question, showForm }) {
     window.location.reload();
   }
 
-  const isInputNotEmpty = answerTitle.trim() !== '';
-  const isInputChangeNotEmpty = editingAnswerTitle.trim() !== '';
+  const isInputAnswer = answerTitle.trim() === '';
+  const handleChangeAnswer = editingAnswerTitle.trim() === '';
 
   const handleChange = (e) => {
     setAnswerTitle(e.target.value);
@@ -57,55 +57,53 @@ function AnswersForm({ question, showForm }) {
 
   return (
     <>
-      <div>
-        {showForm ? (
-          <form className="font-[400] text-[16px] gap-[10px]">
-            <textarea
-              type="text"
-              value={editingAnswerTitle}
-              onChange={handleTextChange}
-              placeholder="답변을 입력해주세요"
-              className={`w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] ${
-                isInputChangeNotEmpty
-                  ? ' rounded-lg outline-none whitespace-normal resize-none'
-                  : ' rounded-lg border-[var(--Brown-40)] border-2 whitespace-normal resize-none cursor-not-allowed'
-              }`}
-            />
-            <button
-              onClick={handleCorrectionAnswer}
-              className={`w-[532px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
-                isInputChangeNotEmpty
-                  ? 'bg-[var(--Brown-40)]'
-                  : 'bg-[var(--Brown-30)] cursor-not-allowed'
-              }`}
-              disabled={!isInputChangeNotEmpty}
-            >
-              수정 완료
-            </button>
-          </form>
-        ) : (
-          <form className="font-[400] text-[16px] gap-[10px]">
-            <textarea
-              type="text"
-              value={answerTitle}
-              onChange={handleChange}
-              placeholder="답변을 입력해주세요"
-              className="w-full h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg outline-none whitespace-normal resize-none"
-            />
-            <button
-              onClick={addAnswer}
-              className={`w-full h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
-                isInputNotEmpty
-                  ? 'bg-[var(--Brown-40)]'
-                  : 'bg-[var(--Brown-30)] cursor-not-allowed'
-              }`}
-              disabled={!isInputNotEmpty}
-            >
-              답변 완료
-            </button>
-          </form>
-        )}
-      </div>
+      {showForm ? (
+        <form className="gap-3 text-base font-normal">
+          <textarea
+            type="text"
+            value={editingAnswerTitle}
+            onChange={handleTextChange}
+            placeholder="답변을 입력해주세요"
+            className={`w-[532px] h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] ${
+              handleChangeAnswer
+                ? 'rounded-lg border-[var(--Brown-40)] border-2 whitespace-normal resize-none'
+                : 'rounded-lg border-[var(--Brown-40)] border-2 outline-none whitespace-normal resize-none'
+            }`}
+          />
+          <button
+            onClick={handleCorrectionAnswer}
+            className={`w-[532px] h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+              handleChangeAnswer
+                ? 'bg-[var(--Brown-30)] cursor-not-allowed'
+                : 'bg-[var(--Brown-40)] cursor-pointer'
+            }`}
+            disabled={handleChangeAnswer}
+          >
+            수정 완료
+          </button>
+        </form>
+      ) : (
+        <form className="gap-3 text-base font-normal">
+          <textarea
+            type="text"
+            value={answerTitle}
+            onChange={handleChange}
+            placeholder="답변을 입력해주세요"
+            className="w-full h-[186px] p-4 text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] rounded-lg border-[var(--Brown-40)] border-2 outline-none whitespace-normal resize-none"
+          />
+          <button
+            onClick={addAnswer}
+            className={`w-full h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+              isInputAnswer
+                ? 'bg-[var(--Brown-30)] cursor-not-allowed'
+                : 'bg-[var(--Brown-40)] cursor-pointer'
+            }`}
+            disabled={isInputAnswer}
+          >
+            답변 완료
+          </button>
+        </form>
+      )}
     </>
   );
 }
