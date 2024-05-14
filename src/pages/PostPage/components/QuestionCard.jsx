@@ -112,7 +112,9 @@ function QuestionCard({ question }) {
             alt="프로필 사진"
           />
           <div className="flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
-            <p className="text-[14px] font-[400] md:text-[18px]">작성자</p>
+            <p className="text-[14px] font-[400] md:text-[18px]">
+              {userData.name}
+            </p>
             <AnswersForm question={question} showForm={showForm} />
           </div>
         </div>
@@ -140,7 +142,7 @@ function QuestionCard({ question }) {
             />
             <div className="text-[16px] font-[400] flex flex-col w-[203px] md:w-[548px] xl:w-[560px] whitespace-pre-wrap">
               <p className="text-[14px] font-[400] md:text-[18px]">
-                작성자
+                {userData.name}
                 <span className="text-[14px] font-[500] text-[var(--Grayscale-40)]">
                   &nbsp; {formatDateAge(question.answer.createdAt)}
                 </span>

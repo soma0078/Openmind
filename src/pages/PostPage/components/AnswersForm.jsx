@@ -14,6 +14,7 @@ function AnswersForm({ question, showForm }) {
     } catch (error) {
       console.error('답변 추가 중 에러 발생:', error);
     }
+    window.location.reload();
   };
 
   async function handleCorrectionAnswer(e) {
@@ -29,6 +30,7 @@ function AnswersForm({ question, showForm }) {
     } catch (error) {
       console.log('답변 수정 중 오류가 발생했습니다:', error);
     }
+    window.location.reload();
   }
 
   const isInputNotEmpty = answerTitle.trim() !== '';
