@@ -40,7 +40,7 @@ function MainPage() {
   };
 
   return (
-    <div className="h-[100vh] flex justify-center items-center bg-[#F8F7F7] bg-main2 bg-cover bg-top-center bg-no-repeat">
+    <div className="h-[100vh] flex justify-center items-center bg-[#F8F7F7] bg-main2 bg-cover bg-center bg-no-repeat tablet-2:bg-top-center">
       <div className="flex flex-col items-center mx-auto w-[258px] pt-[25%] h- gap-[15px] tablet-1:w-[1200px] tablet-1:pt-0 table-2:w-[900ox] table-2:h-[180px]">
         <img src={logoImage} alt="로고 이미지" />
         <Link to="/list">
