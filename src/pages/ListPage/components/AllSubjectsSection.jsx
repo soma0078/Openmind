@@ -81,12 +81,7 @@ function AllSubjectsSection() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="flex flex-col items-center gap-3">
-          <div
-            className="
-            grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
-            gap-[16px] tablet-1:gap-[20px]"
-          >
+        <div className="relative flex flex-col items-center gap-6">
             {subjectList?.map((subject) => (
               <UserCard item={subject} key={subject.id} />
             ))}

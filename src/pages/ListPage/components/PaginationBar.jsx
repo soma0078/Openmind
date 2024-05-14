@@ -19,7 +19,7 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
   );
 
   return (
-    <div className="flex items-center justify-center space-x-1">
+    <div className="absolute flex items-center justify-center space-x-1 bottom-[10%]">
       <button
         className={`text-gray-400 w-[40px] h-[40px] font-semibold text-[16px] ${
           activePageNum === 1 ? 'cursor-default opacity-50' : ''
