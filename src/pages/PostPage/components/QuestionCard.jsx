@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import thumbsUpButtonGray from '../../../assets/icon-thumbs-up-gray.svg';
 import thumbsUpButtonBlue from '../../../assets/icon-thumbs-up-blue.svg';
 import thumbsDownButtonGray from '../../../assets/icon-thumbs-down-gray.svg';
@@ -15,22 +15,15 @@ function QuestionCard({ question }) {
   const { postId } = useParams();
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
-  //로컬스토리지에서 좋아요 싫어요 상태가져오고 해당값으로 초기화 하기
-  const [likeClicked, setLikeClicked] = useState(
+
+  const likeClicked = useRef(
     localStorage.getItem(`${question.id}-like`) ? true : false,
   );
-  const [dislikeClicked, setDislikeClicked] = useState(
+  const dislikeClicked = useRef(
     localStorage.getItem(`${question.id}-dislike`) ? true : false,
   );
 
   useEffect(() => {
-    //로컬스토리지에서 좋아요와 싫어요 상태를 가져옴
-    const likeStatus = localStorage.getItem(`${question.id}-like`);
-    const dislikeStatus = localStorage.getItem(`${question.id}-dislike`);
-
-    setLikeClicked(likeStatus ? true : false);
-    setDislikeClicked(dislikeStatus ? true : false);
-
     async function fetchUserData() {
       try {
         const userData = await getUserData(postId);
@@ -58,10 +51,10 @@ function QuestionCard({ question }) {
       await postQuestionReaction(question.id, type);
       if (type === 'like') {
         setLikeCount(likeCount + 1);
-        setLikeClicked(true);
+        likeClicked.current = true;
       } else if (type === 'dislike') {
         setDislikeCount(dislikeCount + 1);
-        setDislikeClicked(true);
+        dislikeClicked.current = true;
       }
     } else {
       alert('이미 반응을 선택하셨습니다.');
@@ -129,12 +122,12 @@ function QuestionCard({ question }) {
         <div className="flex gap-[6px]">
           <img
             className="w-[24px] h-[24px] cursor-pointer"
-            src={likeClicked ? thumbsUpButtonBlue : thumbsUpButtonGray}
+            src={likeClicked.current ? thumbsUpButtonBlue : thumbsUpButtonGray}
             alt="좋아요 버튼"
             onClick={() => handleReaction('like')}
           />
           <span
-            className={`cursor-pointer ${likeClicked ? 'text-[var(--Blue-50)]' : 'text-[var(--Grayscale-40)]'}`}
+            className={`cursor-pointer ${likeClicked.current ? 'text-[var(--Blue-50)]' : 'text-[var(--Grayscale-40)]'}`}
             onClick={() => handleReaction('like')}
           >
             좋아요 {likeCount}개
@@ -143,12 +136,16 @@ function QuestionCard({ question }) {
         <div className="flex gap-[6px]">
           <img
             className="w-[24px] h-[24px] cursor-pointer"
-            src={dislikeClicked ? thumbsDownButtonBlack : thumbsDownButtonGray}
+            src={
+              dislikeClicked.current
+                ? thumbsDownButtonBlack
+                : thumbsDownButtonGray
+            }
             alt="싫어요 버튼"
             onClick={() => handleReaction('dislike')}
           />
           <span
-            className={`cursor-pointer ${dislikeClicked ? 'text-[var(--Grayscale-60)]' : 'text-[var(--Grayscale-40)]'}`}
+            className={`cursor-pointer ${dislikeClicked.current ? 'text-[var(--Grayscale-60)]' : 'text-[var(--Grayscale-40)]'}`}
             onClick={() => handleReaction('dislike')}
           >
             싫어요 {dislikeCount}개
