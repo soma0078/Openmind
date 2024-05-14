@@ -16,12 +16,59 @@ function QuestionCard({ question }) {
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
 
-  const likeClicked = useRef(
+  const [likeClicked, setLikeClicked] = useState(
     localStorage.getItem(`${question.id}-like`) ? true : false,
   );
-  const dislikeClicked = useRef(
+  const [dislikeClicked, setDislikeClicked] = useState(
     localStorage.getItem(`${question.id}-dislike`) ? true : false,
   );
+
+  // 429, 500 오류가 발생하면 재시도, 재시도 횟수를 초과하면 오류를 던짐
+  async function fetchUserDataWithRetry(postId, retries = 5, delay = 1000) {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const userData = await getUserData(postId);
+        return userData;
+      } catch (error) {
+        if (i < retries - 1) {
+          if (error.status === 429) {
+            console.log('Too many requests. Retrying...');
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          } else if (error.status >= 500) {
+            console.log('Server error. Retrying...');
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          } else {
+            throw error;
+          }
+        } else {
+          throw error;
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    async function fetchUserData() {
+      try {
+        const userData = await fetchUserDataWithRetry(postId);
+        setUserData(userData);
+      } catch (error) {
+        console.error('사용자 데이터를 불러오는데 실패했습니다.', error);
+      }
+    }
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    const likeStatus = localStorage.getItem(`${question.id}-like`);
+    const dislikeStatus = localStorage.getItem(`${question.id}-dislike`);
+
+    console.log(`Like status for question ${question.id}:`, likeStatus);
+    console.log(`Dislike status for question ${question.id}:`, dislikeStatus);
+
+    setLikeClicked(likeStatus ? true : false);
+    setDislikeClicked(dislikeStatus ? true : false);
+  }, [question.id]);
 
   useEffect(() => {
     async function fetchUserData() {
@@ -51,10 +98,10 @@ function QuestionCard({ question }) {
       await postQuestionReaction(question.id, type);
       if (type === 'like') {
         setLikeCount(likeCount + 1);
-        likeClicked.current = true;
+        setLikeClicked(true);
       } else if (type === 'dislike') {
         setDislikeCount(dislikeCount + 1);
-        dislikeClicked.current = true;
+        setDislikeClicked(true);
       }
     } else {
       alert('이미 반응을 선택하셨습니다.');
@@ -122,12 +169,12 @@ function QuestionCard({ question }) {
         <div className="flex gap-[6px]">
           <img
             className="w-[24px] h-[24px] cursor-pointer"
-            src={likeClicked.current ? thumbsUpButtonBlue : thumbsUpButtonGray}
+            src={likeClicked ? thumbsUpButtonBlue : thumbsUpButtonGray}
             alt="좋아요 버튼"
             onClick={() => handleReaction('like')}
           />
           <span
-            className={`cursor-pointer ${likeClicked.current ? 'text-[var(--Blue-50)]' : 'text-[var(--Grayscale-40)]'}`}
+            className={`cursor-pointer ${likeClicked ? 'text-[var(--Blue-50)]' : 'text-[var(--Grayscale-40)]'}`}
             onClick={() => handleReaction('like')}
           >
             좋아요 {likeCount}개
@@ -136,16 +183,12 @@ function QuestionCard({ question }) {
         <div className="flex gap-[6px]">
           <img
             className="w-[24px] h-[24px] cursor-pointer"
-            src={
-              dislikeClicked.current
-                ? thumbsDownButtonBlack
-                : thumbsDownButtonGray
-            }
+            src={dislikeClicked ? thumbsDownButtonBlack : thumbsDownButtonGray}
             alt="싫어요 버튼"
             onClick={() => handleReaction('dislike')}
           />
           <span
-            className={`cursor-pointer ${dislikeClicked.current ? 'text-[var(--Grayscale-60)]' : 'text-[var(--Grayscale-40)]'}`}
+            className={`cursor-pointer ${dislikeClicked ? 'text-[var(--Grayscale-60)]' : 'text-[var(--Grayscale-40)]'}`}
             onClick={() => handleReaction('dislike')}
           >
             싫어요 {dislikeCount}개
