@@ -71,9 +71,9 @@ function AllSubjectsSection() {
   };
 
   return (
-    <div className="flex flex-col gap-[16px] tablet-1:gap-[40px]">
+    <div className="flex flex-col gap-[16px] tablet-1:gap-[30px] bg-[#F9F9F9]">
       <div className="px-[24px] tablet-1:px-[32px] z-20 pt-[30px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
-        <p className="w-[214px] tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
+        <p className="tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
           누구에게 질문할까요?
         </p>
         <DropdownMenu onSortSelection={handleSortSelection} />
@@ -81,7 +81,7 @@ function AllSubjectsSection() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="px-[24px] flex justify-center">
+        <div className="flex flex-col items-center gap-3">
           <div
             className="
             grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
@@ -91,15 +91,13 @@ function AllSubjectsSection() {
               <UserCard item={subject} key={subject.id} />
             ))}
           </div>
+          <PaginationBar
+            activePageNum={page}
+            totalPageNum={totalPageNum}
+            onPageChange={onPageChange}
+          />
         </div>
       )}
-      <div className="pt-[40px] pb-[80px]">
-        <PaginationBar
-          activePageNum={page}
-          totalPageNum={totalPageNum}
-          onPageChange={onPageChange}
-        />
-      </div>
     </div>
   );
 }
