@@ -7,9 +7,18 @@ import {
 import editButton from '../../../assets/icon-edit.svg';
 import closeButton from '../../../assets/icon-close.svg';
 import rejectionButton from '../../../assets/icon-rejection.svg';
+import editButtonBlue from '../../../assets/icon-edit-blue.svg';
+import closeButtonBlue from '../../../assets/icon-close-blue.svg';
+import rejectionButtonBlue from '../../../assets/icon-rejection-blue.svg';
+import { useState } from 'react';
 
 function KebabModal({ question, handleDataChange, toggleMenu }) {
+  const [hoverEdit, setHoverEdit] = useState(false);
+  const [hoverDeleteAnswer, setHoverDeleteAnswer] = useState(false);
+  const [hoverRejection, setHoverRejection] = useState(false);
+  const [hoverDeleteQuestion, setHoverDeleteQuestion] = useState(false);
   const questionId = question.id;
+
   async function handleDeleteAnswer() {
     try {
       await deleteAnswer(question.answer.id);
@@ -64,8 +73,20 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           }
         }}
         aria-label="답변 수정하기 버튼"
+        onMouseOver={(e) => {
+          e.stopPropagation();
+          setHoverEdit(true);
+        }}
+        onMouseOut={(e) => {
+          e.stopPropagation();
+          setHoverEdit(false);
+        }}
       >
-        <img className="flex w-[14px] h-[14px]" src={editButton} alt="버튼" />
+        <img
+          className="flex w-[14px] h-[14px]"
+          src={hoverEdit ? editButtonBlue : editButton}
+          alt="버튼"
+        />
         <span className="flex">답변 수정하기</span>
       </div>
       <div
@@ -80,10 +101,18 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           }
         }}
         aria-label="답변 삭제하기 버튼"
+        onMouseOver={(e) => {
+          e.stopPropagation();
+          setHoverDeleteAnswer(true);
+        }}
+        onMouseOut={(e) => {
+          e.stopPropagation();
+          setHoverDeleteAnswer(false);
+        }}
       >
         <img
           className="flex w-[14px] h-[14px]"
-          src={closeButton}
+          src={hoverDeleteAnswer ? closeButtonBlue : closeButton}
           alt="버튼"
         ></img>
         <span className="flex">답변 삭제하기</span>
@@ -103,10 +132,18 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           }
         }}
         aria-label="답변 거절하기 버튼"
+        onMouseOver={(e) => {
+          e.stopPropagation();
+          setHoverRejection(true);
+        }}
+        onMouseOut={(e) => {
+          e.stopPropagation();
+          setHoverRejection(false);
+        }}
       >
         <img
           className="flex w-[14px] h-[14px]"
-          src={rejectionButton}
+          src={hoverRejection ? rejectionButtonBlue : rejectionButton}
           alt="버튼"
         ></img>
         <span className="flex">답변 거절하기</span>
@@ -118,10 +155,18 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           toggleMenu();
         }}
         aria-label="질문 삭제하기 버튼"
+        onMouseOver={(e) => {
+          e.stopPropagation();
+          setHoverDeleteQuestion(true);
+        }}
+        onMouseOut={(e) => {
+          e.stopPropagation();
+          setHoverDeleteQuestion(false);
+        }}
       >
         <img
           className="flex w-[14px] h-[14px]"
-          src={closeButton}
+          src={hoverDeleteQuestion ? closeButtonBlue : closeButton}
           alt="버튼"
         ></img>
         <span className="flex">질문 삭제하기</span>
