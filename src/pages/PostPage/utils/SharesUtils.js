@@ -1,4 +1,4 @@
-const url = window.location.href;
+const url = 'https://deploy-preview-33--openyourmind.netlify.app';
 
 // Facebook
 export const shareFacebook = () => {
