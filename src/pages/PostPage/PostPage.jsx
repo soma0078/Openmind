@@ -205,7 +205,7 @@ function PostPage() {
           <div className="flex items-center gap-[8px]">
             {/* 질문이 없을 때 */}
             {questionCardCount === 0 && (
-              <div className="flex flex-col items-center gap-2 w-[716px] h-[330px]">
+              <div className="flex flex-col items-center gap-2 h-[330px]">
                 <div className="flex justify-center gap-2">
                   <img
                     className="w-[24px] h-[24px]"
