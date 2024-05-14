@@ -72,10 +72,10 @@ function Modal({ userData, onQuestionSubmitted }) {
       </button>
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 bg-black bg-opacity-50 z-50"></div>
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50"></div>
           <dialog
             ref={dialogRef}
-            className="fixed top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 rounded-3xl shadow-xl p-9 max-md:p-6 z-50"
+            className="fixed z-50 -translate-x-1/2 -translate-y-1/2 shadow-xl top-2/4 left-2/4 rounded-3xl p-9 max-md:p-6"
             open={true}
           >
             <div className="flex gap-1 mb-9">
@@ -97,7 +97,7 @@ function Modal({ userData, onQuestionSubmitted }) {
                 <img
                   src={userData.imageSource}
                   alt={userData.imageSource}
-                  className="w-7 h-7 rounded-full"
+                  className="rounded-full w-7 h-7"
                 />
                 {userData.name}
               </label>

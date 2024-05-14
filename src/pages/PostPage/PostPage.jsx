@@ -129,9 +129,11 @@ function PostPage() {
   };
 
   const deletePeed = async () => {
-    window.localStorage.removeItem(postId);
-    await deleteAll(postId);
-    nav('/list', { replace: true });
+    if (window.confirm('피드를 삭제하시겠습니까? 삭제시, 복구되지 않습니다.')) {
+      window.localStorage.removeItem(postId);
+      await deleteAll(postId);
+      nav('/list', { replace: true });
+    } else return;
   };
 
   useEffect(() => {
@@ -203,9 +205,9 @@ function PostPage() {
       <div className="flex justify-center pt-[30px] pb-[80px]">
         <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
           <div className="flex items-center gap-[8px]">
-            {/* 질문이 없을 때 */}
-            {questionCardCount === 0 && (
-              <div className="flex flex-col items-center gap-2 h-[330px]">
+            {/* 질문 여부에 따른 렌더링 */}
+            {questionCardCount === 0 ? (
+              <div className="flex flex-col items-center gap-2 w-[716px] h-[330px]">
                 <div className="flex justify-center gap-2">
                   <img
                     className="w-[24px] h-[24px]"
@@ -222,23 +224,18 @@ function PostPage() {
                   alt="비어있는 상태 이미지"
                 />
               </div>
+            ) : (
+              <div className="flex items-center justify-center gap-2">
+                <img
+                  className="w-[24px] h-[24px]"
+                  src={messageImage}
+                  alt="메시지 이모티콘"
+                />
+                <span className="font-[400] text-[20px] text-[#542F1A]">
+                  {userData.questionCount}개의 질문이 있습니다.
+                </span>
+              </div>
             )}
-
-            {/* 질문이 있을 때 */}
-            <div className="flex flex-col gap-2">
-              {questionCardCount > 0 && (
-                <div className="flex items-center justify-center gap-2">
-                  <img
-                    className="w-[24px] h-[24px]"
-                    src={messageImage}
-                    alt="메시지 이모티콘"
-                  />
-                  <span className="font-[400] text-[20px] text-[#542F1A]">
-                    {userData.questionCount}개의 질문이 있습니다.
-                  </span>
-                </div>
-              )}
-            </div>
           </div>
           <div className="questionlist">
             <QuestionList questionData={questionData} />
