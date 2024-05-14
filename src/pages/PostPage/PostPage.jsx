@@ -24,6 +24,12 @@ function PostPage() {
   const { postId } = useParams();
   const nav = useNavigate();
 
+  useEffect(() => {
+    if (!postId || isNaN(postId)) {
+      nav('/not-found-page');
+    }
+  }, [postId, nav]);
+
   const onMoveBack = () => {
     nav(-1);
   };
