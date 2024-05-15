@@ -17,8 +17,6 @@ function QuestionCard({ question }) {
   const [showForm, setShowForm] = useState(false);
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
-
-  //로컬스토리지에서 좋아요 싫어요 상태가져오고 해당값으로 초기화 하기
   const [likeClicked, setLikeClicked] = useState(
     localStorage.getItem(`${question.id}-like`) ? true : false,
   );
@@ -28,13 +26,17 @@ function QuestionCard({ question }) {
   );
 
   useEffect(() => {
-    //로컬스토리지에서 좋아요와 싫어요 상태를 가져옴
     const likeStatus = localStorage.getItem(`${question.id}-like`);
     const dislikeStatus = localStorage.getItem(`${question.id}-dislike`);
 
+    console.log(`Like status for question ${question.id}:`, likeStatus);
+    console.log(`Dislike status for question ${question.id}:`, dislikeStatus);
+
     setLikeClicked(likeStatus ? true : false);
     setDislikeClicked(dislikeStatus ? true : false);
+  }, [question.id]);
 
+  useEffect(() => {
     async function fetchUserData() {
       try {
         const userData = await getUserData(postId);
@@ -56,7 +58,7 @@ function QuestionCard({ question }) {
       return;
     }
 
-    const success = setReactionStorage(question.id, null, type);
+    const success = setReactionStorage(question.id, type);
 
     if (success) {
       await postQuestionReaction(question.id, type);
