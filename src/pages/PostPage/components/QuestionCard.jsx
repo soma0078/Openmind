@@ -1,24 +1,35 @@
+<<<<<<< HEAD
 import React, { useEffect, useRef, useState } from 'react';
+=======
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { postQuestionReaction } from '../../../api/api';
+import { getUserData } from '../../../api/api';
+import { setReactionStorage } from '../../../utils/localStorage';
+import { formatDateAge } from '../../../utils/utils';
+import AnswersForm from './AnswersForm';
+import KebabButton from './KebabButton';
+>>>>>>> 3da49c1fa4041e2f5a0d07a3d424ce7f6e8aaa7c
 import thumbsUpButtonGray from '../../../assets/icon-thumbs-up-gray.svg';
 import thumbsUpButtonBlue from '../../../assets/icon-thumbs-up-blue.svg';
 import thumbsDownButtonGray from '../../../assets/icon-thumbs-down-gray.svg';
 import thumbsDownButtonBlack from '../../../assets/icon-thumbs-down-black.svg';
-import { formatDateAge } from '../../../utils/utils';
-import { postQuestionReaction } from '../../../api/api';
-import AnswersForm from './AnswersForm';
-import { getUserData } from '../../../api/api';
-import { useParams } from 'react-router-dom';
-import { setLocalStorage } from '../../../utils/localStorage';
 
 function QuestionCard({ question }) {
-  const [userData, setUserData] = useState('');
   const { postId } = useParams();
+  const [userData, setUserData] = useState('');
+  const [showForm, setShowForm] = useState(false);
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
 
+<<<<<<< HEAD
+=======
+  //로컬스토리지에서 좋아요 싫어요 상태가져오고 해당값으로 초기화 하기
+>>>>>>> 3da49c1fa4041e2f5a0d07a3d424ce7f6e8aaa7c
   const [likeClicked, setLikeClicked] = useState(
     localStorage.getItem(`${question.id}-like`) ? true : false,
   );
+
   const [dislikeClicked, setDislikeClicked] = useState(
     localStorage.getItem(`${question.id}-dislike`) ? true : false,
   );
@@ -92,7 +103,7 @@ function QuestionCard({ question }) {
       return;
     }
 
-    const success = setLocalStorage(question.id, null, type);
+    const success = setReactionStorage(question.id, null, type);
 
     if (success) {
       await postQuestionReaction(question.id, type);
@@ -108,67 +119,94 @@ function QuestionCard({ question }) {
     }
   };
 
+  //답변 수정 입력 창 상태관리
+  const handleDataChange = (e) => {
+    setShowForm(e);
+  };
+
   return (
-    <div className="flex flex-col p-[32px] w-[295px] md:w-[672px] xl:w-[684px] bg-[#FFFFFF] rounded-[16px] gap-[32px] shadow-md mb-5">
-      {question.answer ? (
-        <div className="w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Brown-40)]">
-          <div className="text-[14px] font-medium text-center text-[var(--Brown-40)]">
-            답변
-          </div>
-        </div>
-      ) : (
-        <div className="w-[61px] h-[26px] p-[4px 12px] gap-[10px] rounded-lg border-2 border-solid border-[var(--Grayscale-40)]">
-          <div className="text-[14px] font-medium text-center text-[var(--Grayscale-40)]">
+    <div className="flex flex-col p-8 w-[295px] md:w-[672px] xl:w-[684px] bg-[var(--Grayscale-10)] rounded-2xl gap-8 shadow-md mb-5">
+      <div className="flex items-center justify-between">
+        {/* showForm = true 일때 수정 중/ 답변이 있을 때 답변 완료/ 답변이 없을 때 미답변 */}
+        {showForm ? (
+          <span className="flex justify-center items-center h-7 py-1 px-3 rounded-lg border-2 border-solid border-[var(--Brown-50)] bg-[var(--Brown-40)] text-sm font-medium text-center text-[var(--Brown-10)]">
+            수정 중
+          </span>
+        ) : question.answer ? (
+          <span className="flex justify-center items-center h-7 py-1 px-3 rounded-lg border-2 border-solid border-[var(--Brown-40)] text-sm font-medium text-center text-[var(--Brown-40)]">
+            답변 완료
+          </span>
+        ) : (
+          <span className="flex justify-center items-center h-7 py-1 px-3 rounded-lg border-2 border-solid border-[var(--Grayscale-40)] text-sm font-medium text-center text-[var(--Grayscale-40)]">
             미답변
-          </div>
-        </div>
-      )}
+          </span>
+        )}
+        <KebabButton question={question} handleDataChange={handleDataChange} />
+      </div>
       <div>
-        <span className="text-[14px] text-[#818181] font-[500]">
+        <span className="text-sm text-[var(--Grayscale-40)] font-medium">
           질문 &#183; {formatDateAge(question.createdAt)}
         </span>
-        <p className="text-[16px] font-[400] md:text-[18px]">
+        <p className="text-base font-normal whitespace-pre-wrap md:text-lg">
           {question.content}
         </p>
       </div>
-      {!question.answer ? (
-        <div className="flex gap-[12px]">
+      {/* showForm = true 일때 수정 완료 버튼/ 답변이 없을 때 답변 완료 버튼/
+        답변이 있을 때 질문- isRejected = true 이면 답변 거절 출력 */}
+      {showForm ? (
+        <div className="flex gap-3">
           <img
-            className="rounded-full object-cover w-[32px] h-[32px] md:w-[48px] md:h-[48px]"
+            className="object-cover w-8 h-8 rounded-full md:w-12 md:h-12"
             src={userData.imageSource}
             alt="프로필 사진"
           />
           <div className="flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
-            <p className="text-[14px] font-[400] md:text-[18px]">
-              {userData.name}
-            </p>
+            <p className="text-sm font-normal md:text-lg">{userData.name}</p>
+            <AnswersForm question={question} showForm={showForm} />
+          </div>
+        </div>
+      ) : !question.answer ? (
+        <div className="flex gap-3">
+          <img
+            className="object-cover w-8 h-8 rounded-full md:w-12 md:h-12"
+            src={userData.imageSource}
+            alt="프로필 사진"
+          />
+          <div className="flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
+            <p className="text-sm font-normal md:text-lg">{userData.name}</p>
             <AnswersForm question={question} />
           </div>
         </div>
       ) : (
         <>
-          <div className="flex gap-[12px]">
+          <div className="flex gap-3">
             <img
-              className="rounded-full object-cover w-[32px] h-[32px] md:w-[48px] md:h-[48px]"
+              className="object-cover w-8 h-8 rounded-full md:w-12 md:h-12"
               src={userData.imageSource}
               alt="프로필 사진"
             />
-            <div className="text-[16px] font-[400] flex flex-col w-[203px] md:w-[548px] xl:w-[560px]">
-              <p className="text-[14px] font-[400] md:text-[18px]">
+            <div className="text-base font-normal flex flex-col w-[203px] md:w-[548px] xl:w-[560px] whitespace-pre-wrap">
+              <p className="text-sm font-normal md:text-lg">
                 {userData.name}
-                <span className="text-[14px] text-[500] text-[var(--Grayscale-40)]">
+                <span className="text-sm font-base text-[var(--Grayscale-40)]">
                   &nbsp; {formatDateAge(question.answer.createdAt)}
                 </span>
               </p>
-              {question.answer.content}
+              {question.answer.isRejected === true ? (
+                <div className="text-base font-normal text-[var(--Red-50)]">
+                  답변 거절
+                </div>
+              ) : (
+                question.answer.content
+              )}
             </div>
           </div>
         </>
       )}
-      <div className="flex items-center gap-[32px] border-t border-[#cfcfcf] pt-6">
-        <div className="flex gap-[6px]">
+      <div className="flex items-center gap-8 border-t border-[var(--Grayscale-30)] pt-6">
+        <div className="flex gap-1 tablet-2:gap-2">
           <img
-            className="w-[24px] h-[24px] cursor-pointer"
+            className="w-6 h-6 cursor-pointer"
             src={likeClicked ? thumbsUpButtonBlue : thumbsUpButtonGray}
             alt="좋아요 버튼"
             onClick={() => handleReaction('like')}
@@ -180,9 +218,9 @@ function QuestionCard({ question }) {
             좋아요 {likeCount}개
           </span>
         </div>
-        <div className="flex gap-[6px]">
+        <div className="flex gap-1 tablet-2:gap-2">
           <img
-            className="w-[24px] h-[24px] cursor-pointer"
+            className="w-6 h-6 cursor-pointer"
             src={dislikeClicked ? thumbsDownButtonBlack : thumbsDownButtonGray}
             alt="싫어요 버튼"
             onClick={() => handleReaction('dislike')}

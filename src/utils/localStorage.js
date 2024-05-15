@@ -1,4 +1,4 @@
-export const setLocalStorage = (id, name, reactionType) => {
+export const setReactionStorage = (id, name, reactionType) => {
   const userData = JSON.parse(localStorage.getItem('user')) || {};
 
   // 기존의 로직 대체
@@ -26,4 +26,19 @@ export const setLocalStorage = (id, name, reactionType) => {
 
   localStorage.setItem('user', JSON.stringify(userData));
   return true;
+};
+
+// id 로컬스토리지에 저장하는 함수
+export const setLocalStorage = (id, name) => {
+  if (!localStorage.getItem('user')) {
+    localStorage.setItem('user', JSON.stringify({ [id]: name }));
+  } else {
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        ...JSON.parse(localStorage.getItem('user')),
+        [id]: name,
+      }),
+    );
+  }
 };

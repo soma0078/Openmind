@@ -19,9 +19,9 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
   );
 
   return (
-    <div className="flex items-center justify-center space-x-1">
+    <div className="absolute flex items-center justify-center space-x-1 bottom-[10%]">
       <button
-        className={`text-gray-400 w-[40px] h-[40px] font-semibold text-[16px] ${
+        className={`text-gray-400 w-10 h-10 font-semibold text-base ${
           activePageNum === 1 ? 'cursor-default opacity-50' : ''
         }`}
         disabled={activePageNum === 1}
@@ -32,7 +32,7 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
       {pages.map((page) => (
         <button
           key={page}
-          className={`w-[40px] h-[40px] font-semibold text-[16px] ${
+          className={`w-10 h-10 font-semibold text-base ${
             activePageNum === page
               ? 'text-[#542f1a] font-bold'
               : 'text-gray-400'
@@ -43,7 +43,7 @@ const PaginationBar = ({ totalPageNum, activePageNum, onPageChange }) => {
         </button>
       ))}
       <button
-        className={`text-gray-400 w-[40px] h-[40px] font-semibold text-[16px] ${
+        className={`text-gray-400 w-10 h-10 font-semibold text-base ${
           activePageNum === totalPageNum ? 'cursor-default opacity-50' : ''
         }`}
         disabled={activePageNum === totalPageNum}

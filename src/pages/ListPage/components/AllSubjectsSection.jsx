@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import UserCard from './UserCard.jsx';
 import { getSubjects } from '../../../api/api.js';
-import PaginationBar from './PaginationBar.jsx';
-import DropdownMenu from './DropdownMenu.jsx';
-import Loading from './Loading.jsx';
+import UserCard from './UserCard';
+import PaginationBar from './PaginationBar';
+import DropdownMenu from './DropdownMenu';
+import Loading from './Loading';
 
 // tailwind media query 적용 시 참고
 // md (min-width: 768px)
@@ -71,9 +71,9 @@ function AllSubjectsSection() {
   };
 
   return (
-    <div className="flex flex-col gap-[16px] tablet-1:gap-[40px]">
-      <div className="px-[24px] tablet-1:px-[32px] z-20 pt-[30px] flex tablet-1:flex-col tablet-1:gap-[20px] justify-between items-center">
-        <p className="w-[214px] tablet-1:w-[341px] text-[24px] tablet-1:text-[40px] font-normal">
+    <div className="flex flex-col gap-4 tablet-1:gap-8 bg-[var(--Grayscale-20)]">
+      <div className="z-20 flex items-center justify-between px-6 pt-8 tablet-1:px-8 tablet-1:flex-col tablet-1:gap-5">
+        <p className="text-2xl font-normal tablet-1:text-5xl">
           누구에게 질문할까요?
         </p>
         <DropdownMenu onSortSelection={handleSortSelection} />
@@ -81,25 +81,19 @@ function AllSubjectsSection() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="px-[24px] flex justify-center">
-          <div
-            className="
-            grid grid-cols-2 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 
-            gap-[16px] tablet-1:gap-[20px]"
-          >
+        <div className="relative flex flex-col items-center gap-6">
+          <div className="grid grid-cols-2 gap-4 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 tablet-1:gap-5">
             {subjectList?.map((subject) => (
               <UserCard item={subject} key={subject.id} />
             ))}
           </div>
+          <PaginationBar
+            activePageNum={page}
+            totalPageNum={totalPageNum}
+            onPageChange={onPageChange}
+          />
         </div>
       )}
-      <div className="pt-[40px] pb-[80px]">
-        <PaginationBar
-          activePageNum={page}
-          totalPageNum={totalPageNum}
-          onPageChange={onPageChange}
-        />
-      </div>
     </div>
   );
 }

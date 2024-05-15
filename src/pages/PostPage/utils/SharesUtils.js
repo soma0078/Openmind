@@ -1,4 +1,4 @@
-const url = window.location.href;
+const url = 'https://deploy-preview-33--openyourmind.netlify.app';
 
 // Facebook
 export const shareFacebook = () => {
@@ -27,7 +27,7 @@ export const shareKakao = () => {
     },
     buttons: [
       {
-        title: '나도 테스트 하러가기',
+        title: '나도 질문하러 가기',
         link: {
           mobileWebUrl: 'https://developers.kakao.com',
         },
