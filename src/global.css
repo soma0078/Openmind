@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 :root {
+  background-color: var(--Grayscale-20);
+
   /* Grayscale */
   --Grayscale-10: #ffffff;
   --Grayscale-20: #f9f9f9;

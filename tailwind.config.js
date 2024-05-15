@@ -14,6 +14,11 @@ module.exports = {
         main1: "url('./assets/img-openmind1.png')",
         main2: "url('./assets/img-openmind2.png')",
       },
+      backgroundPosition: {
+        'center-bottom-1': '50% 30%',
+        'center-bottom-2': '50% 120%',
+        'center-bottom-3': '50% -500%',
+      },
     },
   },
   plugins: [],
