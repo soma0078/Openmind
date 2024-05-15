@@ -72,7 +72,7 @@ function Modal({ userData, onQuestionSubmitted }) {
       </button>
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 z-50 bg-black bg-opacity-50"></div>
+          <div className="fixed inset-0 z-50 bg-[var(--Grayscale-10)] bg-opacity-50"></div>
           <dialog
             ref={dialogRef}
             className="fixed z-50 -translate-x-1/2 -translate-y-1/2 shadow-xl top-2/4 left-2/4 rounded-3xl p-9 max-md:p-6"
@@ -106,7 +106,7 @@ function Modal({ userData, onQuestionSubmitted }) {
                 value={questionContent}
                 onChange={handleContentChange}
                 placeholder="질문을 입력해주세요"
-                className="w-[33rem] min-w-72 h-44 rounded-md block bg-slate-100 p-3 mt-3 mb-2 outline-[#542F1A]/40 resize-none max-md:w-full max-md:h-96"
+                className="w-[33rem] min-w-72 h-44 rounded-md block bg-slate-100 p-3 mt-3 mb-2 outline-[var(--Brown-40)]/40 resize-none max-md:w-full max-md:h-96"
               />
               <button
                 type="submit"
