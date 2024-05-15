@@ -64,7 +64,7 @@ function AnswersForm({ question, showForm }) {
             value={editingAnswerTitle}
             onChange={handleTextChange}
             placeholder="답변을 입력해주세요"
-            className={`w-full h-[186px] p-[16px] text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] ${
+            className={`w-full h-[186px] p-4 text-left text-[var(--Grayscale-60)] bg-[var(--Grayscale-20)] ${
               handleChangeAnswer
                 ? 'rounded-lg border-[var(--Brown-40)] border-2 whitespace-normal resize-none'
                 : 'rounded-lg border-[var(--Brown-40)] border-2 outline-none whitespace-normal resize-none'
@@ -72,7 +72,7 @@ function AnswersForm({ question, showForm }) {
           />
           <button
             onClick={handleCorrectionAnswer}
-            className={`w-full h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+            className={`w-full h-12 text-center text-[var(--Grayscale-10)] rounded-lg ${
               handleChangeAnswer
                 ? 'bg-[var(--Brown-30)] cursor-not-allowed'
                 : 'bg-[var(--Brown-40)] cursor-pointer'
@@ -93,7 +93,7 @@ function AnswersForm({ question, showForm }) {
           />
           <button
             onClick={addAnswer}
-            className={`w-full h-[46px] text-center text-[var(--Grayscale-10)] rounded-lg ${
+            className={`w-full h-12 text-center text-[var(--Grayscale-10)] rounded-lg ${
               isInputAnswer
                 ? 'bg-[var(--Brown-30)] cursor-not-allowed'
                 : 'bg-[var(--Brown-40)] cursor-pointer'

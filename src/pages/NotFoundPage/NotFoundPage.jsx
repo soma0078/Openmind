@@ -27,13 +27,13 @@ function NotFoundPage() {
       </div>
       <div className="w-[450px] flex justify-between tablet-1:w-[700px]">
         <button
-          className="w-[150px] h-[35px] rounded-lg flex justify-center items-center bg-[var(--Brown-40)] text-base text-[var(--Grayscale-10)] font-normal tablet-1:w-[150px] tablet-1:h-[35px]"
+          className="w-[150px] h-10 rounded-lg flex justify-center items-center bg-[var(--Brown-40)] text-base text-[var(--Grayscale-10)] font-normal tablet-1:w-[150px] tablet-1:h-12"
           onClick={onMovePrevPage}
         >
           이전 페이지
         </button>
         <button
-          className="w-[150px] h-[35px] rounded-lg flex justify-center items-center bg-[var(--Brown-40)] text-base text-[var(--Grayscale-10)] font-normal tablet-1:w-[150px] tablet-1:h-[35px]"
+          className="w-[150px] h-10 rounded-lg flex justify-center items-center bg-[var(--Brown-40)] text-base text-[var(--Grayscale-10)] font-normal tablet-1:w-[150px] tablet-1:h-12"
           onClick={onMoveMainPage}
         >
           메인으로 가기

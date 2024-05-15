@@ -8,7 +8,7 @@ function QuestionList({ questionData }) {
   return (
     <>
       {questionData.length !== 0 && (
-        <div className="w-[275px] md:w-[652px] flex justify-end gap-[20px] mr-[20px] mb-[20px]">
+        <div className="w-[275px] md:w-[652px] flex justify-end gap-3 mr-3 mb-3 md:gap-5 md:mr-5 md:mb-5">
           <button
             onClick={() => setDisplayMode('all')}
             className={`text-base font-normal ${displayMode === 'all' ? 'text-[var(--Blue-50)]' : 'text-[var(--Brown-40)]'}`}

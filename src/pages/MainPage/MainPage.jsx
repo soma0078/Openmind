@@ -44,7 +44,7 @@ function MainPage() {
       <div className="flex flex-col items-center mx-auto w-[450px] pt-2 tablet-1:w-[1200px] tablet-1:pt-0 table-2:w-[900ox] table-2:h-[180px] tablet-2:pt-0">
         <img src={logoImage} alt="로고 이미지" />
         <Link to="/list">
-          <button className="relative flex justify-center items-center w-[161px] h-[46px] rounded-lg py-3 px-1 border-2 border-[var(--Brown-40)] text-base text-[var(--Brown-40)] font-semibold bg-[var(--Brown-10)] top-[5%] right-[10%] tablet-1:absolute tablet-2:py-6 tablet-2:px-3">
+          <button className="relative flex justify-center items-center w-[161px] h-12 rounded-lg py-3 px-1 border-2 border-[var(--Brown-40)] text-base text-[var(--Brown-40)] font-semibold bg-[var(--Brown-10)] top-[5%] right-[10%] tablet-1:absolute tablet-2:py-6 tablet-2:px-3">
             질문하러 가기 →
           </button>
         </Link>

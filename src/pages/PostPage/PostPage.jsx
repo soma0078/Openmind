@@ -159,12 +159,12 @@ function PostPage() {
   }, []);
 
   return (
-    <div className="w-[100vw] flex flex-col bg-[#F9F9F9]">
+    <div className="w-[100vw] h-[100vh] flex flex-col bg-[var(--Grayscale-20)]">
       <div className="relative flex flex-col items-center justify-center">
-        <div className="mt-[50px] z-10 gap-[20px] flex flex-col items-center justify-center">
+        <div className="mt-[50px] z-10 gap-5 flex flex-col items-center justify-center">
           <Link to="/">
             <img
-              className="w-[124px] h-[49px] md:w-[170px] md:h-[67px]"
+              className="w-[124px] h-12 md:w-[170px] md:h-[67px]"
               src={logoImage}
               alt="로고 이미지"
             />
@@ -175,14 +175,14 @@ function PostPage() {
             alt="프로필 사진"
           />
           <div className="relative">
-            <h2 className="font-[400] text-[32px] text-[#000000]">
+            <h2 className="font-normal text-3xl md:text-4xl text-[var(--Grayscale-60)]">
               {userData.name}
             </h2>
           </div>
           <Share />
           <div className="w-[327px] md:w-[704px] flex justify-between items-center">
             <button
-              className="flex justify-center items-center w-12 h-12 rounded-full bg-[#C7BBB5]"
+              className="flex justify-center items-center w-12 h-12 rounded-full bg-[var(--Brown-30)]"
               onClick={onMoveBack}
             >
               <img
@@ -191,10 +191,10 @@ function PostPage() {
                 className="w-8 h-8"
               />
             </button>
-            <div className="flex gap-1 md:gap-3 justify-between bottom-[80px]">
+            <div className="flex justify-between gap-1 md:gap-3 bottom-20">
               <Modal userData={userData} onQuestionSubmitted={addQuestion} />
               <button
-                className="w-[123px] h-[54px] md:w-[208px] md:h-[54px] rounded-[200px] py-[12px] px-[24px] bg-[#B93333] text-[20px] text-[#FFFFFF] font-[400]"
+                className="w-[123px] md:w-[208px] md:h-[54px] rounded-[200px] py-3 px-6 bg-[#B93333] text-xl text-[var(--Grayscale-10)] font-normal"
                 onClick={deletePeed}
               >
                 {deleteButtonText}
@@ -208,19 +208,19 @@ function PostPage() {
           alt="헤더 이미지"
         />
       </div>
-      <div className="flex justify-center pt-[30px] pb-[80px]">
-        <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-[16px] border-[1px] border-[#C7BBB5] rounded-[16px] gap-[18px] bg-[#F5F1EE]">
+      <div className="flex justify-center py-5">
+        <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-4 border-2 border-[var(--Brown-30)] rounded-2xl gap-5 bg-[var(--Brown-10)]">
           <div className="flex items-center gap-[8px]">
             {/* 질문 여부에 따른 렌더링 */}
             {questionCardCount === 0 ? (
               <div className="flex flex-col items-center gap-2 w-[716px] h-[330px]">
                 <div className="flex justify-center gap-2">
                   <img
-                    className="w-[24px] h-[24px]"
+                    className="w-6 h-6"
                     src={messageImage}
                     alt="메시지 이모티콘"
                   />
-                  <span className="font-[400] text-[20px] text-[#542F1A]">
+                  <span className="font-noral text-xl text-[var(--Brown-40)]">
                     아직 질문이 없습니다.
                   </span>
                 </div>
@@ -233,11 +233,11 @@ function PostPage() {
             ) : (
               <div className="flex items-center justify-center gap-2">
                 <img
-                  className="w-[24px] h-[24px]"
+                  className="w-6 h-6"
                   src={messageImage}
                   alt="메시지 이모티콘"
                 />
-                <span className="font-[400] text-[20px] text-[#542F1A]">
+                <span className="font-normal text-xl text-[var(--Brown-40)]">
                   {userData.questionCount}개의 질문이 있습니다.
                 </span>
               </div>
