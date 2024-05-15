@@ -34,9 +34,6 @@ function QuestionCard({ question, displayMode }) {
     const likeStatus = userData[`${question.id}-like`];
     const dislikeStatus = userData[`${question.id}-dislike`];
 
-    console.log(`Like status for question ${question.id}:`, likeStatus);
-    console.log(`Dislike status for question ${question.id}:`, dislikeStatus);
-
     setLikeClicked(likeStatus ? true : false);
     setDislikeClicked(dislikeStatus ? true : false);
   }, []);
