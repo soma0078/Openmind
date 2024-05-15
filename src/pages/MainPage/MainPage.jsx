@@ -31,7 +31,7 @@ function MainPage() {
       createCard(nickName).then((result) => {
         setLocalStorage(result.id, result.name);
       });
-      nav('/list');
+      nav('/list', { replace: true });
     } else if (!isNickName) {
       alert('닉네임을 작성해주세요.');
     } else {

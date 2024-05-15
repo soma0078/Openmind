@@ -6,11 +6,11 @@ function NotFoundPage() {
   const nav = useNavigate();
 
   const onMovePrevPage = () => {
-    nav(-1);
+    nav('/list', { replace: true });
   };
 
   const onMoveMainPage = () => {
-    nav('/');
+    nav('/', { replace: true });
   };
 
   return (
