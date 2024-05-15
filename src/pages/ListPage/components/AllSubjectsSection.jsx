@@ -81,17 +81,19 @@ function AllSubjectsSection() {
       {loading ? (
         <Loading />
       ) : (
-        <div className="relative flex flex-col items-center gap-6">
+        <div className="relative flex flex-col items-center gap-6 justify-evenly">
           <div className="grid grid-cols-2 gap-4 tablet-1:grid-cols-3 tablet-2:grid-cols-4 pc:grid-cols-4 tablet-1:gap-5">
             {subjectList?.map((subject) => (
               <UserCard item={subject} key={subject.id} />
             ))}
           </div>
-          <PaginationBar
-            activePageNum={page}
-            totalPageNum={totalPageNum}
-            onPageChange={onPageChange}
-          />
+          <div className="flex justify-center">
+            <PaginationBar
+              activePageNum={page}
+              totalPageNum={totalPageNum}
+              onPageChange={onPageChange}
+            />
+          </div>
         </div>
       )}
     </div>
