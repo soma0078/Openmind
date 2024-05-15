@@ -17,24 +17,29 @@ function QuestionCard({ question, displayMode }) {
   const [showForm, setShowForm] = useState(false);
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
+
+  let questionLike = `${question.id}-like`;
+  let questionDislike = `${question.id}-dislike`;
+
   const [likeClicked, setLikeClicked] = useState(
-    localStorage.getItem(`${question.id}-like`) ? true : false,
+    localStorage.getItem(questionLike) ? true : false,
   );
 
   const [dislikeClicked, setDislikeClicked] = useState(
-    localStorage.getItem(`${question.id}-dislike`) ? true : false,
+    localStorage.getItem(questionDislike) ? true : false,
   );
 
   useEffect(() => {
-    const likeStatus = localStorage.getItem(`${question.id}-like`);
-    const dislikeStatus = localStorage.getItem(`${question.id}-dislike`);
+    const userData = JSON.parse(localStorage.getItem('user')) || {};
+    const likeStatus = userData[`${question.id}-like`];
+    const dislikeStatus = userData[`${question.id}-dislike`];
 
     console.log(`Like status for question ${question.id}:`, likeStatus);
     console.log(`Dislike status for question ${question.id}:`, dislikeStatus);
 
     setLikeClicked(likeStatus ? true : false);
     setDislikeClicked(dislikeStatus ? true : false);
-  }, [displayMode]);
+  }, []);
 
   useEffect(() => {
     async function fetchUserData() {
