@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useRef, useState } from 'react';
-=======
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { postQuestionReaction } from '../../../api/api';
@@ -9,7 +6,6 @@ import { setReactionStorage } from '../../../utils/localStorage';
 import { formatDateAge } from '../../../utils/utils';
 import AnswersForm from './AnswersForm';
 import KebabButton from './KebabButton';
->>>>>>> 3da49c1fa4041e2f5a0d07a3d424ce7f6e8aaa7c
 import thumbsUpButtonGray from '../../../assets/icon-thumbs-up-gray.svg';
 import thumbsUpButtonBlue from '../../../assets/icon-thumbs-up-blue.svg';
 import thumbsDownButtonGray from '../../../assets/icon-thumbs-down-gray.svg';
@@ -21,11 +17,6 @@ function QuestionCard({ question }) {
   const [showForm, setShowForm] = useState(false);
   const [likeCount, setLikeCount] = useState(question.like);
   const [dislikeCount, setDislikeCount] = useState(question.dislike);
-
-<<<<<<< HEAD
-=======
-  //로컬스토리지에서 좋아요 싫어요 상태가져오고 해당값으로 초기화 하기
->>>>>>> 3da49c1fa4041e2f5a0d07a3d424ce7f6e8aaa7c
   const [likeClicked, setLikeClicked] = useState(
     localStorage.getItem(`${question.id}-like`) ? true : false,
   );
@@ -33,42 +24,6 @@ function QuestionCard({ question }) {
   const [dislikeClicked, setDislikeClicked] = useState(
     localStorage.getItem(`${question.id}-dislike`) ? true : false,
   );
-
-  // 429, 500 오류가 발생하면 재시도, 재시도 횟수를 초과하면 오류를 던짐
-  async function fetchUserDataWithRetry(postId, retries = 5, delay = 1000) {
-    for (let i = 0; i < retries; i++) {
-      try {
-        const userData = await getUserData(postId);
-        return userData;
-      } catch (error) {
-        if (i < retries - 1) {
-          if (error.status === 429) {
-            console.log('Too many requests. Retrying...');
-            await new Promise((resolve) => setTimeout(resolve, delay));
-          } else if (error.status >= 500) {
-            console.log('Server error. Retrying...');
-            await new Promise((resolve) => setTimeout(resolve, delay));
-          } else {
-            throw error;
-          }
-        } else {
-          throw error;
-        }
-      }
-    }
-  }
-
-  useEffect(() => {
-    async function fetchUserData() {
-      try {
-        const userData = await fetchUserDataWithRetry(postId);
-        setUserData(userData);
-      } catch (error) {
-        console.error('사용자 데이터를 불러오는데 실패했습니다.', error);
-      }
-    }
-    fetchUserData();
-  }, []);
 
   useEffect(() => {
     const likeStatus = localStorage.getItem(`${question.id}-like`);
