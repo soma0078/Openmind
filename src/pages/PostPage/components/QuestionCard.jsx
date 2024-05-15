@@ -11,7 +11,7 @@ import thumbsUpButtonBlue from '../../../assets/icon-thumbs-up-blue.svg';
 import thumbsDownButtonGray from '../../../assets/icon-thumbs-down-gray.svg';
 import thumbsDownButtonBlack from '../../../assets/icon-thumbs-down-black.svg';
 
-function QuestionCard({ question }) {
+function QuestionCard({ question, displayMode }) {
   const { postId } = useParams();
   const [userData, setUserData] = useState('');
   const [showForm, setShowForm] = useState(false);
@@ -34,7 +34,7 @@ function QuestionCard({ question }) {
 
     setLikeClicked(likeStatus ? true : false);
     setDislikeClicked(dislikeStatus ? true : false);
-  }, [question.id]);
+  }, [displayMode]);
 
   useEffect(() => {
     async function fetchUserData() {
