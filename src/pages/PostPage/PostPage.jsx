@@ -213,7 +213,7 @@ function PostPage() {
           <div className="flex items-center gap-[8px]">
             {/* 질문 여부에 따른 렌더링 */}
             {questionCardCount === 0 ? (
-              <div className="flex flex-col items-center gap-2 w-[716px] h-[330px]">
+              <div className="flex flex-col items-center gap-2 w-full h-[330px]">
                 <div className="flex justify-center gap-2">
                   <img
                     className="w-6 h-6"
