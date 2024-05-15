@@ -35,7 +35,7 @@ function QuestionList({ questionData }) {
           <ul>
             {questionData.map((question) => (
               <li key={question.id}>
-                <QuestionCard key={`${question.id}-all`} question={question} />
+                <QuestionCard question={question} />
               </li>
             ))}
           </ul>
@@ -44,12 +44,7 @@ function QuestionList({ questionData }) {
           <ul>
             {questionData.map((question) => (
               <li key={question.id}>
-                {question.answer && (
-                  <QuestionCard
-                    key={`${question.id}-answered`}
-                    question={question}
-                  />
-                )}
+                {question.answer && <QuestionCard question={question} />}
               </li>
             ))}
           </ul>
@@ -58,12 +53,7 @@ function QuestionList({ questionData }) {
           <ul>
             {questionData.map((question) => (
               <li key={question.id}>
-                {!question.answer && (
-                  <QuestionCard
-                    key={`${question.id}-unanswered`}
-                    question={question}
-                  />
-                )}
+                {!question.answer && <QuestionCard question={question} />}
               </li>
             ))}
           </ul>
