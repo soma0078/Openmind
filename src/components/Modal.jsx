@@ -72,7 +72,7 @@ function Modal({ userData, onQuestionSubmitted }) {
       </button>
       {isModalOpen && (
         <>
-          <div className="fixed inset-0 z-50 bg-[var(--Grayscale-10)] bg-opacity-50"></div>
+          <div className="fixed inset-0 z-50 bg-black bg-opacity-50"></div>
           <dialog
             ref={dialogRef}
             className="fixed z-50 -translate-x-1/2 -translate-y-1/2 shadow-xl top-2/4 left-2/4 rounded-3xl p-9 max-md:p-6"
