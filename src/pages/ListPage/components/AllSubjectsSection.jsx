@@ -87,7 +87,7 @@ function AllSubjectsSection() {
               <UserCard item={subject} key={subject.id} />
             ))}
           </div>
-          <div className="flex justify-center">
+          <div className="absolute top-[600px] tablet-1:top-[470px] flex justify-center">
             <PaginationBar
               activePageNum={page}
               totalPageNum={totalPageNum}
