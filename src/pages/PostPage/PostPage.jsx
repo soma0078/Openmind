@@ -208,7 +208,7 @@ function PostPage() {
           alt="헤더 이미지"
         />
       </div>
-      <div className="flex justify-center py-5">
+      <div className="bg-[var(--Grayscale-20)] flex justify-center py-5">
         <div className="flex flex-col items-center w-[327px] md:w-[704px] xl:w-[716px] p-4 border-2 border-[var(--Brown-30)] rounded-2xl gap-5 bg-[var(--Brown-10)]">
           <div className="flex items-center gap-[8px]">
             {/* 질문 여부에 따른 렌더링 */}
@@ -220,7 +220,7 @@ function PostPage() {
                     src={messageImage}
                     alt="메시지 이모티콘"
                   />
-                  <span className="font-noral text-xl text-[var(--Brown-40)]">
+                  <span className="font-normal text-xl text-[var(--Brown-40)]">
                     아직 질문이 없습니다.
                   </span>
                 </div>
