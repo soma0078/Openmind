@@ -58,7 +58,7 @@ function QuestionCard({ question }) {
       return;
     }
 
-    const success = setReactionStorage(question.id, null, type);
+    const success = setReactionStorage(question.id, type);
 
     if (success) {
       await postQuestionReaction(question.id, type);
