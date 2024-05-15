@@ -11,7 +11,7 @@ import thumbsUpButtonBlue from '../../../assets/icon-thumbs-up-blue.svg';
 import thumbsDownButtonGray from '../../../assets/icon-thumbs-down-gray.svg';
 import thumbsDownButtonBlack from '../../../assets/icon-thumbs-down-black.svg';
 
-function QuestionCard({ question, displayMode }) {
+function QuestionCard({ question }) {
   const { postId } = useParams();
   const [userData, setUserData] = useState('');
   const [showForm, setShowForm] = useState(false);
