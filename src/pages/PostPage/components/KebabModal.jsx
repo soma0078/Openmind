@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   deleteAnswer,
   deleteQuestion,
   rejectedUpdate,
   submitAnswers,
 } from '../../../api/api';
+import { updateButtonText } from '../../../utils/utils';
 import editButton from '../../../assets/icon-edit.svg';
 import closeButton from '../../../assets/icon-close.svg';
 import rejectionButton from '../../../assets/icon-rejection.svg';
@@ -17,6 +18,12 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
   const [hoverDeleteAnswer, setHoverDeleteAnswer] = useState(false);
   const [hoverRejection, setHoverRejection] = useState(false);
   const [hoverDeleteQuestion, setHoverDeleteQuestion] = useState(false);
+  const [editButtonText, setEditButtonText] = useState('답변 수정하기');
+  const [closeAnswerButtonText, setCloseAnswerButtonText] =
+    useState('답변 삭제하기');
+  const [rejectButtonText, setRejectionButtonText] = useState('답변 거절하기');
+  const [closeQuestionButtonText, setCloseQuestionButtonText] =
+    useState('질문 삭제하기');
   const questionId = question.id;
 
   async function handleDeleteAnswer() {
@@ -58,10 +65,47 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
     window.location.reload();
   }
 
+  useEffect(() => {
+    // 페이지 로드시 한 번 실행
+    updateButtonText(setEditButtonText, '답변 수정', '답변 수정하기');
+    updateButtonText(setCloseAnswerButtonText, '답변 삭제', '답변 삭제하기');
+    updateButtonText(setRejectionButtonText, '답변  거절', '답변 거절하기');
+    updateButtonText(setCloseQuestionButtonText, '질문 삭제', '질문 삭제하기');
+
+    // 윈도우 사이즈 변경마다 실행
+    window.addEventListener('resize', () => {
+      updateButtonText(setEditButtonText, '답변 수정', '답변 수정하기');
+      updateButtonText(setCloseAnswerButtonText, '답변 삭제', '답변 삭제하기');
+      updateButtonText(setRejectionButtonText, '답변 거절', '답변 거절하기');
+      updateButtonText(
+        setCloseQuestionButtonText,
+        '질문 삭제',
+        '질문 삭제하기',
+      );
+    });
+
+    // Clean up
+    return () =>
+      window.removeEventListener('resize', () => {
+        updateButtonText(setEditButtonText, '답변 수정', '답변 수정하기');
+        updateButtonText(
+          setCloseAnswerButtonText,
+          '답변 삭제',
+          '답변 삭제하기',
+        );
+        updateButtonText(setRejectionButtonText, '답변 거절', '답변 거절하기');
+        updateButtonText(
+          setCloseAnswerButtonText,
+          '질문 삭제',
+          '질문 삭제하기',
+        );
+      });
+  }, []);
+
   return (
     <div className="block text-sm font-medium absolute right-0 mt-2 w-[130px] bg-white shadow-lg rounded-lg">
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium"
+        className="flex items-center justify-between py-1 px-7 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium tablet-1:py-2 tablet-1:px-4"
         onClick={() => {
           if (question.answer === null) {
             alert('수정할 대상이 아닙니다.');
@@ -87,10 +131,10 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           src={hoverEdit ? editButtonBlue : editButton}
           alt="버튼"
         />
-        <span className="flex">답변 수정하기</span>
+        <span className="flex">{editButtonText}</span>
       </div>
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer  hover:text-[var(--Blue-50)] hover:font-medium"
+        className="flex items-center justify-between py-1 px-7 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium tablet-1:py-2 tablet-1:px-4"
         onClick={() => {
           if (question.answer === null) {
             alert('삭제할 답변이 없습니다.');
@@ -115,10 +159,10 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           src={hoverDeleteAnswer ? closeButtonBlue : closeButton}
           alt="버튼"
         ></img>
-        <span className="flex">답변 삭제하기</span>
+        <span className="flex">{closeAnswerButtonText}</span>
       </div>
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium"
+        className="flex items-center justify-between py-1 px-7 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium tablet-1:py-2 tablet-1:px-4"
         onClick={() => {
           if (question.answer === null) {
             handleRejectedAnswer();
@@ -146,10 +190,10 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           src={hoverRejection ? rejectionButtonBlue : rejectionButton}
           alt="버튼"
         ></img>
-        <span className="flex">답변 거절하기</span>
+        <span className="flex">{rejectButtonText}</span>
       </div>
       <div
-        className="flex items-center justify-between py-2 px-4 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium"
+        className="flex items-center justify-between py-1 px-7 hover:bg-gray-100 cursor-pointer hover:text-[var(--Blue-50)] hover:font-medium tablet-1:py-2 tablet-1:px-4"
         onClick={() => {
           handleDeleteQuestion();
           toggleMenu();
@@ -169,7 +213,7 @@ function KebabModal({ question, handleDataChange, toggleMenu }) {
           src={hoverDeleteQuestion ? closeButtonBlue : closeButton}
           alt="버튼"
         ></img>
-        <span className="flex">질문 삭제하기</span>
+        <span className="flex">{closeQuestionButtonText}</span>
       </div>
     </div>
   );
